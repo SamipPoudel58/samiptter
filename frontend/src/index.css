@@ -1,0 +1,46 @@
+:root {
+  --c-blue: #1f9bcf;
+}
+
+main {
+  min-height: 80vh;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
+.navbar {
+  background-color: var(--c-blue);
+}
+
+.newsFeed {
+  border-left: 1px solid #ebeef0;
+  border-right: 1px solid #ebeef0;
+  min-height: 90vh;
+}
+
+.profilePic {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.tweet {
+  /* border-top: 1px solid #ebeef0; */
+  border-bottom: 1px solid #ebeef0;
+}
+
+.font-f-os {
+  font-family: "Open Sans";
+}
