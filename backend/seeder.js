@@ -15,9 +15,9 @@ const importData = async () => {
     await Tweet.deleteMany();
 
     const createdUser = await User.insertMany(users);
-    const adminUser = createdUser[0]._id;
-    const sampleTweets = tweets.map((tweet) => {
-      return { ...tweet, user: adminUser };
+    // const adminUser = createdUser[0]._id;
+    const sampleTweets = tweets.map((tweet, i) => {
+      return { ...tweet, user: createdUser[i]._id };
     });
 
     await Tweet.insertMany(sampleTweets);
