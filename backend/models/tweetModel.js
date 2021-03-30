@@ -23,6 +23,19 @@ const commentSchema = mongoose.Schema(
   }
 );
 
+const likeSchema = mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const tweetSchema = mongoose.Schema(
   {
     user: {
@@ -40,7 +53,8 @@ const tweetSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    likes: {
+    likes: [likeSchema],
+    numLikes: {
       type: Number,
       required: true,
       default: 0,

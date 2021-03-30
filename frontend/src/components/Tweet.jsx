@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Image, Form, Button, Row, Col } from "react-bootstrap";
 
 import * as dayjs from "dayjs";
+import { likeTweet } from "../actions/tweetActions";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 var updateLocale = require("dayjs/plugin/updateLocale");
@@ -26,6 +27,10 @@ dayjs.updateLocale("en", {
 });
 
 const TweetComposer = ({ tweet }) => {
+  const dispatch = useDispatch();
+  const likeHandler = () => {
+    dispatch(likeTweet(tweet._id));
+  };
   return (
     <Row className="py-2 tweet">
       <Col className="pr-0">
@@ -49,9 +54,12 @@ const TweetComposer = ({ tweet }) => {
         </Row>
         <Row className="pr-3 tweetContent">{tweet.tweetContent}</Row>
         <Row className="mt-3">
-          <Col className="pl-0 d-flex align-items-center likeButton">
+          <Col
+            onClick={likeHandler}
+            className="pl-0 d-flex align-items-center likeButton"
+          >
             <i className="far fa-heart fs-18"></i>
-            <span className="fs-12 ml-2">{tweet.likes}</span>
+            <span className="fs-12 ml-2">{tweet.numLikes}</span>
           </Col>
           <Col className="pl-0 d-flex align-items-center commentButton">
             <svg

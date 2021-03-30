@@ -57,7 +57,7 @@ export const createTweet = (tweet) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(`/api/tweets`, tweet, config);
-
+    console.log(data);
     dispatch({
       type: CREATE_TWEET_SUCCESS,
       payload: data,
@@ -70,5 +70,23 @@ export const createTweet = (tweet) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message,
     });
+  }
+};
+
+export const likeTweet = (id) => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.get(`/api/tweets/${id}/like`, config);
+  } catch (error) {
+    console.error(error);
   }
 };

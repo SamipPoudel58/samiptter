@@ -39,3 +39,20 @@ export const tweetCreateReducer = (state = {}, action) => {
       return state;
   }
 };
+
+// export const tweetLikeReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case TWEET_LIKE_REQUEST:
+//       return { loading: true };
+//     case TWEET_LIKE_SUCCESS:
+//       return {
+//         loading: false,
+//         success: true,
+//         tweet: action.payload,
+//       };
+//     case TWEET_LIKE_FAIL:
+//       return { loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };

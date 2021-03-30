@@ -6,10 +6,38 @@ const io = require("../socket");
 // @route DELETE /api/tweets
 // @access Private
 const getAllTweets = asyncHandler(async (req, res) => {
-  const tweets = await Tweet.find({})
+  let tweets = await Tweet.find({})
     .populate("user", "id name image")
     .sort({ createdAt: -1 });
+
+  const tweetsLikedByUser = await Tweet.find(
+    {
+      "likes.user": req.user._id,
+    },
+    "_id"
+  );
+  let myTweets = [];
+  tweets.forEach((tweet) => {
+    myTweets.push({ ...tweet, isLiked: false });
+  });
+  // tweets.forEach((tweet) => {
+  //   tweetsLikedByUser.forEach((t) => {
+  //     if (t._id.toString() === tweet._id.toString()) {
+  //       tweet.isLiked = true;
+  //       tweet.numLikes = 69;
+  //     }
+  //   });
+  // });
+
+  // const finalTweets = tweets.map((tweet, ind) => {
+  //   return tweet.likes.map((like, i) => {
+  //     if (like.user.toString === req.user._id.toString())
+  //       return console.log(tweet);
+  //   });
+  // });
+  console.log(myTweets);
   res.json(tweets);
+  // res.json(finalTweets);
 });
 
 // @desc Create a tweet
@@ -30,6 +58,33 @@ const createTweet = asyncHandler(async (req, res) => {
   res.status(201).json(createdTweet);
 });
 
+const likeTweet = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const tweet = await Tweet.findById(id);
+  let task = "";
+  // console.log(req.user);
+  if (tweet) {
+    const alreadyLiked = tweet.likes.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+
+    if (alreadyLiked) {
+      tweet.likes = tweet.likes.filter(
+        (r) => r.user.toString() !== req.user._id.toString()
+      );
+      tweet.numLikes = tweet.likes.length;
+      task = "Unliked";
+    } else {
+      tweet.likes.push({ user: req.user._id });
+      tweet.numLikes = tweet.likes.length;
+      task = "Liked";
+    }
+  }
+
+  await tweet.save();
+  res.status(201).json({ message: `${task} the post` });
+});
+
 const deleteTweet = (req, res) => {
   Tweet.deleteOne({ _id: req.body.id }, (err) => {
     if (err) {
@@ -42,4 +97,5 @@ module.exports = {
   getAllTweets,
   createTweet,
   deleteTweet,
+  likeTweet,
 };
