@@ -51,6 +51,7 @@ h2 {
   border-left: 1px solid #ebeef0;
   border-right: 1px solid #ebeef0;
   min-height: 90vh;
+  min-width: 565px;
 }
 
 .profilePic {
