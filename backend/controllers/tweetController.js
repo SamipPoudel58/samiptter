@@ -1,5 +1,6 @@
 const Tweet = require("../models/tweetModel");
 const asyncHandler = require("express-async-handler");
+const io = require("../socket");
 
 // @desc Get all tweets
 // @route DELETE /api/tweets
@@ -25,6 +26,7 @@ const createTweet = asyncHandler(async (req, res) => {
     numComments: 0,
   });
   const createdTweet = await tweet.save();
+  io.getIO().emit("tweets", { action: "create", tweet: createdTweet });
   res.status(201).json(createdTweet);
 });
 

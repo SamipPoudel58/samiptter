@@ -23,8 +23,9 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.22",
-    "morgan": "^1.10.0"
+    "mongoose": "^5.12.2",
+    "morgan": "^1.10.0",
+    "socket.io": "^4.0.0"
   },
   "devDependencies": {
     "concurrently": "^6.0.0"

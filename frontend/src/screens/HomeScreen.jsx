@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import openSocket from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Image } from "react-bootstrap";
 import { listTweets } from "../actions/tweetActions";
 import TweetComposer from "../components/TweetComposer";
 import Tweet from "../components/Tweet";
+import { TWEET_LIST_SUCCESS } from "../constants/tweetConstants";
 
 const HomeScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -11,13 +13,27 @@ const HomeScreen = ({ history }) => {
   const { userInfo } = userLogin;
 
   const tweetList = useSelector((state) => state.tweetList);
-  const { loading, error, tweets } = tweetList;
+  let { loading, error, tweets } = tweetList;
 
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
       dispatch(listTweets());
+
+      const socket = openSocket("/");
+      socket.on("tweets", (data) => {
+        if (data.action === "create") {
+          dispatch(listTweets());
+          // console.log(data.tweet);
+          // console.log(tweets);
+          // let tweets = [data.tweet, ...tweets];
+          // dispatch({
+          //   type: TWEET_LIST_SUCCESS,
+          //   payload: tweets,
+          // });
+        }
+      });
     }
   }, [history, userInfo, dispatch]);
   return (

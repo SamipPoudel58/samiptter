@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Image, Form, Button, Row, Col } from "react-bootstrap";
-import { createTweet } from "../actions/tweetActions";
+import { createTweet, listTweets } from "../actions/tweetActions";
 
 const TweetComposer = () => {
   const [tweet, setTweet] = useState("");
@@ -13,7 +13,7 @@ const TweetComposer = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(createTweet({ tweetContent: tweet }));
-    // console.log(tweet);
+    // dispatch(listTweets());
   };
   return (
     <Row className="py-3 tweetComposer">
