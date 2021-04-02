@@ -37,4 +37,7 @@ const server = app.listen(process.env.PORT, () => {
 const io = require("./socket").init(server);
 io.on("connection", (socket) => {
   console.log("Client Connected");
+  socket.on("disconnect", () => {
+    console.log("Client has left");
+  });
 });

@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import TweetScreen from "./screens/TweetScreen";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Container>
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
+          <Route path="/tweets/:id" component={TweetScreen} />
           <Route path="/" component={HomeScreen} exact />
         </Container>
       </main>

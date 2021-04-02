@@ -16,28 +16,30 @@ const getAllTweets = asyncHandler(async (req, res) => {
     },
     "_id"
   );
-  let myTweets = [];
-  tweets.forEach((tweet) => {
-    myTweets.push({ ...tweet, isLiked: false });
-  });
+  // let myTweets = [];
   // tweets.forEach((tweet) => {
+  //   myTweets.push({ ...tweet._doc, isLiked: false });
+  // });
+
+  // myTweets.forEach((tweet) => {
   //   tweetsLikedByUser.forEach((t) => {
   //     if (t._id.toString() === tweet._id.toString()) {
   //       tweet.isLiked = true;
-  //       tweet.numLikes = 69;
   //     }
   //   });
   // });
 
-  // const finalTweets = tweets.map((tweet, ind) => {
-  //   return tweet.likes.map((like, i) => {
-  //     if (like.user.toString === req.user._id.toString())
-  //       return console.log(tweet);
-  //   });
-  // });
-  console.log(myTweets);
+  tweets.forEach((tweet) => {
+    tweetsLikedByUser.forEach((t) => {
+      if (t._id.toString() === tweet._id.toString()) {
+        tweet.isLiked = true;
+      }
+    });
+  });
+
+  // console.log(myTweets);
   res.json(tweets);
-  // res.json(finalTweets);
+  // res.json(tweets);
 });
 
 // @desc Create a tweet
@@ -49,7 +51,7 @@ const createTweet = asyncHandler(async (req, res) => {
   const tweet = new Tweet({
     tweetContent,
     user: req.user._id,
-    likes: 0,
+    likes: [],
     comments: [],
     numComments: 0,
   });

@@ -5,6 +5,7 @@ const tweets = [
     comments: [],
     numComments: 82,
     numLikes: 17,
+    isLiked: false,
   },
   {
     tweetContent:
@@ -12,6 +13,7 @@ const tweets = [
     comments: [],
     numComments: 34,
     numLikes: 50,
+    isLiked: false,
   },
   {
     tweetContent:
@@ -19,6 +21,7 @@ const tweets = [
     comments: [],
     numComments: 4,
     numLikes: 73,
+    isLiked: false,
   },
   {
     tweetContent:
@@ -26,6 +29,7 @@ const tweets = [
     comments: [],
     numComments: 6,
     numLikes: 57,
+    isLiked: false,
   },
   {
     tweetContent:
@@ -33,6 +37,7 @@ const tweets = [
     comments: [],
     numComments: 8,
     numLikes: 17,
+    isLiked: false,
   },
 ];
 

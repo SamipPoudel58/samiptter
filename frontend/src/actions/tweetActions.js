@@ -28,6 +28,7 @@ export const listTweets = () => async (dispatch, getState) => {
       type: TWEET_LIST_SUCCESS,
       payload: data,
     });
+    console.log(data);
   } catch (error) {
     dispatch({
       type: TWEET_LIST_FAIL,

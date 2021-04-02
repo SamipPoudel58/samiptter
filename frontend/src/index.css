@@ -80,8 +80,12 @@ h2 {
   color: rgb(91, 112, 131);
 }
 
-.fa-heart {
+.far.fa-heart {
   color: inherit;
+}
+
+.fas.fa-heart {
+  color: red;
 }
 
 .comment-icon {

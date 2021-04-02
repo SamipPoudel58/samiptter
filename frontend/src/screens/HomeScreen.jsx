@@ -5,6 +5,8 @@ import { Row, Col, Image } from "react-bootstrap";
 import { listTweets } from "../actions/tweetActions";
 import TweetComposer from "../components/TweetComposer";
 import Tweet from "../components/Tweet";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
 import { TWEET_LIST_SUCCESS } from "../constants/tweetConstants";
 
 const HomeScreen = ({ history }) => {
@@ -41,9 +43,13 @@ const HomeScreen = ({ history }) => {
       <Col>1 of 3</Col>
       <Col className="newsFeed" md={7}>
         <TweetComposer />
-        {tweets.map((tweet) => (
-          <Tweet tweet={tweet} key={tweet._id} />
-        ))}
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          tweets.map((tweet) => <Tweet tweet={tweet} key={tweet._id} />)
+        )}
       </Col>
       <Col>3 of 3</Col>
     </Row>

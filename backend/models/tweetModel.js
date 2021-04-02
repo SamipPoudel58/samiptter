@@ -59,6 +59,11 @@ const tweetSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    isLiked: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     timestamps: true,

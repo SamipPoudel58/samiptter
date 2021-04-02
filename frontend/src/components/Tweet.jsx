@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Image, Form, Button, Row, Col } from "react-bootstrap";
 
 import * as dayjs from "dayjs";
-import { likeTweet } from "../actions/tweetActions";
+import { likeTweet, listTweets } from "../actions/tweetActions";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 var updateLocale = require("dayjs/plugin/updateLocale");
@@ -27,9 +27,22 @@ dayjs.updateLocale("en", {
 });
 
 const TweetComposer = ({ tweet }) => {
+  const [like, setLike] = useState(tweet.isLiked);
+  const [numLikes, setNumLikes] = useState(tweet.numLikes);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setLike(tweet.isLiked);
+    setNumLikes(tweet.numLikes);
+  }, []);
+
   const likeHandler = () => {
     dispatch(likeTweet(tweet._id));
+    setLike((prev) => !prev);
+    like
+      ? setNumLikes((prevNum) => prevNum - 1)
+      : setNumLikes((prevNum) => prevNum + 1);
   };
   return (
     <Row className="py-2 tweet">
@@ -58,8 +71,16 @@ const TweetComposer = ({ tweet }) => {
             onClick={likeHandler}
             className="pl-0 d-flex align-items-center likeButton"
           >
-            <i className="far fa-heart fs-18"></i>
-            <span className="fs-12 ml-2">{tweet.numLikes}</span>
+            <i
+              className={`fs-18 ${like ? "fas fa-heart" : "far fa-heart"}`}
+            ></i>
+            {/* <i
+              className={`fs-18 ${
+                tweet.isLiked ? "fas fa-heart" : "far fa-heart"
+              }`}
+            ></i> */}
+            {/* <span className="fs-12 ml-2">{tweet.numLikes}</span> */}
+            <span className="fs-12 ml-2">{numLikes}</span>
           </Col>
           <Col className="pl-0 d-flex align-items-center commentButton">
             <svg
