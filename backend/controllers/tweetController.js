@@ -39,7 +39,31 @@ const getAllTweets = asyncHandler(async (req, res) => {
 
   // console.log(myTweets);
   res.json(tweets);
-  // res.json(tweets);
+});
+
+// @desc Fetch single tweet
+// @route GET /api/tweets/:id
+// @access Private
+const getTweetById = asyncHandler(async (req, res) => {
+  const tweet = await Tweet.findById(req.params.id);
+  if (tweet) {
+    const tweetsLikedByUser = await Tweet.find(
+      {
+        "likes.user": req.user._id,
+      },
+      "_id"
+    );
+
+    tweetsLikedByUser.forEach((t) => {
+      if (t._id.toString() === tweet._id.toString()) {
+        tweet.isLiked = true;
+      }
+    });
+    res.json(tweet);
+  } else {
+    res.status(404);
+    throw new Error("Tweet not found");
+  }
 });
 
 // @desc Create a tweet
@@ -100,4 +124,5 @@ module.exports = {
   createTweet,
   deleteTweet,
   likeTweet,
+  getTweetById,
 };
