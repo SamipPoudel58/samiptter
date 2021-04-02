@@ -42,7 +42,7 @@ const HomeScreen = ({ history }) => {
     <Row>
       <Col>1 of 3</Col>
       <Col className="newsFeed" md={7}>
-        <TweetComposer />
+        <TweetComposer buttonText="Tweet" />
         {loading ? (
           <Loader />
         ) : error ? (

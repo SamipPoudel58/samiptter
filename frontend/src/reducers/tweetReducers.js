@@ -27,7 +27,9 @@ export const tweetListReducer = (state = { tweets: [] }, action) => {
 };
 
 export const tweetDetailsReducer = (
-  state = { tweet: { user: {}, likes: [], comments: [] } },
+  state = {
+    tweet: { user: {}, likes: [], comments: [], isLiked: false, numLikes: 0 },
+  },
   action
 ) => {
   switch (action.type) {

@@ -27,7 +27,7 @@ dayjs.updateLocale("en", {
   },
 });
 
-const TweetComposer = ({ tweet }) => {
+const Tweet = ({ tweet }) => {
   const [like, setLike] = useState(tweet.isLiked);
   const [numLikes, setNumLikes] = useState(tweet.numLikes);
 
@@ -36,7 +36,7 @@ const TweetComposer = ({ tweet }) => {
   useEffect(() => {
     setLike(tweet.isLiked);
     setNumLikes(tweet.numLikes);
-  }, []);
+  }, [tweet.isLiked, tweet.numLikes]);
 
   const likeHandler = () => {
     dispatch(likeTweet(tweet._id));
@@ -102,4 +102,4 @@ const TweetComposer = ({ tweet }) => {
   );
 };
 
-export default TweetComposer;
+export default Tweet;

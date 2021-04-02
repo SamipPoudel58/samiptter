@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Image, Form, Button, Row, Col } from "react-bootstrap";
 import { createTweet, listTweets } from "../actions/tweetActions";
 
-const TweetComposer = () => {
-  const [tweet, setTweet] = useState("");
+const TweetComposer = ({ buttonText }) => {
+  const [text, setText] = useState("");
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -12,7 +12,7 @@ const TweetComposer = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createTweet({ tweetContent: tweet }));
+    dispatch(createTweet({ tweetContent: text }));
     // dispatch(listTweets());
   };
   return (
@@ -33,17 +33,21 @@ const TweetComposer = () => {
             {/* <Form.Label>What's happening?</Form.Label> */}
             <Form.Control
               className="px-0 tweetForm"
-              placeholder="What's happening?"
+              placeholder={
+                buttonText === "Comment"
+                  ? "Write a comment..."
+                  : "What's happening?"
+              }
               as="textarea"
               type="text"
               rows="auto"
-              value={tweet}
-              onChange={(e) => setTweet(e.target.value)}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
           </Form.Group>
 
           <Button className="tweetBtn px-5" type="submit" variant="info">
-            Tweet
+            {buttonText}
           </Button>
         </Form>
       </Col>

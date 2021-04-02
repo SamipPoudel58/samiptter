@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
 import { useDispatch, useSelector } from "react-redux";
 import { listTweetDetails } from "../actions/tweetActions";
+import TweetComposer from "../components/TweetComposer";
 
 const TweetScreen = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const TweetScreen = ({ match, history }) => {
       dispatch(listTweetDetails(match.params.id));
       console.log(tweet);
     }
-  }, [dispatch, match]);
+  }, [dispatch, match, history, userInfo]);
 
   return (
     <>
@@ -41,7 +42,9 @@ const TweetScreen = ({ match, history }) => {
 
               <span className="ml-5 go-back-heading">Tweet</span>
             </Row>
+
             <Tweet tweet={tweet} />
+            <TweetComposer buttonText="Comment" />
           </Col>
           <Col>3 of 3</Col>
         </Row>
