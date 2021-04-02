@@ -2,6 +2,9 @@ import {
   CREATE_TWEET_FAIL,
   CREATE_TWEET_REQUEST,
   CREATE_TWEET_SUCCESS,
+  TWEET_DETAILS_FAIL,
+  TWEET_DETAILS_REQUEST,
+  TWEET_DETAILS_SUCCESS,
   TWEET_LIST_FAIL,
   TWEET_LIST_REQUEST,
   TWEET_LIST_SUCCESS,
@@ -28,10 +31,41 @@ export const listTweets = () => async (dispatch, getState) => {
       type: TWEET_LIST_SUCCESS,
       payload: data,
     });
-    console.log(data);
   } catch (error) {
     dispatch({
       type: TWEET_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listTweetDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: TWEET_DETAILS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/tweets/" + id, config);
+
+    dispatch({
+      type: TWEET_DETAILS_SUCCESS,
+      payload: data,
+    });
+    console.log(data);
+  } catch (error) {
+    dispatch({
+      type: TWEET_DETAILS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

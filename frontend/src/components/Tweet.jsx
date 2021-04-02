@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Image, Form, Button, Row, Col } from "react-bootstrap";
 
@@ -46,7 +47,7 @@ const TweetComposer = ({ tweet }) => {
   };
   return (
     <Row className="py-2 tweet">
-      <Col className="pr-0">
+      <Col className="pr-0 picture-col">
         <Image
           className="pr-0 profilePic"
           src={tweet.user.image}
@@ -65,7 +66,9 @@ const TweetComposer = ({ tweet }) => {
             {dayjs(tweet.createdAt).fromNow(true)}
           </span>
         </Row>
-        <Row className="pr-3 tweetContent">{tweet.tweetContent}</Row>
+        <Link className="tweetContent" to={`/tweets/${tweet._id}`}>
+          <Row className="pr-3">{tweet.tweetContent}</Row>
+        </Link>
         <Row className="mt-3">
           <Col
             onClick={likeHandler}

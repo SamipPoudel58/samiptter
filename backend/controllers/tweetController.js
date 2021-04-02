@@ -45,7 +45,10 @@ const getAllTweets = asyncHandler(async (req, res) => {
 // @route GET /api/tweets/:id
 // @access Private
 const getTweetById = asyncHandler(async (req, res) => {
-  const tweet = await Tweet.findById(req.params.id);
+  const tweet = await Tweet.findById(req.params.id).populate(
+    "user",
+    "id name image"
+  );
   if (tweet) {
     const tweetsLikedByUser = await Tweet.find(
       {

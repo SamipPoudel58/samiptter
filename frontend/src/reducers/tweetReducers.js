@@ -2,6 +2,9 @@ import {
   CREATE_TWEET_FAIL,
   CREATE_TWEET_REQUEST,
   CREATE_TWEET_SUCCESS,
+  TWEET_DETAILS_FAIL,
+  TWEET_DETAILS_REQUEST,
+  TWEET_DETAILS_SUCCESS,
   TWEET_LIST_FAIL,
   TWEET_LIST_REQUEST,
   TWEET_LIST_SUCCESS,
@@ -17,6 +20,22 @@ export const tweetListReducer = (state = { tweets: [] }, action) => {
         tweets: action.payload,
       };
     case TWEET_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const tweetDetailsReducer = (
+  state = { tweet: { user: {}, likes: [], comments: [] } },
+  action
+) => {
+  switch (action.type) {
+    case TWEET_DETAILS_REQUEST:
+      return { loading: true, ...state };
+    case TWEET_DETAILS_SUCCESS:
+      return { loading: false, tweet: action.payload };
+    case TWEET_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

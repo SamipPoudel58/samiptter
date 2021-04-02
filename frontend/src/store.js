@@ -1,13 +1,18 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { tweetCreateReducer, tweetListReducer } from "./reducers/tweetReducers";
+import {
+  tweetCreateReducer,
+  tweetDetailsReducer,
+  tweetListReducer,
+} from "./reducers/tweetReducers";
 import { userLoginReducer, userRegisterReducer } from "./reducers/userReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   tweetList: tweetListReducer,
+  tweetDetails: tweetDetailsReducer,
   tweetCreate: tweetCreateReducer,
 });
 
