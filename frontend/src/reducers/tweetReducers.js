@@ -4,6 +4,7 @@ import {
   CREATE_TWEET_SUCCESS,
   TWEET_DETAILS_FAIL,
   TWEET_DETAILS_REQUEST,
+  TWEET_DETAILS_RESET,
   TWEET_DETAILS_SUCCESS,
   TWEET_LIST_FAIL,
   TWEET_LIST_REQUEST,
@@ -39,6 +40,16 @@ export const tweetDetailsReducer = (
       return { loading: false, tweet: action.payload };
     case TWEET_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    case TWEET_DETAILS_RESET:
+      return {
+        tweet: {
+          user: {},
+          likes: [],
+          comments: [],
+          isLiked: false,
+          numLikes: 0,
+        },
+      };
     default:
       return state;
   }

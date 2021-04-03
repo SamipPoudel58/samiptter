@@ -125,3 +125,21 @@ export const likeTweet = (id) => async (dispatch, getState) => {
     console.error(error);
   }
 };
+
+export const likeComment = (id, comId) => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.get(`/api/tweets/${id}/${comId}/like`, config);
+  } catch (error) {
+    console.error(error);
+  }
+};

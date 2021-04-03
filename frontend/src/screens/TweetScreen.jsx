@@ -7,6 +7,31 @@ import Tweet from "../components/Tweet";
 import { useDispatch, useSelector } from "react-redux";
 import { listTweetDetails } from "../actions/tweetActions";
 import TweetComposer from "../components/TweetComposer";
+import { TWEET_DETAILS_RESET } from "../constants/tweetConstants";
+import Comment from "../components/Comment";
+
+import * as dayjs from "dayjs";
+var relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
+var updateLocale = require("dayjs/plugin/updateLocale");
+dayjs.extend(updateLocale);
+dayjs.updateLocale("en", {
+  relativeTime: {
+    future: "in %s",
+    past: "%s",
+    s: "1s",
+    m: "1m",
+    mm: "%dm",
+    h: "1h",
+    hh: "%dh",
+    d: "1d",
+    dd: "%dd",
+    M: "1mon",
+    MM: "%dmon",
+    y: "1y",
+    yy: "%dy",
+  },
+});
 
 const TweetScreen = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -36,7 +61,10 @@ const TweetScreen = ({ match, history }) => {
           <Col>1 of 3</Col>
           <Col className="newsFeed" md={7}>
             <Row className="p-3 u-line">
-              <Link to="/">
+              <Link
+                onClick={() => dispatch({ type: TWEET_DETAILS_RESET })}
+                to="/"
+              >
                 <i className="fas fa-arrow-left"></i>
               </Link>
 
@@ -45,6 +73,14 @@ const TweetScreen = ({ match, history }) => {
 
             <Tweet tweet={tweet} />
             <TweetComposer buttonText="Comment" />
+            {tweet.comments.map((comment) => (
+              <Comment
+                mainTweetId={tweet._id}
+                tweet={comment}
+                userInfo={userInfo}
+                key={comment._id}
+              />
+            ))}
           </Col>
           <Col>3 of 3</Col>
         </Row>

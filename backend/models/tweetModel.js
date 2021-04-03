@@ -2,15 +2,20 @@ const mongoose = require("mongoose");
 
 const commentSchema = mongoose.Schema(
   {
-    name: { type: String, required: true },
-    image: {
+    tweetContent: {
       type: String,
       required: true,
     },
-    likes: {
+    likes: [],
+    numLikes: {
       type: Number,
       required: true,
       default: 0,
+    },
+    isLiked: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

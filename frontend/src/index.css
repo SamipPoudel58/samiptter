@@ -70,6 +70,7 @@ h2 {
 }
 
 .tweetContent {
+  color: inherit !important;
   text-decoration: none !important;
 }
 

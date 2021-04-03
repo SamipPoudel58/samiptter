@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 // import { Route } from "react-router-dom";
@@ -22,7 +23,9 @@ const Header = () => {
           </LinkContainer>
           <Nav className="ml-auto">
             {userInfo ? (
-              <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
+              <Nav.Link href="/login" onClick={logoutHandler}>
+                Logout
+              </Nav.Link>
             ) : (
               <>
                 <LinkContainer to="/login">
