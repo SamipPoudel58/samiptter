@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
+  commentCreateReducer,
   tweetCreateReducer,
   tweetDetailsReducer,
   tweetListReducer,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   tweetList: tweetListReducer,
   tweetDetails: tweetDetailsReducer,
   tweetCreate: tweetCreateReducer,
+  commentCreate: commentCreateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

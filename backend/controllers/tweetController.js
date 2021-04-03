@@ -161,6 +161,55 @@ const likeComment = asyncHandler(async (req, res) => {
   res.status(201).json({ message: `${task} the comment` });
 });
 
+// @desc Create a comment
+// @route POST /api/tweets/:id
+// @access Private
+const createComment = asyncHandler(async (req, res) => {
+  const { commentContent } = req.body;
+  const { id } = req.params;
+  const tweet = await Tweet.findById(id);
+  console.log(id, req.body);
+
+  if (!tweet) {
+    res.status(404);
+    throw new Error("Tweet not found");
+  }
+
+  tweet.comments.push({
+    user: req.user._id,
+    likes: [],
+    numLikes: 0,
+    isLiked: false,
+    tweetContent: commentContent,
+  });
+  tweet.numComments = tweet.comments.length;
+  const createdTweet = await tweet.save();
+  // console.log(createdTweet);
+  io.getIO().emit("tweets", { action: "comment", tweet: createdTweet });
+  res.status(201).json("Comment Created");
+});
+
+// @desc Delete a comment
+// @route DEL /api/tweets/:id
+// @access Private
+const deleteComment = asyncHandler(async (req, res) => {
+  const { id, comId } = req.params;
+  const tweet = await Tweet.findById(id);
+  // let task = "";
+  if (!tweet) {
+    res.status(404);
+    throw new Error("Tweet not found");
+  }
+
+  tweet.comments = tweet.comments.filter((com) => {
+    return com._id.toString() !== comId.toString();
+  });
+  tweet.numComments = tweet.comments.length;
+  await tweet.save();
+  io.getIO().emit("tweets", { action: "comment" });
+  res.status(201).json({ message: `Deleted the comment` });
+});
+
 const deleteTweet = (req, res) => {
   Tweet.deleteOne({ _id: req.body.id }, (err) => {
     if (err) {
@@ -174,6 +223,8 @@ module.exports = {
   createTweet,
   deleteTweet,
   likeTweet,
+  createComment,
+  deleteComment,
   likeComment,
   getTweetById,
 };

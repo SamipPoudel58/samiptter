@@ -1,4 +1,7 @@
 import {
+  CREATE_COMMENT_FAIL,
+  CREATE_COMMENT_REQUEST,
+  CREATE_COMMENT_SUCCESS,
   CREATE_TWEET_FAIL,
   CREATE_TWEET_REQUEST,
   CREATE_TWEET_SUCCESS,
@@ -138,7 +141,58 @@ export const likeComment = (id, comId) => async (dispatch, getState) => {
       },
     };
 
-    await axios.get(`/api/tweets/${id}/${comId}/like`, config);
+    await axios.get(`/api/tweets/${id}/${comId}`, config);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createComment = (id, comment) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CREATE_COMMENT_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.post(`/api/tweets/${id}`, comment, config);
+
+    dispatch({
+      type: CREATE_COMMENT_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteComment = (id, comId) => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/tweets/${id}/${comId}`, config);
   } catch (error) {
     console.error(error);
   }

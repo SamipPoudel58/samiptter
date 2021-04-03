@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import openSocket from "socket.io-client";
 import { Link } from "react-router-dom";
 import { Row, Col, Image } from "react-bootstrap";
 import Message from "../components/Message";
@@ -46,7 +47,12 @@ const TweetScreen = ({ match, history }) => {
       history.push("/login");
     } else {
       dispatch(listTweetDetails(match.params.id));
-      console.log(tweet);
+      const socket = openSocket("/");
+      socket.on("tweets", (data) => {
+        if (data.action === "comment") {
+          dispatch(listTweetDetails(match.params.id));
+        }
+      });
     }
   }, [dispatch, match, history, userInfo]);
 
@@ -68,11 +74,15 @@ const TweetScreen = ({ match, history }) => {
                 <i className="fas fa-arrow-left"></i>
               </Link>
 
-              <span className="ml-5 go-back-heading">Tweet</span>
+              <span className="ml-3 go-back-heading">Tweet</span>
             </Row>
 
             <Tweet tweet={tweet} />
-            <TweetComposer buttonText="Comment" />
+            <TweetComposer tweet={tweet} buttonText="Comment" />
+            <Row className="p-3 u-line">
+              <i className="far fa-comment-alt"></i>
+              <span className="ml-3 go-back-heading">Comments</span>
+            </Row>
             {tweet.comments.map((comment) => (
               <Comment
                 mainTweetId={tweet._id}

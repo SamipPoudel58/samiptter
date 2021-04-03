@@ -56,6 +56,7 @@ h2 {
   border-right: 1px solid #ebeef0;
   min-height: 90vh;
   min-width: 565px;
+  padding-bottom: 50px;
 }
 
 .profilePic {
@@ -97,6 +98,12 @@ h2 {
   color: #e0245e;
 }
 
+.far.fa-comment-alt {
+  color: #1f9bcf;
+  line-height: 1;
+  font-size: 21px;
+}
+
 .fa-arrow-left {
   font-size: 21px;
   color: #1f9bcf;
@@ -120,6 +127,16 @@ h2 {
 .commentButton:hover {
   color: #1f9bcf;
   cursor: pointer;
+}
+
+.deleteButton {
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  color: #e0245e;
 }
 
 .go-back-heading {

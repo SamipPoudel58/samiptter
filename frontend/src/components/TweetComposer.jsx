@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Image, Form, Button, Row, Col } from "react-bootstrap";
-import { createTweet, listTweets } from "../actions/tweetActions";
+import {
+  createComment,
+  createTweet,
+  listTweets,
+} from "../actions/tweetActions";
 
-const TweetComposer = ({ buttonText }) => {
+const TweetComposer = ({ buttonText, tweet }) => {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
 
@@ -12,12 +16,14 @@ const TweetComposer = ({ buttonText }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (buttonText === "Comment") {
+      return dispatch(createComment(tweet._id, { commentContent: text }));
+    }
     dispatch(createTweet({ tweetContent: text }));
-    // dispatch(listTweets());
   };
   return (
     <Row className="py-3 tweetComposer">
-      <Col className="pr-0">
+      <Col className="pr-0 picture-col">
         {userInfo && (
           <Image
             className="pr-0 profilePic"
@@ -46,7 +52,7 @@ const TweetComposer = ({ buttonText }) => {
             />
           </Form.Group>
 
-          <Button className="tweetBtn px-5" type="submit" variant="info">
+          <Button className=" tweetBtn px-5" type="submit" variant="info">
             {buttonText}
           </Button>
         </Form>

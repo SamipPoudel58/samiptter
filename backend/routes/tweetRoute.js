@@ -7,14 +7,19 @@ const {
   getTweetById,
   likeTweet,
   likeComment,
+  createComment,
+  deleteComment,
 } = require("../controllers/tweetController");
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/").get(protect, getAllTweets).post(protect, createTweet);
 
+router.route("/:id").get(protect, getTweetById).post(protect, createComment);
 router.route("/:id/like").get(protect, likeTweet);
 
-router.route("/:id").get(protect, getTweetById);
-router.route("/:id/:comId/like").get(protect, likeComment);
+router
+  .route("/:id/:comId")
+  .get(protect, likeComment)
+  .delete(protect, deleteComment);
 
 module.exports = router;
