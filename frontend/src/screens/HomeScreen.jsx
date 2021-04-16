@@ -7,6 +7,7 @@ import TweetComposer from "../components/TweetComposer";
 import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import SideNav from "../components/SideNav";
 import { TWEET_LIST_SUCCESS } from "../constants/tweetConstants";
 
 const HomeScreen = ({ history }) => {
@@ -39,9 +40,11 @@ const HomeScreen = ({ history }) => {
     }
   }, [history, userInfo, dispatch]);
   return (
-    <Row>
-      <Col>1 of 3</Col>
-      <Col className="newsFeed" md={7}>
+    <Row className="mainRow">
+      <Col md={3} className="firstCol">
+        <SideNav />
+      </Col>
+      <Col className="newsFeed" md={6}>
         <TweetComposer buttonText="Tweet" />
         {loading ? (
           <Loader />
@@ -51,7 +54,9 @@ const HomeScreen = ({ history }) => {
           tweets.map((tweet) => <Tweet tweet={tweet} key={tweet._id} />)
         )}
       </Col>
-      <Col>3 of 3</Col>
+      <Col className="thirdCol" md={3}>
+        3 of 3
+      </Col>
     </Row>
   );
 };

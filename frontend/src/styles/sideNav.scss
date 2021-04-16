@@ -1,0 +1,45 @@
+.sideNav {
+  display: flex;
+  flex-direction: column;
+  min-height: 85vh;
+  //   position: fixed;
+  &__nav {
+    padding: 2rem 0;
+  }
+
+  &__navlink {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #55595c;
+    padding: 1rem;
+    line-height: 1 !important;
+
+    & > i {
+      margin-right: 1rem;
+      font-size: 1.3rem;
+    }
+
+    &:hover {
+      box-sizing: border-box;
+      color: var(--c-blue);
+      background-color: rgba(#1f9bcf, 0.1);
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+.profileRow {
+  cursor: pointer;
+  //   background-color: red;
+  flex-wrap: nowrap;
+
+  &__col {
+    max-width: 75px !important;
+    min-width: 75px !important;
+  }
+}
+
+.loggedInText {
+  color: #999;
+}

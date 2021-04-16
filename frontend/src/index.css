@@ -35,7 +35,10 @@ h2 {
 .bar {
   display: block;
   height: 20px;
-  background-color: red;
+}
+
+.mainRow {
+  align-items: flex-start;
 }
 
 .tweetComposer {
@@ -63,6 +66,10 @@ h2 {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+}
+.picture-col {
+  max-width: 95px !important;
+  /* min-width: 95px !important; */
 }
 
 .tweet {
@@ -145,9 +152,4 @@ h2 {
   text-transform: uppercase;
   font-size: 16px;
   line-height: 1.2;
-}
-
-.picture-col {
-  max-width: 95px !important;
-  /* min-width: 95px !important; */
 }

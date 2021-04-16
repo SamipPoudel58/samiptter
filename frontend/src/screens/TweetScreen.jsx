@@ -12,6 +12,7 @@ import { TWEET_DETAILS_RESET } from "../constants/tweetConstants";
 import Comment from "../components/Comment";
 
 import * as dayjs from "dayjs";
+import SideNav from "../components/SideNav";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 var updateLocale = require("dayjs/plugin/updateLocale");
@@ -64,7 +65,9 @@ const TweetScreen = ({ match, history }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <Row>
-          <Col>1 of 3</Col>
+          <Col>
+            <SideNav />
+          </Col>
           <Col className="newsFeed" md={7}>
             <Row className="p-3 u-line">
               <Link
