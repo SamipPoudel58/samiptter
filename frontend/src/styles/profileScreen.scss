@@ -1,0 +1,28 @@
+.profileScreen {
+  &__images {
+    position: relative;
+  }
+
+  &__profilepic {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid white;
+    transform: translate(1rem, 50%);
+  }
+
+  &__details {
+    font-family: "Open Sans", sans-serif;
+    padding: 5rem 1.3125rem 1rem;
+    &-name {
+      font-family: inherit;
+      text-transform: none !important;
+      letter-spacing: normal;
+      font-weight: bold;
+    }
+  }
+}

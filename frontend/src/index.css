@@ -79,6 +79,7 @@ h2 {
   min-width: 565px;
   padding-bottom: 50px;
   max-height: calc(100vh - 88px);
+  min-height: calc(100vh - 88px);
   overflow-y: scroll;
 }
 
