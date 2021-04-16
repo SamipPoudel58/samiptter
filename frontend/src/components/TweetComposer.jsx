@@ -7,7 +7,7 @@ import {
   listTweets,
 } from "../actions/tweetActions";
 
-const TweetComposer = ({ buttonText, tweet }) => {
+const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
 
@@ -20,6 +20,9 @@ const TweetComposer = ({ buttonText, tweet }) => {
       return dispatch(createComment(tweet._id, { commentContent: text }));
     }
     dispatch(createTweet({ tweetContent: text }));
+    if (setBackDrop) {
+      setBackDrop(false);
+    }
   };
   return (
     <Row className="py-3 tweetComposer">
@@ -52,7 +55,7 @@ const TweetComposer = ({ buttonText, tweet }) => {
             />
           </Form.Group>
 
-          <Button className=" tweetBtn px-5" type="submit" variant="info">
+          <Button className="tweetBtn px-5" type="submit" variant="info">
             {buttonText}
           </Button>
         </Form>

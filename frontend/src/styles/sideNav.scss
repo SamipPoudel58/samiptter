@@ -26,6 +26,20 @@
       border-radius: 0.5rem;
     }
   }
+
+  &__cta {
+    padding: 1rem 3rem;
+    background-color: var(--c-blue);
+    color: white;
+    border: none;
+    margin-top: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
 
 .profileRow {

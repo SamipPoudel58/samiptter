@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
@@ -8,14 +8,16 @@ import {
   Row,
   Col,
   Image,
-  Navbar,
+  Button,
   Nav,
   Container,
   NavDropdown,
 } from "react-bootstrap";
 import "../styles/sideNav.scss";
+import TweetComposer from "./TweetComposer";
 
 const SideNav = () => {
+  const [backDrop, setBackDrop] = useState(false);
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -26,6 +28,11 @@ const SideNav = () => {
   };
   return (
     <section className="sideNav">
+      {backDrop && (
+        <div className="backdrop" onClick={() => setBackDrop(false)}>
+          <TweetComposer setBackDrop={setBackDrop} buttonText="Tweet" />
+        </div>
+      )}
       <nav className="sideNav__nav">
         <LinkContainer className="sideNav__navlink" to="/">
           <Nav.Link>
@@ -45,6 +52,9 @@ const SideNav = () => {
             <span>Profile</span>
           </Nav.Link>
         </LinkContainer>
+        <button onClick={() => setBackDrop(true)} className="sideNav__cta">
+          Tweet
+        </button>
       </nav>
       <Row className="mt-auto profileRow">
         <Col className="pr-0 profileRow__col">
