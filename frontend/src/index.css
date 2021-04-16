@@ -39,6 +39,7 @@ h2 {
 
 .mainRow {
   align-items: flex-start;
+  max-height: calc(100vh - 88px);
 }
 
 .tweetComposer {
@@ -57,9 +58,16 @@ h2 {
 .newsFeed {
   border-left: 1px solid #ebeef0;
   border-right: 1px solid #ebeef0;
-  min-height: 90vh;
   min-width: 565px;
   padding-bottom: 50px;
+  max-height: calc(100vh - 88px);
+  overflow-y: scroll;
+}
+
+.newsFeed::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+  display: none;
 }
 
 .profilePic {

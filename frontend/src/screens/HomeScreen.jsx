@@ -41,10 +41,10 @@ const HomeScreen = ({ history }) => {
   }, [history, userInfo, dispatch]);
   return (
     <Row className="mainRow">
-      <Col md={3} className="firstCol">
+      <Col className="firstCol">
         <SideNav />
       </Col>
-      <Col className="newsFeed" md={6}>
+      <Col className="newsFeed" md={7}>
         <TweetComposer buttonText="Tweet" />
         {loading ? (
           <Loader />
@@ -54,9 +54,7 @@ const HomeScreen = ({ history }) => {
           tweets.map((tweet) => <Tweet tweet={tweet} key={tweet._id} />)
         )}
       </Col>
-      <Col className="thirdCol" md={3}>
-        3 of 3
-      </Col>
+      <Col className="thirdCol">3 of 3</Col>
     </Row>
   );
 };
