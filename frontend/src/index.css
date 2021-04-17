@@ -28,6 +28,10 @@ h2 {
   border-bottom: 1px solid #ebeef0;
 }
 
+.my-font {
+  font-family: "Open Sans", sans-serif !important;
+}
+
 .navbar {
   background-color: var(--c-blue);
 }

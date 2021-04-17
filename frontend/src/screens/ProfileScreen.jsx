@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from "react";
-import openSocket from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { listTweets } from "../actions/tweetActions";
-import TweetComposer from "../components/TweetComposer";
 import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import SideNav from "../components/SideNav";
-import { TWEET_LIST_SUCCESS } from "../constants/tweetConstants";
+
 import "../styles/profileScreen.scss";
+import { getProfile } from "../actions/userActions";
 
 const ProfileScreen = ({ history }) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const tweetList = useSelector((state) => state.tweetList);
-  let { loading, error, tweets } = tweetList;
+  const userProfile = useSelector((state) => state.userProfile);
+  let { loading, error, tweets, user } = userProfile;
 
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      dispatch(listTweets());
+      dispatch(getProfile(userInfo._id));
     }
   }, [history, userInfo, dispatch]);
   return (
@@ -37,7 +36,6 @@ const ProfileScreen = ({ history }) => {
           <Link to="/">
             <i className="fas fa-arrow-left"></i>
           </Link>
-
           <span className="ml-3 go-back-heading">{userInfo.name}</span>
         </Row>
         <Row className="profileScreen__images">
@@ -57,6 +55,15 @@ const ProfileScreen = ({ history }) => {
         <Row className="profileScreen__details u-line">
           <h4 className="profileScreen__details-name">{userInfo.name}</h4>
         </Row>
+        <Row className="p-3 my-font font-weight-bold u-line">Tweets</Row>
+
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          tweets.map((tweet) => <Tweet tweet={tweet} key={tweet._id} />)
+        )}
       </Col>
       <Col className="thirdCol">3 of 3</Col>
     </Row>

@@ -7,7 +7,11 @@ import {
   tweetDetailsReducer,
   tweetListReducer,
 } from "./reducers/tweetReducers";
-import { userLoginReducer, userRegisterReducer } from "./reducers/userReducers";
+import {
+  getProfileReducer,
+  userLoginReducer,
+  userRegisterReducer,
+} from "./reducers/userReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -16,6 +20,7 @@ const reducer = combineReducers({
   tweetDetails: tweetDetailsReducer,
   tweetCreate: tweetCreateReducer,
   commentCreate: commentCreateReducer,
+  userProfile: getProfileReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
