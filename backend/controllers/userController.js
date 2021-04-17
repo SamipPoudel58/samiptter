@@ -71,8 +71,15 @@ const getUserProfile = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
+  const userData = {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    image: user.image,
+  };
   const tweets = await Tweet.find({ user: id });
-  res.json(user, tweets);
+  res.json({ user: userData, tweets });
 });
 
 module.exports = {
