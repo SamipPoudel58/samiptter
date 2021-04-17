@@ -10,6 +10,7 @@ import SideNav from "../components/SideNav";
 
 import "../styles/profileScreen.scss";
 import { getProfile } from "../actions/userActions";
+import BackButton from "../components/BackButton";
 
 const ProfileScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -33,9 +34,10 @@ const ProfileScreen = ({ history }) => {
       </Col>
       <Col className="newsFeed" md={7}>
         <Row className="p-3 u-line">
-          <Link to="/">
+          {/* <Link to="/">
             <i className="fas fa-arrow-left"></i>
-          </Link>
+          </Link> */}
+          <BackButton />
           <span className="ml-3 go-back-heading">{userInfo.name}</span>
         </Row>
         <Row className="profileScreen__images">
