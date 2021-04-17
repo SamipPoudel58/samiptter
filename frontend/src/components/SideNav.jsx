@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
-// import { Route } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Row, Col, Image, Nav } from "react-bootstrap";
 import "../styles/sideNav.scss";
@@ -14,9 +13,6 @@ const SideNav = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const logoutHandler = () => {
-    dispatch(logout());
-  };
   return (
     <section className="sideNav">
       {backDrop && (

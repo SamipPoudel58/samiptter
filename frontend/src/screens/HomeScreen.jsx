@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import openSocket from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { listTweets } from "../actions/tweetActions";
 import TweetComposer from "../components/TweetComposer";
 import Tweet from "../components/Tweet";
@@ -27,13 +27,6 @@ const HomeScreen = ({ history }) => {
       socket.on("tweets", (data) => {
         if (data.action === "create") {
           dispatch(listTweets());
-          // console.log(data.tweet);
-          // console.log(tweets);
-          // let tweets = [data.tweet, ...tweets];
-          // dispatch({
-          //   type: TWEET_LIST_SUCCESS,
-          //   payload: tweets,
-          // });
         }
       });
     }

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import openSocket from "socket.io-client";
-import { Link } from "react-router-dom";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
@@ -74,14 +73,7 @@ const TweetScreen = ({ match, history }) => {
           </Col>
           <Col className="newsFeed" md={7}>
             <Row className="p-3 u-line">
-              {/* <Link
-                onClick={() => dispatch({ type: TWEET_DETAILS_RESET })}
-                to="/"
-              >
-                <i className="fas fa-arrow-left"></i>
-              </Link> */}
               <BackButton />
-
               <span className="ml-3 go-back-heading">Tweet</span>
             </Row>
 

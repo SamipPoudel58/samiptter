@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Image, Form, Button, Row, Col } from "react-bootstrap";
-import {
-  likeComment,
-  likeTweet,
-  listTweets,
-  deleteComment,
-} from "../actions/tweetActions";
+import { useDispatch } from "react-redux";
+import { Image, Row, Col } from "react-bootstrap";
+import { likeComment, deleteComment } from "../actions/tweetActions";
 
 import * as dayjs from "dayjs";
 

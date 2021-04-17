@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Image, Form, Button, Row, Col } from "react-bootstrap";
-import {
-  createComment,
-  createTweet,
-  listTweets,
-} from "../actions/tweetActions";
+import { createComment, createTweet } from "../actions/tweetActions";
 
 const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const { userInfo } = userLogin;
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -39,7 +35,6 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
       <Col className="pl-0 mr-3" md={10}>
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="tweet">
-            {/* <Form.Label>What's happening?</Form.Label> */}
             <Form.Control
               className="px-0 tweetForm"
               placeholder={

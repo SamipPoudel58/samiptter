@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Image, Form, Button, Row, Col } from "react-bootstrap";
-import { likeTweet, listTweets } from "../actions/tweetActions";
+import { useDispatch } from "react-redux";
+import { Image, Row, Col } from "react-bootstrap";
+import { likeTweet } from "../actions/tweetActions";
 
 import * as dayjs from "dayjs";
 var relativeTime = require("dayjs/plugin/relativeTime");
@@ -77,12 +77,7 @@ const Tweet = ({ tweet }) => {
             <i
               className={`fs-18 ${like ? "fas fa-heart" : "far fa-heart"}`}
             ></i>
-            {/* <i
-              className={`fs-18 ${
-                tweet.isLiked ? "fas fa-heart" : "far fa-heart"
-              }`}
-            ></i> */}
-            {/* <span className="fs-12 ml-2">{tweet.numLikes}</span> */}
+
             <span className="fs-12 ml-2">{numLikes}</span>
           </Col>
           <Col className="pl-0 d-flex align-items-center commentButton">
