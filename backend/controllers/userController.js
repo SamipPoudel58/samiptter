@@ -78,7 +78,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
     isAdmin: user.isAdmin,
     image: user.image,
   };
-  const tweets = await Tweet.find({ user: id });
+  const tweets = await Tweet.find({ user: id })
+    .populate("user", "id name image")
+    .sort({ createdAt: -1 });
   res.json({ user: userData, tweets });
 });
 
