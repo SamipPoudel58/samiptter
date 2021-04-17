@@ -15,6 +15,7 @@ import {
 } from "react-bootstrap";
 import "../styles/sideNav.scss";
 import TweetComposer from "./TweetComposer";
+import e from "cors";
 
 const SideNav = () => {
   const [backDrop, setBackDrop] = useState(false);
@@ -29,9 +30,14 @@ const SideNav = () => {
   return (
     <section className="sideNav">
       {backDrop && (
-        <div className="backdrop" onClick={() => setBackDrop(false)}>
-          <TweetComposer setBackDrop={setBackDrop} buttonText="Tweet" />
-        </div>
+        <>
+          <div className="backdrop" onClick={() => setBackDrop(false)}></div>
+          <TweetComposer
+            onClick={(e) => e.stopPropagation()}
+            setBackDrop={setBackDrop}
+            buttonText="Tweet"
+          />
+        </>
       )}
       <nav className="sideNav__nav">
         <LinkContainer className="sideNav__navlink" to="/">
