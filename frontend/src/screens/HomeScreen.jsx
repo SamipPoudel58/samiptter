@@ -8,7 +8,6 @@ import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import SideNav from "../components/SideNav";
-import { TWEET_LIST_SUCCESS } from "../constants/tweetConstants";
 
 const HomeScreen = ({ history }) => {
   const dispatch = useDispatch();

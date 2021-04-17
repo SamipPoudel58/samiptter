@@ -39,10 +39,10 @@ export const userRegisterReducer = (state = {}, action) => {
   }
 };
 
-export const getProfileReducer = (state = { tweets: [] }, action) => {
+export const getProfileReducer = (state = { tweets: [], user: {} }, action) => {
   switch (action.type) {
     case GET_PROFILE_REQUEST:
-      return { loading: true, tweets: [] };
+      return { loading: true, tweets: [], user: {} };
     case GET_PROFILE_SUCCESS:
       return {
         loading: false,

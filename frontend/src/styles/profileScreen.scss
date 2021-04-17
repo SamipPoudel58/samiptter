@@ -17,12 +17,16 @@
 
   &__details {
     font-family: "Open Sans", sans-serif;
-    padding: 5rem 1.3125rem 1rem;
+    padding: 5rem 1.3125rem 0;
     &-name {
       font-family: inherit;
       text-transform: none !important;
       letter-spacing: normal;
       font-weight: bold;
+    }
+
+    &-bio {
+      padding-left: 1.3123rem;
     }
   }
 }

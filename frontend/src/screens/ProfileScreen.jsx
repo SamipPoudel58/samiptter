@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { listTweets } from "../actions/tweetActions";
 import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -54,8 +52,11 @@ const ProfileScreen = ({ history }) => {
             fluid
           />
         </Row>
-        <Row className="profileScreen__details u-line">
+        <Row className="profileScreen__details">
           <h4 className="profileScreen__details-name">{userInfo.name}</h4>
+        </Row>
+        <Row className="profileScreen__details-bio">
+          <p>{user.bio}</p>
         </Row>
         <Row className="p-3 my-font font-weight-bold u-line">Tweets</Row>
 

@@ -1,21 +1,11 @@
 import React, { useState } from "react";
-import { Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 // import { Route } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import {
-  Row,
-  Col,
-  Image,
-  Button,
-  Nav,
-  Container,
-  NavDropdown,
-} from "react-bootstrap";
+import { Row, Col, Image, Nav } from "react-bootstrap";
 import "../styles/sideNav.scss";
 import TweetComposer from "./TweetComposer";
-import e from "cors";
 
 const SideNav = () => {
   const [backDrop, setBackDrop] = useState(false);
@@ -62,26 +52,28 @@ const SideNav = () => {
           Tweet
         </button>
       </nav>
-      <Row className="mt-auto profileRow">
-        <Col className="pr-0 profileRow__col">
-          <Image
-            className="pr-0 profilePic"
-            src={userInfo.image}
-            alt={userInfo.name}
-            fluid
-          />
-        </Col>
-        <Col md={10}>
-          <Row>
-            <strong className="mt-1 font-weight-bold text-primary font-f-os">
-              {userInfo.name}
-            </strong>
-          </Row>
-          <Row>
-            <span className="loggedInText">Logged In</span>
-          </Row>
-        </Col>
-      </Row>
+      {userInfo.image && (
+        <Row className="mt-auto profileRow">
+          <Col className="pr-0 profileRow__col">
+            <Image
+              className="pr-0 profilePic"
+              src={userInfo.image}
+              alt={userInfo.name}
+              fluid
+            />
+          </Col>
+          <Col md={10}>
+            <Row>
+              <strong className="mt-1 font-weight-bold text-primary font-f-os">
+                {userInfo.name}
+              </strong>
+            </Row>
+            <Row>
+              <span className="loggedInText">Logged In</span>
+            </Row>
+          </Col>
+        </Row>
+      )}
     </section>
   );
 };
