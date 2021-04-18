@@ -1,7 +1,9 @@
 .sideNav {
   display: flex;
   flex-direction: column;
-  min-height: 85vh;
+  align-items: center;
+  min-height: 100vh;
+  padding-bottom: 1rem;
   &__nav {
     padding: 1rem 0;
   }

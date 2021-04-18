@@ -25,6 +25,7 @@ const SideNav = () => {
           />
         </>
       )}
+      <h1 className="primary my-font logo">Samiptter</h1>
       <nav className="sideNav__nav">
         <LinkContainer className="sideNav__navlink" to="/">
           <Nav.Link>

@@ -33,10 +33,11 @@ const HomeScreen = ({ history }) => {
   }, [history, userInfo, dispatch]);
   return (
     <Row className="mainRow">
-      <Col className="firstCol">
+      <Col className="p-0 firstCol">
         <SideNav />
       </Col>
-      <Col className="newsFeed" md={7}>
+      <Col className="newsFeed" md={6}>
+        <Row className="p-3 u-line my-font font-weight-bold">Home</Row>
         <TweetComposer buttonText="Tweet" />
         {loading ? (
           <Loader />

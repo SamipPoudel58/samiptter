@@ -30,11 +30,8 @@ const ProfileScreen = ({ history }) => {
       <Col className="firstCol">
         <SideNav />
       </Col>
-      <Col className="newsFeed" md={7}>
+      <Col className="newsFeed" md={6}>
         <Row className="p-3 u-line">
-          {/* <Link to="/">
-            <i className="fas fa-arrow-left"></i>
-          </Link> */}
           <BackButton />
           <span className="ml-3 go-back-heading">{userInfo.name}</span>
         </Row>
