@@ -10,7 +10,8 @@ import "../styles/profileScreen.scss";
 import { getProfile } from "../actions/userActions";
 import BackButton from "../components/BackButton";
 
-const ProfileScreen = ({ history }) => {
+const ProfileScreen = ({ history, match }) => {
+  let userId = match.params.id;
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -22,9 +23,10 @@ const ProfileScreen = ({ history }) => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      dispatch(getProfile(userInfo._id));
+      dispatch(getProfile(userId || userInfo._id));
+      console.log(match.params.id);
     }
-  }, [history, userInfo, dispatch]);
+  }, [history, userInfo, dispatch, userId]);
   return (
     <Row className="mainRow">
       <Col className="firstCol">
@@ -33,24 +35,24 @@ const ProfileScreen = ({ history }) => {
       <Col className="newsFeed" md={6}>
         <Row className="p-3 u-line">
           <BackButton />
-          <span className="ml-3 go-back-heading">{userInfo.name}</span>
+          <span className="ml-3 go-back-heading">{user.name}</span>
         </Row>
         <Row className="profileScreen__images">
           <Image
             className="profileScreen__coverpic"
             src="/images/cover.jpg"
-            alt={`${userInfo.name} cover photo`}
+            alt={`${user.name} cover photo`}
             fluid
           />
           <Image
             className="profileScreen__profilepic"
-            src={userInfo.image}
-            alt={`${userInfo.name} profile photo`}
+            src={user.image}
+            alt={`${user.name} profile photo`}
             fluid
           />
         </Row>
         <Row className="profileScreen__details">
-          <h4 className="profileScreen__details-name">{userInfo.name}</h4>
+          <h4 className="profileScreen__details-name">{user.name}</h4>
         </Row>
         <Row className="profileScreen__details-bio">
           <p>{user.bio}</p>

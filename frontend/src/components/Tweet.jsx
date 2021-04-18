@@ -57,9 +57,12 @@ const Tweet = ({ tweet }) => {
       </Col>
       <Col className="pl-0 pt-1" md={10}>
         <Row className="mb-1">
-          <strong className="pl-0 font-weight-bold text-primary font-f-os">
+          <Link
+            to={`/profile/${tweet.user._id}`}
+            className="pl-0 font-weight-bold text-primary font-f-os"
+          >
             {tweet.user.name}
-          </strong>
+          </Link>
 
           <span className="text-muted font-weight-bold mx-1 font-f-os">.</span>
           <span className="text-muted ml-1">

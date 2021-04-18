@@ -14,7 +14,8 @@ function App() {
         <Route path="/login" component={LoginScreen} />
         <Route path="/register" component={RegisterScreen} />
         <Container>
-          <Route path="/profile" component={ProfileScreen} />
+          <Route path="/profile/:id?" component={ProfileScreen} />
+          {/* <Route path="/profile/:id" component={ProfileScreen} /> */}
           <Route path="/tweets/:id" component={TweetScreen} />
           <Route path="/" component={HomeScreen} exact />
         </Container>
