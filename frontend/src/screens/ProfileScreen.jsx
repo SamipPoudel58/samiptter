@@ -11,7 +11,6 @@ import { getProfile } from "../actions/userActions";
 import BackButton from "../components/BackButton";
 
 const ProfileScreen = ({ history, match }) => {
-  let userId = match.params.id;
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -23,10 +22,10 @@ const ProfileScreen = ({ history, match }) => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      dispatch(getProfile(userId || userInfo._id));
+      dispatch(getProfile(match.params.id || userInfo._id));
       console.log(match.params.id);
     }
-  }, [history, userInfo, dispatch, userId]);
+  }, [history, userInfo, dispatch, match.params.id]);
   return (
     <Row className="mainRow">
       <Col className="firstCol">

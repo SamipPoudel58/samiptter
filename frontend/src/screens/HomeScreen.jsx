@@ -8,6 +8,7 @@ import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import SideNav from "../components/SideNav";
+import { logout } from "../actions/userActions";
 
 const HomeScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -31,10 +32,15 @@ const HomeScreen = ({ history }) => {
       });
     }
   }, [history, userInfo, dispatch]);
+
+  const logOutHandler = () => {
+    dispatch(logout());
+  };
+
   return (
     <Row className="mainRow">
       <Col className="p-0 firstCol">
-        <SideNav />
+        <SideNav logOutHandler={logOutHandler} />
       </Col>
       <Col className="newsFeed" md={6}>
         <Row className="p-3 u-line my-font font-weight-bold">Home</Row>

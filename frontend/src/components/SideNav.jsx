@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../actions/userActions";
 import { LinkContainer } from "react-router-bootstrap";
 import { Row, Col, Image, Nav } from "react-bootstrap";
 import "../styles/sideNav.scss";
 import TweetComposer from "./TweetComposer";
 
-const SideNav = () => {
+const SideNav = ({ logOutHandler }) => {
   const [backDrop, setBackDrop] = useState(false);
   const dispatch = useDispatch();
 
@@ -18,11 +17,7 @@ const SideNav = () => {
       {backDrop && (
         <>
           <div className="backdrop" onClick={() => setBackDrop(false)}></div>
-          <TweetComposer
-            onClick={(e) => e.stopPropagation()}
-            setBackDrop={setBackDrop}
-            buttonText="Tweet"
-          />
+          <TweetComposer setBackDrop={setBackDrop} buttonText="Tweet" />
         </>
       )}
       <h1 className="primary my-font logo">Samiptter</h1>
@@ -49,7 +44,7 @@ const SideNav = () => {
           Tweet
         </button>
       </nav>
-      {userInfo.image && (
+      {userInfo && (
         <Row className="mt-auto profileRow">
           <Col className="pr-0 profileRow__col">
             <Image
@@ -69,6 +64,11 @@ const SideNav = () => {
               <span className="loggedInText">Logged In</span>
             </Row>
           </Col>
+          <div className="profileRow__popup">
+            <p onClick={() => logOutHandler()} className="profileRow__logout">
+              Log Out
+            </p>
+          </div>
         </Row>
       )}
     </section>

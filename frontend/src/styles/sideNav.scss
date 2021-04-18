@@ -46,12 +46,41 @@
 
 .profileRow {
   cursor: pointer;
-  //   background-color: red;
+  position: relative;
   flex-wrap: nowrap;
 
   &__col {
     max-width: 75px !important;
     min-width: 75px !important;
+  }
+
+  &__popup {
+    // height: 40px;
+    width: 100%;
+    background-color: #f3f3f3;
+    position: absolute;
+    top: 0;
+    left: 10%;
+    transform: translate(0%, -110%);
+    padding: 1rem 1rem;
+
+    &::before {
+      content: "";
+      height: 10px;
+      width: 10px;
+      background-color: #f3f3f3;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: rotate(-45deg) translateX(-50%);
+    }
+  }
+
+  &__logout {
+    font-weight: bold;
+    color: var(--c-blue);
+    line-height: 1;
+    font-size: 1rem;
   }
 }
 
