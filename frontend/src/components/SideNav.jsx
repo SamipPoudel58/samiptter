@@ -7,7 +7,7 @@ import TweetComposer from "./TweetComposer";
 
 const SideNav = ({ logOutHandler }) => {
   const [backDrop, setBackDrop] = useState(false);
-  const dispatch = useDispatch();
+  const [popUp, setPopUp] = useState(false);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -45,7 +45,10 @@ const SideNav = ({ logOutHandler }) => {
         </button>
       </nav>
       {userInfo && (
-        <Row className="mt-auto profileRow">
+        <Row
+          onClick={() => setPopUp((prevValue) => !prevValue)}
+          className="mt-auto profileRow"
+        >
           <Col className="pr-0 profileRow__col">
             <Image
               className="pr-0 profilePic"
@@ -64,11 +67,13 @@ const SideNav = ({ logOutHandler }) => {
               <span className="loggedInText">Logged In</span>
             </Row>
           </Col>
-          <div className="profileRow__popup">
-            <p onClick={() => logOutHandler()} className="profileRow__logout">
-              Log Out
-            </p>
-          </div>
+          {popUp && (
+            <div className="profileRow__popup">
+              <p onClick={() => logOutHandler()} className="profileRow__logout">
+                Log Out
+              </p>
+            </div>
+          )}
         </Row>
       )}
     </section>
