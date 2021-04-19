@@ -14,7 +14,11 @@ const { protect } = require("../middleware/authMiddleware");
 
 router.route("/").get(protect, getAllTweets).post(protect, createTweet);
 
-router.route("/:id").get(protect, getTweetById).post(protect, createComment);
+router
+  .route("/:id")
+  .get(protect, getTweetById)
+  .post(protect, createComment)
+  .delete(protect, deleteTweet);
 router.route("/:id/like").get(protect, likeTweet);
 
 router

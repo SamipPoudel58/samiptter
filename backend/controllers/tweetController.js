@@ -189,7 +189,7 @@ const createComment = asyncHandler(async (req, res) => {
   res.status(201).json("Comment Created");
 });
 
-// @desc Delete a tweet/comment
+// @desc Delete a comment
 // @route DEL /api/tweets/:id/:comId
 // @access Private
 const deleteComment = asyncHandler(async (req, res) => {
@@ -201,11 +201,6 @@ const deleteComment = asyncHandler(async (req, res) => {
     throw new Error("Tweet not found");
   }
 
-  if (id && !comId) {
-    await tweet.remove();
-    return res.json({ message: "tweet deleted" });
-  }
-
   tweet.comments = tweet.comments.filter((com) => {
     return com._id.toString() !== comId.toString();
   });
@@ -215,9 +210,23 @@ const deleteComment = asyncHandler(async (req, res) => {
   res.status(201).json({ message: `Deleted the comment` });
 });
 
+// @desc Delete a tweet
+// @route DEL /api/tweets/:id
+// @access Private
+const deleteTweet = asyncHandler(async (req, res) => {
+  const tweet = await Tweet.findById(req.params.id);
+  if (!tweet) {
+    res.status(404);
+    throw new Error("Tweet not found");
+  }
+  await tweet.remove();
+  res.json({ message: "tweet deleted" });
+});
+
 module.exports = {
   getAllTweets,
   createTweet,
+  deleteTweet,
   likeTweet,
   createComment,
   deleteComment,
