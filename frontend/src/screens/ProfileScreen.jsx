@@ -39,7 +39,7 @@ const ProfileScreen = ({ history, match }) => {
         <Row className="profileScreen__images">
           <Image
             className="profileScreen__coverpic"
-            src="/images/cover.jpg"
+            src={user.cover}
             alt={`${user.name} cover photo`}
             fluid
           />

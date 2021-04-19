@@ -18,6 +18,7 @@ const loginUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       image: user.image,
+      cover: user.cover,
       token: generateToken(user._id),
     });
   } else {
@@ -77,6 +78,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     email: user.email,
     isAdmin: user.isAdmin,
     image: user.image,
+    cover: user.cover,
     bio: user.bio,
   };
   const tweets = await Tweet.find({ user: id })

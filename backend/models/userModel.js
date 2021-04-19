@@ -21,7 +21,11 @@ const userSchema = mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
+      default: "/images/profile.jpg",
+    },
+    cover: {
+      type: String,
+      default: "/images/cover.jpg",
     },
     isAdmin: {
       type: Boolean,

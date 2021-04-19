@@ -3,6 +3,11 @@
     position: relative;
   }
 
+  &__coverpic {
+    object-fit: cover;
+    aspect-ratio: 3/1;
+  }
+
   &__profilepic {
     position: absolute;
     left: 0;
