@@ -4,6 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   commentCreateReducer,
   tweetCreateReducer,
+  tweetDeleteReducer,
   tweetDetailsReducer,
   tweetListReducer,
 } from "./reducers/tweetReducers";
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   tweetList: tweetListReducer,
   tweetDetails: tweetDetailsReducer,
   tweetCreate: tweetCreateReducer,
+  tweetDelete: tweetDeleteReducer,
   commentCreate: commentCreateReducer,
   userProfile: getProfileReducer,
 });

@@ -123,6 +123,7 @@ h2 {
 .tweet {
   /* border-top: 1px solid #ebeef0; */
   border-bottom: 1px solid #ebeef0;
+  position: relative;
 }
 
 .tweetContent {
@@ -162,6 +163,33 @@ h2 {
 .fa-arrow-left {
   font-size: 21px;
   color: #1f9bcf;
+}
+
+.options-icon {
+  height: 18px;
+  width: 18px;
+  fill: rgb(91, 112, 131);
+  cursor: pointer;
+}
+
+.options-icon:hover {
+  fill: #1f9bcf;
+}
+
+.optionsPopup {
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(122, 122, 122, 0.3);
+  top: 2rem;
+  right: 2rem;
+  border-radius: 5px;
+}
+
+.optionsPopup__delete:hover {
+  background-color: #ebeef0;
+  color: #e0245e;
+  cursor: pointer;
 }
 
 .comment-icon {

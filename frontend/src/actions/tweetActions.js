@@ -5,6 +5,8 @@ import {
   CREATE_TWEET_FAIL,
   CREATE_TWEET_REQUEST,
   CREATE_TWEET_SUCCESS,
+  DELETE_TWEET_FAIL,
+  DELETE_TWEET_SUCCESS,
   TWEET_DETAILS_FAIL,
   TWEET_DETAILS_REQUEST,
   TWEET_DETAILS_SUCCESS,
@@ -195,5 +197,33 @@ export const deleteComment = (id, comId) => async (dispatch, getState) => {
     await axios.delete(`/api/tweets/${id}/${comId}`, config);
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const deleteTweet = (id) => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/tweets/${id}`, config);
+
+    dispatch({
+      type: DELETE_TWEET_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_TWEET_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

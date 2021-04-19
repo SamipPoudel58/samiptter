@@ -18,11 +18,21 @@ const HomeScreen = ({ history }) => {
   const tweetList = useSelector((state) => state.tweetList);
   let { loading, error, tweets } = tweetList;
 
+  const tweetDelete = useSelector((state) => state.tweetDelete);
+  let {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = tweetDelete;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
       dispatch(listTweets());
+      if (successDelete) {
+        dispatch(listTweets());
+      }
 
       const socket = openSocket("/");
       socket.on("tweets", (data) => {
@@ -31,7 +41,7 @@ const HomeScreen = ({ history }) => {
         }
       });
     }
-  }, [history, userInfo, dispatch]);
+  }, [history, userInfo, dispatch, successDelete]);
 
   const logOutHandler = () => {
     dispatch(logout());
@@ -50,7 +60,9 @@ const HomeScreen = ({ history }) => {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          tweets.map((tweet) => <Tweet tweet={tweet} key={tweet._id} />)
+          tweets.map((tweet) => (
+            <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
+          ))
         )}
       </Col>
       <Col className="thirdCol">3 of 3</Col>
