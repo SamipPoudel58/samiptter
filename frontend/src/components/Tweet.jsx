@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Image, Row, Col } from "react-bootstrap";
 import Loader from "../components/Loader";
-import Message from "../components/Message";
 import { deleteTweet, likeTweet } from "../actions/tweetActions";
 
 import * as dayjs from "dayjs";
@@ -35,6 +34,8 @@ const Tweet = ({ tweet, userInfo }) => {
   const [numLikes, setNumLikes] = useState(tweet.numLikes);
 
   const dispatch = useDispatch();
+  const location = useLocation();
+  let history = useHistory();
 
   const tweetDelete = useSelector((state) => state.tweetDelete);
   let { loading } = tweetDelete;
@@ -54,6 +55,9 @@ const Tweet = ({ tweet, userInfo }) => {
 
   const tweetDeleteHandler = () => {
     dispatch(deleteTweet(tweet._id));
+    if (location.pathname !== "/") {
+      history.push("/");
+    }
   };
 
   return (
