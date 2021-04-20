@@ -77,7 +77,7 @@ const TweetScreen = ({ match, history }) => {
               <span className="ml-3 go-back-heading">Tweet</span>
             </Row>
 
-            <Tweet tweet={tweet} />
+            <Tweet userInfo={userInfo} tweet={tweet} />
             <TweetComposer tweet={tweet} buttonText="Comment" />
             <Row className="p-3 u-line">
               <i className="far fa-comment-alt"></i>

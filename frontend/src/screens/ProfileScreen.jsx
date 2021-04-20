@@ -63,7 +63,9 @@ const ProfileScreen = ({ history, match }) => {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          tweets.map((tweet) => <Tweet tweet={tweet} key={tweet._id} />)
+          tweets.map((tweet) => (
+            <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
+          ))
         )}
       </Col>
       <Col className="thirdCol">3 of 3</Col>
