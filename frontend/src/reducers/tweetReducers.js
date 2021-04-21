@@ -14,6 +14,7 @@ import {
   TWEET_DETAILS_SUCCESS,
   TWEET_LIST_FAIL,
   TWEET_LIST_REQUEST,
+  TWEET_LIST_RESET,
   TWEET_LIST_SUCCESS,
 } from "../constants/tweetConstants";
 
@@ -28,6 +29,10 @@ export const tweetListReducer = (state = { tweets: [] }, action) => {
       };
     case TWEET_LIST_FAIL:
       return { loading: false, error: action.payload };
+    case TWEET_LIST_RESET:
+      return {
+        tweets: [],
+      };
     default:
       return state;
   }

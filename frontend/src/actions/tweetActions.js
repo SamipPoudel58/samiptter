@@ -16,7 +16,7 @@ import {
 } from "../constants/tweetConstants";
 import axios from "axios";
 
-export const listTweets = () => async (dispatch, getState) => {
+export const listTweets = (keyword = "") => async (dispatch, getState) => {
   try {
     dispatch({ type: TWEET_LIST_REQUEST });
 
@@ -30,8 +30,7 @@ export const listTweets = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/tweets`, config);
-
+    const { data } = await axios.get(`/api/tweets?keyword=${keyword}`, config);
     dispatch({
       type: TWEET_LIST_SUCCESS,
       payload: data,

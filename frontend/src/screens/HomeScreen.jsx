@@ -9,6 +9,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import SideNav from "../components/SideNav";
 import { logout } from "../actions/userActions";
+import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 
 const HomeScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -41,6 +42,9 @@ const HomeScreen = ({ history }) => {
         }
       });
     }
+    return () => {
+      dispatch({ type: TWEET_LIST_RESET });
+    };
   }, [history, userInfo, dispatch, successDelete]);
 
   const logOutHandler = () => {

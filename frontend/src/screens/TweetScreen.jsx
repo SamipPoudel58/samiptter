@@ -66,7 +66,7 @@ const TweetScreen = ({ match, history }) => {
         <Col>
           <SideNav />
         </Col>
-        <Col className="newsFeed" md={7}>
+        <Col className="newsFeed" md={6}>
           {loading ? (
             <Loader />
           ) : error ? (
