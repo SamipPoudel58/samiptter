@@ -6,7 +6,15 @@ const io = require("../socket");
 // @route DELETE /api/tweets
 // @access Private
 const getAllTweets = asyncHandler(async (req, res) => {
-  let tweets = await Tweet.find({})
+  const keyword = req.query.keyword
+    ? {
+        tweetContent: {
+          $regex: req.query.keyword,
+          $options: "i", // case insensitive
+        },
+      }
+    : {};
+  let tweets = await Tweet.find({ ...keyword })
     .populate("user", "id name image")
     .sort({ createdAt: -1 });
 
@@ -16,18 +24,6 @@ const getAllTweets = asyncHandler(async (req, res) => {
     },
     "_id"
   );
-  // let myTweets = [];
-  // tweets.forEach((tweet) => {
-  //   myTweets.push({ ...tweet._doc, isLiked: false });
-  // });
-
-  // myTweets.forEach((tweet) => {
-  //   tweetsLikedByUser.forEach((t) => {
-  //     if (t._id.toString() === tweet._id.toString()) {
-  //       tweet.isLiked = true;
-  //     }
-  //   });
-  // });
 
   tweets.forEach((tweet) => {
     tweetsLikedByUser.forEach((t) => {
@@ -36,8 +32,6 @@ const getAllTweets = asyncHandler(async (req, res) => {
       }
     });
   });
-
-  // console.log(myTweets);
   res.json(tweets);
 });
 
