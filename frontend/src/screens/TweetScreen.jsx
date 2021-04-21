@@ -62,39 +62,41 @@ const TweetScreen = ({ match, history }) => {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">{error}</Message>
-      ) : (
-        <Row>
-          <Col>
-            <SideNav />
-          </Col>
-          <Col className="newsFeed" md={7}>
-            <Row className="p-3 u-line">
-              <BackButton />
-              <span className="ml-3 go-back-heading">Tweet</span>
-            </Row>
+      <Row>
+        <Col>
+          <SideNav />
+        </Col>
+        <Col className="newsFeed" md={7}>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            <>
+              <Row className="p-3 u-line">
+                <BackButton />
+                <span className="ml-3 go-back-heading">Tweet</span>
+              </Row>
 
-            <Tweet userInfo={userInfo} tweet={tweet} />
-            <TweetComposer tweet={tweet} buttonText="Comment" />
-            <Row className="p-3 u-line">
-              <i className="far fa-comment-alt"></i>
-              <span className="ml-3 go-back-heading">Comments</span>
-            </Row>
-            {tweet.comments.map((comment) => (
-              <Comment
-                mainTweetId={tweet._id}
-                tweet={comment}
-                userInfo={userInfo}
-                key={comment._id}
-              />
-            ))}
-          </Col>
-          <Col>3 of 3</Col>
-        </Row>
-      )}
+              <Tweet userInfo={userInfo} tweet={tweet} />
+              <TweetComposer tweet={tweet} buttonText="Comment" />
+              <Row className="p-3 u-line">
+                <i className="far fa-comment-alt"></i>
+                <span className="ml-3 go-back-heading">Comments</span>
+              </Row>
+              {tweet.comments.map((comment) => (
+                <Comment
+                  mainTweetId={tweet._id}
+                  tweet={comment}
+                  userInfo={userInfo}
+                  key={comment._id}
+                />
+              ))}
+            </>
+          )}
+        </Col>
+        <Col>3 of 3</Col>
+      </Row>
     </>
   );
 };

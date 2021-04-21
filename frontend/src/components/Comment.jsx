@@ -48,7 +48,6 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
   };
 
   const deleteHandler = () => {
-    console.log("deleted");
     if (window.confirm("Are you sure?")) {
       dispatch(deleteComment(mainTweetId, tweet._id));
     }

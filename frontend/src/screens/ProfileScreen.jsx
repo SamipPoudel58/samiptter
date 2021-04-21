@@ -23,7 +23,6 @@ const ProfileScreen = ({ history, match }) => {
       history.push("/login");
     } else {
       dispatch(getProfile(match.params.id || userInfo._id));
-      console.log(match.params.id);
     }
   }, [history, userInfo, dispatch, match.params.id]);
   return (

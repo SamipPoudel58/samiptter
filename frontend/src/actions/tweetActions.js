@@ -67,7 +67,6 @@ export const listTweetDetails = (id) => async (dispatch, getState) => {
       type: TWEET_DETAILS_SUCCESS,
       payload: data,
     });
-    console.log(data);
   } catch (error) {
     dispatch({
       type: TWEET_DETAILS_FAIL,
@@ -97,7 +96,7 @@ export const createTweet = (tweet) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(`/api/tweets`, tweet, config);
-    console.log(data);
+
     dispatch({
       type: CREATE_TWEET_SUCCESS,
       payload: data,
