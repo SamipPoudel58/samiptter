@@ -6,6 +6,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import TweetScreen from "./screens/TweetScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import SearchScreen from "./screens/SearchScreen";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route path="/register" component={RegisterScreen} />
         <Container>
           <Route path="/profile/:id?" component={ProfileScreen} />
-          {/* <Route path="/profile/:id" component={ProfileScreen} /> */}
+          <Route path="/search" component={SearchScreen} />
           <Route path="/tweets/:id" component={TweetScreen} />
           <Route path="/" component={HomeScreen} exact />
         </Container>
