@@ -30,43 +30,43 @@ const ProfileScreen = ({ history, match }) => {
       <Col className="firstCol">
         <SideNav />
       </Col>
-      <Col className="newsFeed" md={6}>
-        <Row className="p-3 u-line">
-          <BackButton />
-          <span className="ml-3 go-back-heading">{user.name}</span>
-        </Row>
-        <Row className="profileScreen__images">
-          <Image
-            className="profileScreen__coverpic"
-            src={user.cover}
-            alt={`${user.name} cover photo`}
-            fluid
-          />
-          <Image
-            className="profileScreen__profilepic"
-            src={user.image}
-            alt={`${user.name} profile photo`}
-            fluid
-          />
-        </Row>
-        <Row className="profileScreen__details">
-          <h4 className="profileScreen__details-name">{user.name}</h4>
-        </Row>
-        <Row className="profileScreen__details-bio">
-          <p>{user.bio}</p>
-        </Row>
-        <Row className="p-3 my-font font-weight-bold u-line">Tweets</Row>
-
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : (
-          tweets.map((tweet) => (
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <Col className="newsFeed" md={6}>
+          <Row className="p-3 u-line">
+            <BackButton />
+            <span className="ml-3 go-back-heading">{user.name}</span>
+          </Row>
+          <Row className="profileScreen__images">
+            <Image
+              className="profileScreen__coverpic"
+              src={user.cover}
+              alt={`${user.name} cover photo`}
+              fluid
+            />
+            <Image
+              className="profileScreen__profilepic"
+              src={user.image}
+              alt={`${user.name} profile photo`}
+              fluid
+            />
+          </Row>
+          <Row className="profileScreen__details">
+            <h4 className="profileScreen__details-name">{user.name}</h4>
+          </Row>
+          <Row className="profileScreen__details-bio">
+            <p>{user.bio}</p>
+          </Row>
+          <Row className="p-3 my-font font-weight-bold u-line">Tweets</Row>
+          {tweets.map((tweet) => (
             <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
-          ))
-        )}
-      </Col>
+          ))}
+        </Col>
+      )}
+
       <Col className="thirdCol">3 of 3</Col>
     </Row>
   );
