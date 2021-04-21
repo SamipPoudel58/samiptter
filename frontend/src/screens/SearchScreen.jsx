@@ -11,6 +11,8 @@ import "../styles/searchScreen.scss";
 
 const SearchScreen = ({ history }) => {
   const [keyword, setKeyword] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [finalKeyword, setFinalKeyword] = useState("");
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -23,16 +25,16 @@ const SearchScreen = ({ history }) => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      console.log(typeof keyword);
       if (keyword !== "") {
-        console.log("yes");
         dispatch(listTweets(keyword));
       }
     }
-  }, [history, userInfo]);
+  }, [history, userInfo, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setFinalKeyword(keyword);
+    setSubmitted(true);
     {
       keyword !== "" && dispatch(listTweets(keyword));
     }
@@ -67,6 +69,12 @@ const SearchScreen = ({ history }) => {
             {tweets.length > 0 && (
               <Row className="p-3 u-line">
                 Search Result for
+                <strong className="ml-2 font-weight-bold my-font">{`"${finalKeyword}"`}</strong>
+              </Row>
+            )}
+            {tweets.length === 0 && submitted && (
+              <Row className="p-3 u-line">
+                No results for
                 <strong className="ml-2 font-weight-bold my-font">{`"${keyword}"`}</strong>
               </Row>
             )}
