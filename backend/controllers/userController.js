@@ -17,6 +17,7 @@ const loginUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      friends: user.friends,
       image: user.image,
       cover: user.cover,
       token: generateToken(user._id),
@@ -44,6 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    friends: [],
   });
 
   if (user) {
@@ -51,6 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      friends: user.friends,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
@@ -76,6 +79,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
+    friends: user.friends,
     isAdmin: user.isAdmin,
     image: user.image,
     cover: user.cover,
@@ -87,8 +91,34 @@ const getUserProfile = asyncHandler(async (req, res) => {
   res.json({ user: userData, tweets });
 });
 
+// @desc Add friend
+// @route GET /api/users/friends/:id
+// @access Private
+const addFriend = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  let user = await User.findById(req.user._id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  if (id.toString() === req.user._id.toString()) {
+    throw new Error("Cannot add yourself in your friendlist");
+  }
+  const userExist = user.friends.find(
+    (f) => f.user.toString() === id.toString()
+  );
+  if (!userExist) {
+    user.friends.push({ user: id });
+  } else {
+    throw new Error("User already exist in friend list");
+  }
+  await user.save();
+  res.json("User added to friendlist");
+});
+
 module.exports = {
   loginUser,
   registerUser,
   getUserProfile,
+  addFriend,
 };
