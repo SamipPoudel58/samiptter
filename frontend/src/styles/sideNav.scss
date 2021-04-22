@@ -48,6 +48,12 @@
   cursor: pointer;
   position: relative;
   flex-wrap: nowrap;
+  padding: 1rem 1rem 1rem 0;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: #ebeef0;
+  }
 
   &__col {
     max-width: 75px !important;
@@ -55,32 +61,41 @@
   }
 
   &__popup {
-    // height: 40px;
-    width: 100%;
-    background-color: #f3f3f3;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(122, 122, 122, 0.3);
     position: absolute;
     top: 0;
     left: 10%;
-    transform: translate(0%, -110%);
-    padding: 1rem 1rem;
+    transform: translate(0%, -115%);
+    border-radius: 5px;
 
     &::before {
       content: "";
       height: 10px;
       width: 10px;
-      background-color: #f3f3f3;
+      background-color: white;
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: rotate(-45deg) translateX(-50%);
     }
+
+    &:hover::before {
+      background-color: #ebeef0;
+    }
   }
 
   &__logout {
     font-weight: bold;
-    color: var(--c-blue);
     line-height: 1;
     font-size: 1rem;
+    margin: 0;
+    padding: 1rem;
+
+    &:hover {
+      color: var(--c-blue);
+      background-color: #ebeef0;
+    }
   }
 }
 
