@@ -1,5 +1,7 @@
 import axios from "axios";
 import {
+  ADD_FRIEND_FAIL,
+  ADD_FRIEND_SUCCESS,
   GET_PROFILE_FAIL,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -116,9 +118,37 @@ export const getProfile = (id) => async (dispatch, getState) => {
       type: GET_PROFILE_SUCCESS,
       payload: data,
     });
+    console.log(data.user);
   } catch (error) {
     dispatch({
       type: GET_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const addFriendAction = (id) => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.get(`/api/users/friends/${id}`, config);
+    dispatch({
+      type: ADD_FRIEND_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_FRIEND_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

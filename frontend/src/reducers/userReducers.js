@@ -1,4 +1,7 @@
 import {
+  ADD_FRIEND_FAIL,
+  ADD_FRIEND_REQUEST,
+  ADD_FRIEND_SUCCESS,
   GET_PROFILE_FAIL,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -39,7 +42,10 @@ export const userRegisterReducer = (state = {}, action) => {
   }
 };
 
-export const getProfileReducer = (state = { tweets: [], user: {} }, action) => {
+export const getProfileReducer = (
+  state = { tweets: [], user: { friends: [] } },
+  action
+) => {
   switch (action.type) {
     case GET_PROFILE_REQUEST:
       return { loading: true, tweets: [], user: {} };
@@ -50,6 +56,22 @@ export const getProfileReducer = (state = { tweets: [], user: {} }, action) => {
         user: action.payload.user,
       };
     case GET_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const addFriendReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_FRIEND_REQUEST:
+      return { loading: true };
+    case ADD_FRIEND_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ADD_FRIEND_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

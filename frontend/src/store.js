@@ -9,6 +9,7 @@ import {
   tweetListReducer,
 } from "./reducers/tweetReducers";
 import {
+  addFriendReducer,
   getProfileReducer,
   userLoginReducer,
   userRegisterReducer,
@@ -17,6 +18,7 @@ import {
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  addFriend: addFriendReducer,
   tweetList: tweetListReducer,
   tweetDetails: tweetDetailsReducer,
   tweetCreate: tweetCreateReducer,

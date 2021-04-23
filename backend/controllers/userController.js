@@ -75,6 +75,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
+  const friend = await User.find({
+    _id: req.user._id,
+    "friends.user": id,
+  });
+  let isFriend = false;
+  if (friend && friend.length > 0) {
+    isFriend = true;
+  }
   const userData = {
     _id: user._id,
     name: user.name,
@@ -84,6 +92,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     image: user.image,
     cover: user.cover,
     bio: user.bio,
+    isFriend,
   };
   const tweets = await Tweet.find({ user: id })
     .populate("user", "id name image")
@@ -110,7 +119,9 @@ const addFriend = asyncHandler(async (req, res) => {
   if (!userExist) {
     user.friends.push({ user: id });
   } else {
-    throw new Error("User already exist in friend list");
+    user.friends = user.friends.filter(
+      (f) => f.user.toString() !== userExist.user.toString()
+    );
   }
   await user.save();
   res.json("User added to friendlist");

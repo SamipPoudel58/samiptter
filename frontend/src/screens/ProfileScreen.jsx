@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col, Image, Button } from "react-bootstrap";
 import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import SideNav from "../components/SideNav";
 
 import "../styles/profileScreen.scss";
-import { getProfile } from "../actions/userActions";
+import { getProfile, addFriendAction } from "../actions/userActions";
 import BackButton from "../components/BackButton";
 
 const ProfileScreen = ({ history, match }) => {
@@ -18,13 +18,19 @@ const ProfileScreen = ({ history, match }) => {
   const userProfile = useSelector((state) => state.userProfile);
   let { loading, error, tweets, user } = userProfile;
 
+  const addFriend = useSelector((state) => state.addFriend);
+  let { error: followError, success: followSuccess } = addFriend;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
       dispatch(getProfile(match.params.id || userInfo._id));
+      if (followSuccess) {
+        dispatch(getProfile(match.params.id || userInfo._id));
+      }
     }
-  }, [history, userInfo, dispatch, match.params.id]);
+  }, [history, userInfo, dispatch, match.params.id, followSuccess]);
   return (
     <Row className="mainRow">
       <Col className="firstCol">
@@ -56,9 +62,34 @@ const ProfileScreen = ({ history, match }) => {
           </Row>
           <Row className="profileScreen__details">
             <h4 className="profileScreen__details-name">{user.name}</h4>
+            {user.isFriend && <p className="ml-2 text-info">Following</p>}
+            {followError && <Message variant="danger">{followError}</Message>}
+
+            {match.params.id && !user.isFriend && (
+              <button
+                onClick={() => dispatch(addFriendAction(user._id))}
+                className="profileScreen__follow ml-auto"
+              >
+                Follow
+              </button>
+            )}
+            {match.params.id && user.isFriend && (
+              <button
+                onClick={() => dispatch(addFriendAction(user._id))}
+                className="profileScreen__follow ml-auto"
+              >
+                Unfollow
+              </button>
+            )}
           </Row>
-          <Row className="profileScreen__details-bio">
+          <Row className="profileScreen__details-bio u-line">
             <p>{user.bio}</p>
+          </Row>
+          <Row className="profileScreen__details-friends flex align-items-center u-line py-2">
+            <h4 className="m-0 p-0 my-font font-weight-bold pr-2">
+              {user.friends.length}
+            </h4>
+            Friends
           </Row>
           <Row className="p-3 my-font font-weight-bold u-line">Tweets</Row>
           {tweets.map((tweet) => (

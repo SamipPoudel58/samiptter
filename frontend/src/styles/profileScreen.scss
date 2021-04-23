@@ -30,8 +30,24 @@
       font-weight: bold;
     }
 
-    &-bio {
+    &-bio,
+    &-friends {
       padding-left: 1.3123rem;
+    }
+  }
+
+  &__follow {
+    padding: 0.7rem 1.5rem;
+    border: 2px solid var(--c-blue);
+    background-color: white;
+    border-radius: 5px;
+    color: var(--c-blue);
+    font-weight: bold;
+
+    &:hover {
+      background-color: var(--c-blue);
+      color: white;
+      border: 2px solid var(--c-blue);
     }
   }
 }
