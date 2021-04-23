@@ -26,11 +26,13 @@ const ProfileScreen = ({ history, match }) => {
       history.push("/login");
     } else {
       dispatch(getProfile(match.params.id || userInfo._id));
-      if (followSuccess) {
-        dispatch(getProfile(match.params.id || userInfo._id));
-      }
     }
-  }, [history, userInfo, dispatch, match.params.id, followSuccess]);
+  }, [history, userInfo, dispatch, match.params.id]);
+
+  const followHandler = () => {
+    dispatch(addFriendAction(user._id));
+    dispatch(getProfile(match.params.id || userInfo._id));
+  };
   return (
     <Row className="mainRow">
       <Col className="firstCol">
@@ -67,7 +69,7 @@ const ProfileScreen = ({ history, match }) => {
 
             {match.params.id && !user.isFriend && (
               <button
-                onClick={() => dispatch(addFriendAction(user._id))}
+                onClick={followHandler}
                 className="profileScreen__follow ml-auto"
               >
                 Follow
@@ -75,7 +77,7 @@ const ProfileScreen = ({ history, match }) => {
             )}
             {match.params.id && user.isFriend && (
               <button
-                onClick={() => dispatch(addFriendAction(user._id))}
+                onClick={followHandler}
                 className="profileScreen__follow ml-auto"
               >
                 Unfollow

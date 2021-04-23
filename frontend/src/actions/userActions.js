@@ -118,7 +118,6 @@ export const getProfile = (id) => async (dispatch, getState) => {
       type: GET_PROFILE_SUCCESS,
       payload: data,
     });
-    console.log(data.user);
   } catch (error) {
     dispatch({
       type: GET_PROFILE_FAIL,
