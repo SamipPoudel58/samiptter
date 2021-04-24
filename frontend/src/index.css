@@ -19,12 +19,6 @@ h1 {
   padding: 1rem 0;
 }
 
-@media screen and (min-width: 1200px) {
-  .container {
-    max-width: 100%;
-  }
-}
-
 h2 {
   font-size: 1.4rem;
   padding: 0.5rem 0;
@@ -232,4 +226,56 @@ h2 {
   text-transform: uppercase;
   font-size: 16px;
   line-height: 1.2;
+}
+
+.recommendedFollowButton {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--c-blue);
+  background-color: white;
+  border-radius: 5px;
+  color: var(--c-blue);
+  font-weight: bold;
+  text-decoration: none !important;
+}
+
+.recommendedFollowButton:hover {
+  background-color: var(--c-blue);
+  color: white;
+  border: 2px solid var(--c-blue);
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    max-width: 100%;
+  }
+}
+@media screen and (min-width: 992px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .logo {
+    display: none;
+  }
+  .thirdCol {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  .container {
+    max-width: 90%;
+  }
+  .firstCol {
+    display: none;
+  }
+  .mainRow {
+    justify-content: center;
+  }
+
+  .newFeed {
+    max-width: 90%;
+  }
 }

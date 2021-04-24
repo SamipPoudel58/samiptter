@@ -132,12 +132,24 @@ const addFriend = asyncHandler(async (req, res) => {
 // @access Private
 const getRecommendedUser = asyncHandler(async (req, res) => {
   const userSize = 3;
-  const users = await User.find({ _id: { $ne: req.user._id } }).limit(userSize);
-
+  let users = await User.find({ _id: { $ne: req.user._id } }).limit(userSize);
+  let currentUser = await User.findById(req.user._id);
   if (!users) {
     res.status(404);
     throw new Error("No recommended users found");
   }
+
+  users = users.map((u) => {
+    let isFriend = false;
+    currentUser.friends.forEach((f) => {
+      if (f.user.toString() === u._id.toString()) {
+        return (isFriend = true);
+      } else {
+        return;
+      }
+    });
+    return { ...u._doc, isFriend };
+  });
   res.json(users);
 });
 

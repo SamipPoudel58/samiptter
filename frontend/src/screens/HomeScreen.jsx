@@ -108,9 +108,14 @@ const HomeScreen = ({ history }) => {
                 </Link>
               </Col>
               <Col>
-                <button className="profileScreen__follow recommendedFollowButton ml-auto">
-                  Follow
-                </button>
+                <Row className="pr-2">
+                  <Link
+                    to={`/profile/${user._id}`}
+                    className="recommendedFollowButton ml-auto"
+                  >
+                    Follow
+                  </Link>
+                </Row>
               </Col>
             </Row>
           ))

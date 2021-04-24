@@ -4,6 +4,7 @@
   align-items: center;
   min-height: 100vh;
   padding-bottom: 1rem;
+
   &__nav {
     padding: 1rem 0;
   }
@@ -27,6 +28,12 @@
       background-color: rgba(#1f9bcf, 0.1);
       border-radius: 0.5rem;
     }
+
+    & span {
+      @media only screen and (max-width: 1100px) {
+        display: none;
+      }
+    }
   }
 
   &__cta {
@@ -37,6 +44,18 @@
     margin-top: 1rem;
     font-weight: 600;
     text-transform: uppercase;
+
+    @media only screen and (max-width: 1100px) {
+      display: none;
+    }
+
+    &-responsive {
+      display: none;
+      padding: 1rem 1.5rem;
+      @media only screen and (max-width: 1100px) {
+        display: block;
+      }
+    }
 
     &:focus {
       outline: none;

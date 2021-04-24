@@ -43,6 +43,12 @@ const SideNav = ({ logOutHandler }) => {
         <button onClick={() => setBackDrop(true)} className="sideNav__cta">
           Tweet
         </button>
+        <button
+          onClick={() => setBackDrop(true)}
+          className="sideNav__cta sideNav__cta-responsive"
+        >
+          <i className="fas fa-feather-alt"></i>
+        </button>
       </nav>
       {userInfo && (
         <Row
