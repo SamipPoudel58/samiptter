@@ -69,7 +69,13 @@ const HomeScreen = ({ history }) => {
           ))
         )}
       </Col>
-      <Col className="thirdCol">3 of 3</Col>
+      <Col className="thirdCol">
+        <Row className="py-3 u-line">
+          <p className="m-0 font-weight-bold my-font text-center w-100">
+            Who To Follow
+          </p>
+        </Row>
+      </Col>
     </Row>
   );
 };

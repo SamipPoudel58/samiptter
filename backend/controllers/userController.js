@@ -127,9 +127,24 @@ const addFriend = asyncHandler(async (req, res) => {
   res.json("User added to friendlist");
 });
 
+// @desc Get recommended user
+// @route GET /api/users/recommended
+// @access Private
+const getRecommendedUser = asyncHandler(async (req, res) => {
+  const userSize = 3;
+  const users = await User.find({ _id: { $ne: req.user._id } }).limit(userSize);
+
+  if (!users) {
+    res.status(404);
+    throw new Error("No recommended users found");
+  }
+  res.json(users);
+});
+
 module.exports = {
   loginUser,
   registerUser,
   getUserProfile,
   addFriend,
+  getRecommendedUser,
 };
