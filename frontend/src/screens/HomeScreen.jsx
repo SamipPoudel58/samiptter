@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import openSocket from "socket.io-client";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import { listTweets } from "../actions/tweetActions";
 import TweetComposer from "../components/TweetComposer";
 import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import SideNav from "../components/SideNav";
-import { logout } from "../actions/userActions";
+import { logout, recommendUsers } from "../actions/userActions";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 
 const HomeScreen = ({ history }) => {
@@ -18,6 +19,13 @@ const HomeScreen = ({ history }) => {
 
   const tweetList = useSelector((state) => state.tweetList);
   let { loading, error, tweets } = tweetList;
+
+  const getRecommendedUsers = useSelector((state) => state.getRecommendedUsers);
+  let {
+    loading: loadingRecommended,
+    error: errorRecommended,
+    users: usersRecommended,
+  } = getRecommendedUsers;
 
   const tweetDelete = useSelector((state) => state.tweetDelete);
   let {
@@ -31,6 +39,7 @@ const HomeScreen = ({ history }) => {
       history.push("/login");
     } else {
       dispatch(listTweets());
+      dispatch(recommendUsers());
       if (successDelete) {
         dispatch(listTweets());
       }
@@ -75,6 +84,37 @@ const HomeScreen = ({ history }) => {
             Who To Follow
           </p>
         </Row>
+        {loadingRecommended ? (
+          <Loader />
+        ) : errorRecommended ? (
+          <Message variant="danger">{errorRecommended}</Message>
+        ) : (
+          usersRecommended.map((user) => (
+            <Row className="py-2">
+              <Col className="pr-0 picture-col-recommended">
+                <Image
+                  className="pr-0 profilePic"
+                  src={user.image}
+                  alt={user.name}
+                  fluid
+                />
+              </Col>
+              <Col className="pl-0 pt-1">
+                <Link
+                  to={`/profile/${user._id}`}
+                  className="pl-0 font-weight-bold text-primary font-f-os"
+                >
+                  {user.name}
+                </Link>
+              </Col>
+              <Col>
+                <button className="profileScreen__follow recommendedFollowButton ml-auto">
+                  Follow
+                </button>
+              </Col>
+            </Row>
+          ))
+        )}
       </Col>
     </Row>
   );

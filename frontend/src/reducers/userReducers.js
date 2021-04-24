@@ -5,6 +5,9 @@ import {
   GET_PROFILE_FAIL,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
+  GET_RECOMMENDED_USERS_FAIL,
+  GET_RECOMMENDED_USERS_REQUEST,
+  GET_RECOMMENDED_USERS_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -72,6 +75,22 @@ export const addFriendReducer = (state = {}, action) => {
         success: true,
       };
     case ADD_FRIEND_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getRecommendedUsersReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case GET_RECOMMENDED_USERS_REQUEST:
+      return { loading: true };
+    case GET_RECOMMENDED_USERS_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload,
+      };
+    case GET_RECOMMENDED_USERS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

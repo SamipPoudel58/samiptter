@@ -120,6 +120,10 @@ h2 {
   /* min-width: 95px !important; */
 }
 
+.picture-col-recommended {
+  max-width: 80px;
+}
+
 .tweet {
   /* border-top: 1px solid #ebeef0; */
   border-bottom: 1px solid #ebeef0;
