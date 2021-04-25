@@ -132,8 +132,11 @@ const addFriend = asyncHandler(async (req, res) => {
 // @access Private
 const getRecommendedUser = asyncHandler(async (req, res) => {
   const userSize = 3;
-  let users = await User.find({ _id: { $ne: req.user._id } }).limit(userSize);
   let currentUser = await User.findById(req.user._id);
+  let friendArray = currentUser.friends.map((f) => f.user);
+  let users = await User.find({
+    _id: { $nin: [...friendArray, req.user._id] },
+  }).limit(userSize);
   if (!users) {
     res.status(404);
     throw new Error("No recommended users found");
