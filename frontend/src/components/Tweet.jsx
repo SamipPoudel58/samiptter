@@ -87,7 +87,11 @@ const Tweet = ({ tweet, userInfo }) => {
           <Col className="pl-0 pt-1" md={10}>
             <Row className="mb-1">
               <Link
-                to={`/profile/${tweet.user._id}`}
+                to={
+                  userInfo._id.toString() === tweet.user._id.toString()
+                    ? "/profile"
+                    : `/profile/${tweet.user._id}`
+                }
                 className="pl-0 font-weight-bold text-primary font-f-os"
               >
                 {tweet.user.name}
