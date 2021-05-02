@@ -88,7 +88,7 @@ const Tweet = ({ tweet, userInfo }) => {
             <Row className="mb-1">
               <Link
                 to={
-                  userInfo._id.toString() === tweet.user._id.toString()
+                  userInfo._id === tweet.user._id
                     ? "/profile"
                     : `/profile/${tweet.user._id}`
                 }
