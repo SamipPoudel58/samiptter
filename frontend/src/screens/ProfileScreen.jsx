@@ -9,6 +9,7 @@ import SideNav from "../components/SideNav";
 import "../styles/profileScreen.scss";
 import { getProfile, addFriendAction } from "../actions/userActions";
 import BackButton from "../components/BackButton";
+import FollowRecommendation from "../components/FollowRecommendation";
 
 const ProfileScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -100,7 +101,9 @@ const ProfileScreen = ({ history, match }) => {
         </Col>
       )}
 
-      <Col className="thirdCol">3 of 3</Col>
+      <Col className="thirdCol">
+        <FollowRecommendation />
+      </Col>
     </Row>
   );
 };

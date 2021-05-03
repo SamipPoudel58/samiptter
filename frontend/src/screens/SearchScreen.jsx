@@ -8,6 +8,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
 import "../styles/searchScreen.scss";
+import FollowRecommendation from "../components/FollowRecommendation";
 
 const SearchScreen = ({ history }) => {
   const [keyword, setKeyword] = useState("");
@@ -84,7 +85,9 @@ const SearchScreen = ({ history }) => {
           </>
         )}
       </Col>
-      <Col>3 of 3</Col>
+      <Col>
+        <FollowRecommendation />
+      </Col>
     </Row>
   );
 };
