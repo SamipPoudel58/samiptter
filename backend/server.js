@@ -1,5 +1,5 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const path = require("path");
 const cors = require("cors");
 const userRoute = require("./routes/userRoute");
 const tweetRoute = require("./routes/tweetRoute");
@@ -10,7 +10,6 @@ const connectDB = require("./config/db");
 dotenv.config();
 
 const app = express();
-connectDB();
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -19,16 +18,27 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.json({ creator: "Samip", stack: "MERN" });
-});
 app.use("/api/users", userRoute);
 app.use("/api/tweets", tweetRoute);
+
+const rootdir = path.resolve();
+// serving the frontend
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(rootdir, "/frontend/build")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(rootdir, "frontend", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running");
+  });
+}
 
 app.use(notFound);
 app.use(errorHandler);
 
-const server = app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, async () => {
+  await connectDB();
   console.log(
     `Server running in ${process.env.NODE_ENV} on port ${process.env.PORT}`
   );

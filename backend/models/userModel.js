@@ -27,16 +27,17 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "/images/cover.jpg",
     },
-    friends: [
-      {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          ref: "User",
-          unique: true,
+    friends: {
+      type: [
+        {
+          user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+          },
         },
-      },
-    ],
+      ],
+      default: [],
+    },
     isAdmin: {
       type: Boolean,
       required: true,
