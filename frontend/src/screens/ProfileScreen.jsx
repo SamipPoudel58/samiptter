@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Image, Button } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -20,7 +20,7 @@ const ProfileScreen = ({ history, match }) => {
   let { loading, error, tweets, user } = userProfile;
 
   const addFriend = useSelector((state) => state.addFriend);
-  let { error: followError, success: followSuccess } = addFriend;
+  let { error: followError } = addFriend;
 
   useEffect(() => {
     if (!userInfo) {

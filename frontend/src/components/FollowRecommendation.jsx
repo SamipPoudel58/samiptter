@@ -6,11 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const FollowRecommendation = ({ history }) => {
+const FollowRecommendation = () => {
   const dispatch = useDispatch();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
   const getRecommendedUsers = useSelector((state) => state.getRecommendedUsers);
   let {
@@ -20,12 +17,8 @@ const FollowRecommendation = ({ history }) => {
   } = getRecommendedUsers;
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/login");
-    } else {
-      dispatch(recommendUsers());
-    }
-  }, [dispatch, history]);
+    dispatch(recommendUsers());
+  }, [dispatch]);
   return (
     <>
       <Row className="py-3 u-line">

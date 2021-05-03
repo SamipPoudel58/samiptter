@@ -26,18 +26,18 @@ const SearchScreen = ({ history }) => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      if (keyword !== "") {
-        dispatch(listTweets(keyword));
-      }
+      // if (keyword !== "") {
+      //   dispatch(listTweets(keyword));
+      // }
     }
   }, [history, userInfo, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setFinalKeyword(keyword);
-    setSubmitted(true);
-    {
-      keyword !== "" && dispatch(listTweets(keyword));
+    if (keyword !== "") {
+      setFinalKeyword(keyword);
+      setSubmitted(true);
+      dispatch(listTweets(keyword));
     }
   };
   return (

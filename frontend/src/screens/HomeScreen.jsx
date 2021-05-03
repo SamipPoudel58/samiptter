@@ -8,7 +8,6 @@ import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import SideNav from "../components/SideNav";
-import { logout } from "../actions/userActions";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import FollowRecommendation from "../components/FollowRecommendation";
 
@@ -21,11 +20,7 @@ const HomeScreen = ({ history }) => {
   let { loading, error, tweets } = tweetList;
 
   const tweetDelete = useSelector((state) => state.tweetDelete);
-  let {
-    loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = tweetDelete;
+  let { success: successDelete } = tweetDelete;
 
   useEffect(() => {
     if (!userInfo) {
@@ -48,14 +43,10 @@ const HomeScreen = ({ history }) => {
     };
   }, [history, userInfo, dispatch, successDelete]);
 
-  const logOutHandler = () => {
-    dispatch(logout());
-  };
-
   return (
     <Row className="mainRow">
       <Col className="p-0 firstCol">
-        <SideNav logOutHandler={logOutHandler} />
+        <SideNav />
       </Col>
       <Col className="newsFeed" md={6}>
         <Row className="p-3 u-line my-font font-weight-bold">Home</Row>
