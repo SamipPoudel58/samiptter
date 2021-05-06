@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
   commentCreateReducer,
+  commentDeleteReducer,
   tweetCreateReducer,
   tweetDeleteReducer,
   tweetDetailsReducer,
@@ -26,6 +27,7 @@ const reducer = combineReducers({
   tweetCreate: tweetCreateReducer,
   tweetDelete: tweetDeleteReducer,
   commentCreate: commentCreateReducer,
+  commentDelete: commentDeleteReducer,
   userProfile: getProfileReducer,
 });
 

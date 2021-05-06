@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import openSocket from "socket.io-client";
+// import openSocket from "socket.io-client";
 import { Row, Col } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -13,6 +13,7 @@ import Comment from "../components/Comment";
 import * as dayjs from "dayjs";
 import SideNav from "../components/SideNav";
 import BackButton from "../components/BackButton";
+import FollowRecommendation from "../components/FollowRecommendation";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 var updateLocale = require("dayjs/plugin/updateLocale");
@@ -43,22 +44,31 @@ const TweetScreen = ({ match, history }) => {
   const tweetDetails = useSelector((state) => state.tweetDetails);
   let { loading, error, tweet } = tweetDetails;
 
+  const commentCreate = useSelector((state) => state.commentCreate);
+  const { error: errorComment, success: successComment } = commentCreate;
+
+  const commentDelete = useSelector((state) => state.commentDelete);
+  const { error: errorDelete, success: successDelete } = commentDelete;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
       dispatch(listTweetDetails(match.params.id));
-      const socket = openSocket("/");
-      socket.on("tweets", (data) => {
-        if (data.action === "comment") {
-          dispatch(listTweetDetails(match.params.id));
-        }
-      });
+      if (successComment || successDelete) {
+        dispatch(listTweetDetails(match.params.id));
+      }
+      // const socket = openSocket("/");
+      // socket.on("tweets", (data) => {
+      //   if (data.action === "comment") {
+      //     dispatch(listTweetDetails(match.params.id));
+      //   }
+      // });
     }
     return () => {
       dispatch({ type: TWEET_DETAILS_RESET });
     };
-  }, [dispatch, match, history, userInfo]);
+  }, [dispatch, match, history, userInfo, successComment, successDelete]);
 
   return (
     <>
@@ -77,7 +87,10 @@ const TweetScreen = ({ match, history }) => {
                 <BackButton />
                 <span className="ml-3 go-back-heading">Tweet</span>
               </Row>
-
+              {errorComment && (
+                <Message variant="danger">{errorComment}</Message>
+              )}
+              {errorDelete && <Message variant="danger">{errorDelete}</Message>}
               <Tweet userInfo={userInfo} tweet={tweet} />
               <TweetComposer tweet={tweet} buttonText="Comment" />
               <Row className="p-3 u-line">
@@ -95,7 +108,9 @@ const TweetScreen = ({ match, history }) => {
             </>
           )}
         </Col>
-        <Col>3 of 3</Col>
+        <Col>
+          <FollowRecommendation />
+        </Col>
       </Row>
     </>
   );

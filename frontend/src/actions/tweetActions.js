@@ -5,6 +5,9 @@ import {
   CREATE_TWEET_FAIL,
   CREATE_TWEET_REQUEST,
   CREATE_TWEET_SUCCESS,
+  DELETE_COMMENT_FAIL,
+  DELETE_COMMENT_REQUEST,
+  DELETE_COMMENT_SUCCESS,
   DELETE_TWEET_FAIL,
   DELETE_TWEET_SUCCESS,
   TWEET_DETAILS_FAIL,
@@ -182,6 +185,9 @@ export const createComment = (id, comment) => async (dispatch, getState) => {
 
 export const deleteComment = (id, comId) => async (dispatch, getState) => {
   try {
+    dispatch({
+      type: DELETE_COMMENT_REQUEST,
+    });
     const {
       userLogin: { userInfo },
     } = getState();
@@ -193,8 +199,17 @@ export const deleteComment = (id, comId) => async (dispatch, getState) => {
     };
 
     await axios.delete(`/api/tweets/${id}/${comId}`, config);
+    dispatch({
+      type: DELETE_COMMENT_SUCCESS,
+    });
   } catch (error) {
-    console.error(error);
+    dispatch({
+      type: DELETE_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };
 

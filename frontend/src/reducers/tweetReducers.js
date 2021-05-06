@@ -5,6 +5,9 @@ import {
   CREATE_TWEET_FAIL,
   CREATE_TWEET_REQUEST,
   CREATE_TWEET_SUCCESS,
+  DELETE_COMMENT_FAIL,
+  DELETE_COMMENT_REQUEST,
+  DELETE_COMMENT_SUCCESS,
   DELETE_TWEET_FAIL,
   DELETE_TWEET_REQUEST,
   DELETE_TWEET_SUCCESS,
@@ -93,6 +96,22 @@ export const commentCreateReducer = (state = {}, action) => {
         success: true,
       };
     case CREATE_COMMENT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const commentDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_COMMENT_REQUEST:
+      return { loading: true };
+    case DELETE_COMMENT_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case DELETE_COMMENT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

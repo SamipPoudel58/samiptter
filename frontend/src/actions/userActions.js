@@ -173,7 +173,7 @@ export const recommendUsers = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/users/recommended`, config);
-    console.log(data);
+
     dispatch({
       type: GET_RECOMMENDED_USERS_SUCCESS,
       payload: data,

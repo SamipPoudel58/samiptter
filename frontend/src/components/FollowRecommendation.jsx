@@ -32,7 +32,7 @@ const FollowRecommendation = () => {
         <Message variant="danger">{errorRecommended}</Message>
       ) : (
         usersRecommended.map((user) => (
-          <Row className="py-2">
+          <Row className="py-2" key={user._id}>
             <Col className="pr-0 picture-col-recommended">
               <Image
                 className="pr-0 profilePic"

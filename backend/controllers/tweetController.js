@@ -200,7 +200,7 @@ const deleteComment = asyncHandler(async (req, res) => {
   });
   tweet.numComments = tweet.comments.length;
   await tweet.save();
-  io.getIO().emit("tweets", { action: "comment" });
+  // io.getIO().emit("tweets", { action: "comment" });
   res.status(201).json({ message: `Deleted the comment` });
 });
 
