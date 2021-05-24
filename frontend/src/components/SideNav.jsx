@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { Row, Col, Image, Nav } from "react-bootstrap";
-import "../styles/sideNav.scss";
 import { logout } from "../actions/userActions";
 import TweetComposer from "./TweetComposer";
 import { useHistory } from "react-router-dom";

@@ -6,7 +6,6 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import SideNav from "../components/SideNav";
 
-import "../styles/profileScreen.scss";
 import { getProfile, addFriendAction } from "../actions/userActions";
 import BackButton from "../components/BackButton";
 import FollowRecommendation from "../components/FollowRecommendation";

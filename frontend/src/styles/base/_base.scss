@@ -1,0 +1,20 @@
+:root {
+  --c-primary: #1089ff;
+  --c-secondary: #23374d;
+  --c-gray-dark: #828282;
+  --c-gray-md: #e5e5e5;
+  --c-gray-light: #eeeeee;
+  --c-black: #1e1e1e;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}

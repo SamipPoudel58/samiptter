@@ -7,7 +7,6 @@ import SideNav from "../components/SideNav";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
-import "../styles/searchScreen.scss";
 import FollowRecommendation from "../components/FollowRecommendation";
 
 const SearchScreen = ({ history }) => {
