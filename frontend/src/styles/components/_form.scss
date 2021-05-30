@@ -1,0 +1,39 @@
+.form {
+  &__group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-size: 1.4rem;
+    color: var(--c-secondary);
+  }
+
+  &__input {
+    outline: none; // TODO:change this later
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    border: none;
+    color: var(--c-black);
+    background-color: var(--c-gray-lighter);
+    border-radius: 5px;
+    font-family: inherit;
+  }
+
+  &__submitBtn {
+    width: 100%;
+    border: none;
+    background-color: var(--c-primary);
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding: 1.4rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  &__question {
+    text-align: center;
+    font-size: 1.6rem;
+  }
+}

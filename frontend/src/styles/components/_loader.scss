@@ -1,0 +1,26 @@
+.spinner {
+  width: 100%;
+  padding: 2rem 0;
+  // background-color: var(--color-blue-primary);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  height: 3rem;
+  width: 3rem;
+  border: 5px solid var(--c-primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  position: relative;
+
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(-360deg);
+  }
+}

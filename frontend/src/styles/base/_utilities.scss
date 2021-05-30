@@ -1,9 +1,19 @@
 // margins
+.mt-1 {
+  margin-top: 1rem;
+}
+.mt-2 {
+  margin-top: 2rem;
+}
 .mt-3 {
   margin-top: 3rem;
 }
 
-.minor-ink,
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+.minor-link,
 .minor-link:visited {
   text-decoration: none;
   color: var(--c-primary);

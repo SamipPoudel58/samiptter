@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FormContainer from "../components/FormContainer";
 import { Link } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
 import { login } from "../actions/userActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import Header from "../components/Header";
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState("");
@@ -29,44 +26,48 @@ const LoginScreen = ({ location, history }) => {
     dispatch(login(email, password));
   };
   return (
-    <>
-      <Header />
-      <FormContainer>
-        <h1 className="mt-3">Sign In</h1>
-        {error && <Message variant="danger">{error}</Message>}
-        {loading && <Loader />}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId="email">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+    <section className="authScreen">
+      <div className="authScreen__content">
+        <h1 className="logo-text">Samiptter</h1>
+        <div className="authScreen__formContainer">
+          <h2 className="heading-md">Sign In</h2>
+          {error && <Message variant="danger">{error}</Message>}
+          {loading && <Loader />}
+          <form onSubmit={submitHandler}>
+            <div className="form__group mt-2">
+              <label className="form__label mb-1">Email Address</label>
+              <input
+                className="form__input"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
 
-          <Form.Group controlId="password">
-            <Form.Label>Enter Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <div className="form__group mt-2">
+              <label className="form__label mb-1">Password</label>
+              <input
+                className="form__input"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
-          <Button type="submit" variant="info">
-            Sign In
-          </Button>
-        </Form>
-        <Row className="py-3">
-          <Col>
-            New User? <Link to="/register">Register</Link>
-          </Col>
-        </Row>
-      </FormContainer>
-    </>
+            <button className="form__submitBtn mt-2" type="submit">
+              Sign In
+            </button>
+            <p className="mt-2 form__question">
+              Do not have an account ?{" "}
+              <Link className="minor-link" to="/register">
+                Sign Up
+              </Link>
+            </p>
+          </form>
+        </div>
+      </div>
+      <div className="authScreen__decor"></div>
+    </section>
   );
 };
 
