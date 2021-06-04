@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-
+import { ReactComponent as Rocket } from "../assets/rocket.svg";
 import { register } from "../actions/userActions";
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
@@ -28,8 +27,8 @@ const RegisterScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
+    if (password.length < 6) {
+      setMessage("Password should be at least 6 characters.");
     } else {
       dispatch(register(name, email, password));
     }
@@ -45,7 +44,7 @@ const RegisterScreen = ({ location, history }) => {
           {message && <Message variant="danger">{message}</Message>}
           {loading && <Loader />}
           <form onSubmit={submitHandler}>
-            <div className="form__group mt-2">
+            <div className="form__group mt-3">
               <label className="form__label mb-1">Full Name</label>
               <input
                 className="form__input"
@@ -54,7 +53,7 @@ const RegisterScreen = ({ location, history }) => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="form__group mt-2">
+            <div className="form__group mt-3">
               <label className="form__label mb-1">Email Address</label>
               <input
                 className="form__input"
@@ -64,7 +63,7 @@ const RegisterScreen = ({ location, history }) => {
               />
             </div>
 
-            <div className="form__group mt-2">
+            <div className="form__group mt-3">
               <label className="form__label mb-1">Password</label>
               <input
                 className="form__input"
@@ -74,17 +73,7 @@ const RegisterScreen = ({ location, history }) => {
               />
             </div>
 
-            <div className="form__group mt-2">
-              <label className="form__label mb-1">Confirm Password</label>
-              <input
-                className="form__input"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-
-            <button className="form__submitBtn mt-2" type="submit">
+            <button className="form__submitBtn mt-3" type="submit">
               Create Account
             </button>
             <p className="mt-1 form__question">
@@ -96,7 +85,12 @@ const RegisterScreen = ({ location, history }) => {
           </form>
         </div>
       </div>
-      <div className="authScreen__decor"></div>
+      <div className="authScreen__decor">
+        <div className="authScreen__background">
+          <h3 className="authScreen__intro">Let Your Social Life Take Off</h3>
+          <Rocket className="authScreen__rocket" />
+        </div>
+      </div>
     </section>
   );
 };

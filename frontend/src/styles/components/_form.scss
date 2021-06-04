@@ -30,6 +30,10 @@
     padding: 1.4rem;
     border-radius: 5px;
     cursor: pointer;
+
+    &:hover {
+      filter: brightness(90%);
+    }
   }
 
   &__question {

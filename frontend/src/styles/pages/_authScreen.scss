@@ -14,8 +14,33 @@
   &__decor {
     width: 50%;
     height: 100vh;
-    overflow: hidden;
-    background: url(/images/pattern.png) left / cover no-repeat;
-    background-color: var(--c-secondary);
+    padding: 3rem 3rem 3rem 0;
+  }
+
+  &__background {
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(#818cf8, 0.6), #818cf8);
+    border-radius: 4rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    position: relative;
+  }
+
+  &__intro {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    color: white;
+    font-size: 3.6rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &__rocket {
+    transform: translate(1px, 1px);
   }
 }
