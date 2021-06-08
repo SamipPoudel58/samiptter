@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import openSocket from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col } from "react-bootstrap";
 import { listTweets } from "../actions/tweetActions";
-import TweetComposer from "../components/TweetComposer";
-import Tweet from "../components/Tweet";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import SideNav from "../components/SideNav";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
-import FollowRecommendation from "../components/FollowRecommendation";
+import SideNav from "../components/SideNav";
+// import { Row, Col } from "react-bootstrap";
+// import TweetComposer from "../components/TweetComposer";
+// import Tweet from "../components/Tweet";
+// import Message from "../components/Message";
+// import Loader from "../components/Loader";
+// import SideNav from "../components/SideNav";
+// import FollowRecommendation from "../components/FollowRecommendation";
 
 const HomeScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -44,27 +45,31 @@ const HomeScreen = ({ history }) => {
   }, [history, userInfo, dispatch, successDelete]);
 
   return (
-    <Row className="mainRow">
-      <Col className="p-0 firstCol">
-        <SideNav />
-      </Col>
-      <Col className="newsFeed" md={6}>
-        <Row className="p-3 u-line my-font font-weight-bold">Home</Row>
-        <TweetComposer buttonText="Tweet" />
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : (
-          tweets.map((tweet) => (
-            <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
-          ))
-        )}
-      </Col>
-      <Col className="thirdCol">
-        <FollowRecommendation />
-      </Col>
-    </Row>
+    <main className="homeScreen">
+      <SideNav />
+      <h1>HomeScreen</h1>
+    </main>
+    // <Row className="mainRow">
+    //   <Col className="p-0 firstCol">
+    //     <SideNav />
+    //   </Col>
+    //   <Col className="newsFeed" md={6}>
+    //     <Row className="p-3 u-line my-font font-weight-bold">Home</Row>
+    //     <TweetComposer buttonText="Tweet" />
+    //     {loading ? (
+    //       <Loader />
+    //     ) : error ? (
+    //       <Message variant="danger">{error}</Message>
+    //     ) : (
+    //       tweets.map((tweet) => (
+    //         <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
+    //       ))
+    //     )}
+    //   </Col>
+    //   <Col className="thirdCol">
+    //     <FollowRecommendation />
+    //   </Col>
+    // </Row>
   );
 };
 

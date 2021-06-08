@@ -1,0 +1,37 @@
+.sideNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 5rem 7rem;
+  height: 100vh;
+  background-color: white;
+
+  &__nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  &__navlinks {
+    list-style: none;
+  }
+
+  &__navlink {
+    font-weight: 500;
+    line-height: 1;
+    display: block;
+    font-size: 1.8rem;
+    color: var(--c-gray-md);
+    transition: color 0.3s;
+
+    &:hover,
+    &-active {
+      color: var(--c-primary);
+    }
+  }
+
+  &__profileInfo {
+    margin-top: auto;
+  }
+}
