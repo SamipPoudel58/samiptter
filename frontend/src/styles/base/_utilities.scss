@@ -8,6 +8,9 @@
 .mt-3 {
   margin-top: 3rem;
 }
+.mb-2 {
+  margin-bottom: 2rem;
+}
 .mb-4 {
   margin-bottom: 4rem;
 }
@@ -30,4 +33,22 @@
 .minor-link:visited {
   text-decoration: none;
   color: var(--c-primary);
+  font-size: 1.5rem;
+}
+
+.primary-btn {
+  border: none;
+  font-family: inherit;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 5px;
+  color: white;
+  background-color: var(--c-primary);
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--c-secondary);
+  }
 }

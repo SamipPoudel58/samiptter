@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  padding: 5rem 7rem;
+  padding: 5rem;
   height: 100vh;
   background-color: white;
 
@@ -25,9 +25,13 @@
     color: var(--c-gray-md);
     transition: color 0.3s;
 
+    & i {
+      opacity: 0.6;
+    }
+
     &:hover,
     &-active {
-      color: var(--c-primary);
+      color: var(--c-secondary);
     }
   }
 

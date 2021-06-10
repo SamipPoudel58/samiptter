@@ -1,0 +1,15 @@
+.followRecommendation {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--c-gray-light);
+  &__topRow {
+    display: flex;
+    gap: 8rem;
+    align-items: center;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

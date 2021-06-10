@@ -2,3 +2,16 @@
   min-height: 100vh;
   background-color: var(--c-background);
 }
+
+.rightNav {
+  height: 100%;
+  border-left: 1px solid var(--c-gray-light);
+  padding: 0 4rem 0 4rem;
+  &__wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    padding: 5rem 0;
+  }
+}

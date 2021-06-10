@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { listTweets } from "../actions/tweetActions";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import SideNav from "../components/SideNav";
+import FollowRecommendation from "../components/FollowRecommendation";
 // import { Row, Col } from "react-bootstrap";
 // import TweetComposer from "../components/TweetComposer";
 // import Tweet from "../components/Tweet";
 // import Message from "../components/Message";
 // import Loader from "../components/Loader";
 // import SideNav from "../components/SideNav";
-// import FollowRecommendation from "../components/FollowRecommendation";
 
 const HomeScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -48,6 +48,11 @@ const HomeScreen = ({ history }) => {
     <main className="homeScreen">
       <SideNav />
       <h1>HomeScreen</h1>
+      <section className="rightNav__wrapper">
+        <div className="rightNav">
+          <FollowRecommendation />
+        </div>
+      </section>
     </main>
     // <Row className="mainRow">
     //   <Col className="p-0 firstCol">
