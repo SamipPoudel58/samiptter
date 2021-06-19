@@ -1,17 +1,28 @@
 .homeScreen {
   min-height: 100vh;
-  background-color: var(--c-background);
 }
 
 .rightNav {
   height: 100%;
-  border-left: 1px solid var(--c-gray-light);
   padding: 0 4rem 0 4rem;
   &__wrapper {
     position: absolute;
     top: 0;
     right: 0;
     height: 100vh;
-    padding: 5rem 0;
+    padding: 3rem 0;
+    width: 38rem;
+  }
+}
+
+.newsFeed {
+  margin: 0 38rem 0 25rem;
+  min-height: 100vh;
+  background-color: var(--c-background);
+  overflow-y: scroll;
+  padding: 3rem 2rem 0;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

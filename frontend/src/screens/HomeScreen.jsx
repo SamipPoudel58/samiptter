@@ -6,7 +6,7 @@ import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import SideNav from "../components/SideNav";
 import FollowRecommendation from "../components/FollowRecommendation";
 // import { Row, Col } from "react-bootstrap";
-// import TweetComposer from "../components/TweetComposer";
+import TweetComposer from "../components/TweetComposer";
 // import Tweet from "../components/Tweet";
 // import Message from "../components/Message";
 // import Loader from "../components/Loader";
@@ -45,15 +45,19 @@ const HomeScreen = ({ history }) => {
   }, [history, userInfo, dispatch, successDelete]);
 
   return (
-    <main className="homeScreen">
+    <div className="homeScreen">
       <SideNav />
-      <h1>HomeScreen</h1>
+
+      <section className="newsFeed">
+        <TweetComposer />
+      </section>
+
       <section className="rightNav__wrapper">
         <div className="rightNav">
           <FollowRecommendation />
         </div>
       </section>
-    </main>
+    </div>
     // <Row className="mainRow">
     //   <Col className="p-0 firstCol">
     //     <SideNav />
