@@ -34,6 +34,8 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
             placeholder="What's happening?"
             type="text"
             className="tweetComposer__input"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
           <button className="primary-btn" type="submit">
             Post

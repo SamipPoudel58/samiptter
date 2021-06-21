@@ -1,0 +1,55 @@
+.tweet {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 2rem;
+  display: flex;
+  gap: 1rem;
+
+  &__details {
+    flex: 1;
+  }
+
+  &__info {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__content {
+    font-size: 1.4rem;
+    color: var(--c-gray-dark);
+    padding-bottom: 2rem;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__like,
+  &__comment {
+    cursor: pointer;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.4rem;
+    color: var(--c-gray-dark);
+
+    &:hover {
+      color: var(--c-primary);
+    }
+  }
+
+  &__like:hover {
+    color: var(--c-pink);
+  }
+  &__actionIcon {
+    font-size: 1.6rem;
+
+    &-liked {
+      color: var(--c-pink);
+    }
+  }
+}

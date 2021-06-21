@@ -5,11 +5,12 @@ import { listTweets } from "../actions/tweetActions";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import SideNav from "../components/SideNav";
 import FollowRecommendation from "../components/FollowRecommendation";
-// import { Row, Col } from "react-bootstrap";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
 import TweetComposer from "../components/TweetComposer";
+import Tweet from "../components/Tweet";
+// import { Row, Col } from "react-bootstrap";
 // import Tweet from "../components/Tweet";
-// import Message from "../components/Message";
-// import Loader from "../components/Loader";
 // import SideNav from "../components/SideNav";
 
 const HomeScreen = ({ history }) => {
@@ -50,6 +51,15 @@ const HomeScreen = ({ history }) => {
 
       <section className="newsFeed">
         <TweetComposer />
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          tweets.map((tweet) => (
+            <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
+          ))
+        )}
       </section>
 
       <section className="rightNav__wrapper">
