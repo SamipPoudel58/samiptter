@@ -28,7 +28,7 @@ dayjs.updateLocale("en", {
   },
 });
 
-const Tweet = ({ tweet, userInfo }) => {
+const Tweet = ({ tweet, userInfo, major, rounded = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
   const [popup, setPopup] = useState(false);
   const [numLikes, setNumLikes] = useState(tweet.numLikes);
@@ -61,7 +61,11 @@ const Tweet = ({ tweet, userInfo }) => {
   };
 
   return (
-    <article className="tweet mt-2 shadow">
+    <article
+      className={`tweet mt-2 shadow ${rounded && "rounded-2"} ${
+        major && "tweet-major"
+      }`}
+    >
       <div className="tweet__profilePic">
         <img
           className="profile-image"
@@ -82,7 +86,8 @@ const Tweet = ({ tweet, userInfo }) => {
             {tweet.user.name}
           </Link>
           <p className="subtitle-text">
-            {"@" + tweet.user.name.toLowerCase().replace(" ", "")}
+            {tweet.user.name &&
+              "@" + tweet.user.name.toLowerCase().replace(" ", "")}
           </p>
           <span className="subtitle-text">.</span>
           <span className="subtitle-text">

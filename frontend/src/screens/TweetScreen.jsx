@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-// import openSocket from "socket.io-client";
-import { Row, Col } from "react-bootstrap";
+// import { Row, Col } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
@@ -11,8 +10,9 @@ import { TWEET_DETAILS_RESET } from "../constants/tweetConstants";
 import Comment from "../components/Comment";
 
 import * as dayjs from "dayjs";
+import Layout from "../components/Layout";
 import SideNav from "../components/SideNav";
-import BackButton from "../components/BackButton";
+import TopBar from "../components/TopBar";
 import FollowRecommendation from "../components/FollowRecommendation";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -71,48 +71,93 @@ const TweetScreen = ({ match, history }) => {
   }, [dispatch, match, history, userInfo, successComment, successDelete]);
 
   return (
-    <>
-      <Row>
-        <Col>
-          <SideNav />
-        </Col>
-        <Col className="newsFeed" md={6}>
+    <div className="tweetScreen">
+      <Layout>
+        <section className="mainTweet middle-section">
           {loading ? (
             <Loader />
           ) : error ? (
             <Message variant="danger">{error}</Message>
           ) : (
             <>
-              <Row className="p-3 u-line">
-                <BackButton />
-                <span className="ml-3 go-back-heading">Tweet</span>
-              </Row>
-              {errorComment && (
-                <Message variant="danger">{errorComment}</Message>
-              )}
-              {errorDelete && <Message variant="danger">{errorDelete}</Message>}
-              <Tweet userInfo={userInfo} tweet={tweet} />
-              <TweetComposer tweet={tweet} buttonText="Comment" />
-              <Row className="p-3 u-line">
-                <i className="far fa-comment-alt"></i>
-                <span className="ml-3 go-back-heading">Comments</span>
-              </Row>
-              {tweet.comments.map((comment) => (
-                <Comment
-                  mainTweetId={tweet._id}
-                  tweet={comment}
-                  userInfo={userInfo}
-                  key={comment._id}
-                />
-              ))}
+              <TopBar title="Tweet" />
+              <Tweet
+                userInfo={userInfo}
+                tweet={tweet}
+                rounded={true}
+                major={true}
+              />
+              <div className="mt-2 mb-2">
+                <TweetComposer tweet={tweet} buttonText="Comment" />
+              </div>
+
+              <div className="commentSection shadow">
+                <div className="commentSection__header">
+                  <div className="commentSection__icon">
+                    <i className="far fa-comment-alt"></i>
+                  </div>
+                  <h3 className="heading-sm">
+                    {tweet.comments.length === 0 ? "No Comments" : "Comments"}
+                  </h3>
+                </div>
+                <div className="commentSection__comments">
+                  {tweet.comments.map((comment) => (
+                    <Comment
+                      mainTweetId={tweet._id}
+                      tweet={comment}
+                      userInfo={userInfo}
+                      key={comment._id}
+                    />
+                  ))}
+                </div>
+              </div>
             </>
           )}
-        </Col>
-        <Col>
-          <FollowRecommendation />
-        </Col>
-      </Row>
-    </>
+        </section>
+      </Layout>
+    </div>
+    // <>
+    //   <Row>
+    //     <Col>
+    //       <SideNav />
+    //     </Col>
+    //     <Col className="newsFeed" md={6}>
+    //       {loading ? (
+    //         <Loader />
+    //       ) : error ? (
+    //         <Message variant="danger">{error}</Message>
+    //       ) : (
+    //         <>
+    //           <Row className="p-3 u-line">
+    //             <BackButton />
+    //             <span className="ml-3 go-back-heading">Tweet</span>
+    //           </Row>
+    //           {errorComment && (
+    //             <Message variant="danger">{errorComment}</Message>
+    //           )}
+    //           {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+    //           <Tweet userInfo={userInfo} tweet={tweet} />
+    //           <TweetComposer tweet={tweet} buttonText="Comment" />
+    //           <Row className="p-3 u-line">
+    //             <i className="far fa-comment-alt"></i>
+    //             <span className="ml-3 go-back-heading">Comments</span>
+    //           </Row>
+    //           {tweet.comments.map((comment) => (
+    //             <Comment
+    //               mainTweetId={tweet._id}
+    //               tweet={comment}
+    //               userInfo={userInfo}
+    //               key={comment._id}
+    //             />
+    //           ))}
+    //         </>
+    //       )}
+    //     </Col>
+    //     <Col>
+    //       <FollowRecommendation />
+    //     </Col>
+    //   </Row>
+    // </>
   );
 };
 

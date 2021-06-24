@@ -23,6 +23,11 @@
   margin-bottom: 1rem;
 }
 
+// centers the middle section between the two navbars
+.middle-section {
+  margin: 0 38rem 0 25rem;
+}
+
 .profile-image {
   height: 4.5rem;
   width: 4.5rem;
@@ -38,6 +43,17 @@
 
 .shadow {
   box-shadow: 0 4px 40px 5px rgba(16, 137, 255, 0.05);
+}
+
+.rounded-2 {
+  border-radius: 2rem;
+}
+
+.border-b {
+  border-bottom: 1px solid var(--c-gray-light);
+}
+.border-t {
+  border-top: 1px solid var(--c-gray-light);
 }
 
 .primary-btn {

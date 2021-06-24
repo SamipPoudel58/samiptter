@@ -1,16 +1,19 @@
 .tweet {
   background-color: white;
   padding: 2rem;
-  border-radius: 2rem;
   display: flex;
   gap: 1rem;
+
+  &-major {
+    border: 2px solid var(--c-primary);
+  }
 
   &__details {
     flex: 1;
   }
 
   &__info {
-    padding: 0.5rem 0;
+    padding: 0.5rem 0 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
