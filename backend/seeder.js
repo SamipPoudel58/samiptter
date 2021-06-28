@@ -20,16 +20,7 @@ const importData = async () => {
       return {
         ...tweet,
         user: createdUser[i]._id,
-        comments: [
-          {
-            user: createdUser[3],
-            likes: [],
-            numLikes: 0,
-            isLiked: false,
-            tweetContent: "Thank You For Sharing",
-            comments: [],
-          },
-        ],
+        comments: [],
       };
     });
 

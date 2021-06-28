@@ -79,7 +79,8 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
             </p>
             <span className="subtitle-text">.</span>
             <span className="subtitle-text">
-              {dayjs(tweet.createdAt).fromNow(true)}
+              {tweet.createdAt}
+              {/* {dayjs(tweet.createdAt).fromNow(true)} */}
             </span>
           </section>
           <Link to={`/tweets/${tweet._id}`}>

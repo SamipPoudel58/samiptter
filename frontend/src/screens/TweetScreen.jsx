@@ -80,13 +80,15 @@ const TweetScreen = ({ match, history }) => {
             <Message variant="danger">{error}</Message>
           ) : (
             <>
-              <TopBar title="Tweet" />
-              <Tweet
-                userInfo={userInfo}
-                tweet={tweet}
-                rounded={true}
-                major={true}
-              />
+              <TopBar title="Post" />
+              <div className="mt-2">
+                <Tweet
+                  userInfo={userInfo}
+                  tweet={tweet}
+                  rounded={true}
+                  major={true}
+                />
+              </div>
               <div className="mt-2 mb-2">
                 <TweetComposer tweet={tweet} buttonText="Comment" />
               </div>

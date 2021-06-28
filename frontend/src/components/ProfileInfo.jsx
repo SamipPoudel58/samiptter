@@ -12,9 +12,9 @@ const ProfileInfo = ({ image, id, name, username }) => {
         />
       </div>
       <div className="profileInfo__details">
-        <Link to={`/profile/${id}`} className="profileInfo__name username-text">
+        <p to={`/profile/${id}`} className="profileInfo__name username-text">
           {name || "User Hacker"}
-        </Link>
+        </p>
         <p className="profileInfo__more subtitle-text">
           {username?.length > 0
             ? "@" + username.toLowerCase().replace(" ", "")

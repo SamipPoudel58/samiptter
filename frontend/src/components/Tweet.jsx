@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteTweet, likeTweet } from "../actions/tweetActions";
 
 import * as dayjs from "dayjs";
+import { getUsername } from "../utils/getUsername";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 var updateLocale = require("dayjs/plugin/updateLocale");
@@ -28,7 +29,7 @@ dayjs.updateLocale("en", {
   },
 });
 
-const Tweet = ({ tweet, userInfo, major, rounded = true }) => {
+const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
   const [popup, setPopup] = useState(false);
   const [numLikes, setNumLikes] = useState(tweet.numLikes);
@@ -62,7 +63,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true }) => {
 
   return (
     <article
-      className={`tweet mt-2 shadow ${rounded && "rounded-2"} ${
+      className={`tweet ${shadow && "shadow"} ${rounded && "rounded-2"} ${
         major && "tweet-major"
       }`}
     >
@@ -86,8 +87,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true }) => {
             {tweet.user.name}
           </Link>
           <p className="subtitle-text">
-            {tweet.user.name &&
-              "@" + tweet.user.name.toLowerCase().replace(" ", "")}
+            {tweet.user.name && getUsername(tweet.user.name)}
           </p>
           <span className="subtitle-text">.</span>
           <span className="subtitle-text">

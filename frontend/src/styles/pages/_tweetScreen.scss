@@ -1,14 +1,3 @@
-.mainTweet {
-  margin: 0 38rem 0 25rem;
-  min-height: 100vh;
-  background-color: var(--c-background);
-  overflow-y: scroll;
-  padding: 3rem 2rem;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 .commentSection {
   background-color: white;
   border-radius: 2rem;

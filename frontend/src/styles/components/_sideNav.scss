@@ -1,10 +1,11 @@
 .sideNav {
   position: fixed;
-  padding: 3rem 5rem;
+
   height: 100vh;
   width: 25rem;
 
   &__nav {
+    padding: 3rem 4rem 2rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -13,6 +14,7 @@
 
   &__navlinks {
     list-style: none;
+    padding: 0 1rem;
   }
 
   &__navlink {
@@ -34,6 +36,39 @@
   }
 
   &__profileInfo {
+    cursor: pointer;
+    user-select: none;
     margin-top: auto;
+    position: relative;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    &:hover {
+      background-color: var(--c-gray-lighter);
+      border: 2px solid var(--c-primary);
+    }
+  }
+
+  &__popup {
+    position: absolute;
+    top: -6rem;
+    left: 0;
+    width: 100%;
+    background-color: var(--c-gray-light);
+    box-shadow: var(--shadow);
+    border-radius: 2rem;
+    overflow: hidden;
+  }
+
+  &__logOut {
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: var(--c-primary);
+      color: white;
+    }
   }
 }

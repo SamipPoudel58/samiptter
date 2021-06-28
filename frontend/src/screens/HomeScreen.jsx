@@ -57,7 +57,9 @@ const HomeScreen = ({ history }) => {
             <Message variant="danger">{error}</Message>
           ) : (
             tweets.map((tweet) => (
-              <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
+              <div className="mt-2" key={tweet._id}>
+                <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
+              </div>
             ))
           )}
         </section>

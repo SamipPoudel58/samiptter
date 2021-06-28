@@ -26,6 +26,13 @@
 // centers the middle section between the two navbars
 .middle-section {
   margin: 0 38rem 0 25rem;
+  background-color: var(--c-background);
+  min-height: 100vh;
+  overflow-y: scroll;
+  padding: 3rem 2rem;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .profile-image {
@@ -43,6 +50,10 @@
 
 .shadow {
   box-shadow: 0 4px 40px 5px rgba(16, 137, 255, 0.05);
+}
+
+.text-centered {
+  text-align: center;
 }
 
 .rounded-2 {
@@ -70,5 +81,22 @@
 
   &:hover {
     background-color: var(--c-secondary);
+  }
+}
+.primary-btn-alt {
+  border: 2px solid var(--c-primary);
+  font-family: inherit;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 5px;
+  color: var(--c-primary);
+  background-color: transparent;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--c-primary);
+    color: white;
   }
 }

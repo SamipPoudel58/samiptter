@@ -2,4 +2,8 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+
+  &__name {
+    word-break: break-word;
+  }
 }
