@@ -20,8 +20,10 @@
   }
 
   &__content {
+    font-family: "Open Sans";
     font-size: 1.4rem;
-    color: var(--c-gray-dark);
+    line-height: 2rem;
+    color: var(--c-black);
     padding-bottom: 2rem;
   }
 
