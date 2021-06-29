@@ -14,10 +14,11 @@
 
   &__navlinks {
     list-style: none;
-    padding: 0 1rem;
   }
 
   &__navlink {
+    padding: 2rem;
+    border-radius: 1rem;
     font-weight: 500;
     line-height: 1;
     display: block;
@@ -32,6 +33,7 @@
     &:hover,
     &-active {
       color: var(--c-secondary);
+      background-color: var(--c-background);
     }
   }
 

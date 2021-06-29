@@ -21,12 +21,12 @@ const SideNav = () => {
   return (
     <section className="sideNav">
       <nav className="sideNav__nav">
-        <h1 className="logo-text mb-4">Samiptter</h1>
+        <h1 className="logo-text mb-2 text-centered">Samiptter</h1>
         <ul className="sideNav__navlinks">
           <NavLink
             exact
             to="/"
-            className="sideNav__navlink mb-4"
+            className="sideNav__navlink mb-1"
             activeClassName="sideNav__navlink-active"
           >
             <li>
@@ -35,7 +35,7 @@ const SideNav = () => {
           </NavLink>
           <NavLink
             to="/search"
-            className="sideNav__navlink mb-4"
+            className="sideNav__navlink mb-1"
             activeClassName="sideNav__navlink-active"
           >
             <li>
@@ -44,7 +44,7 @@ const SideNav = () => {
           </NavLink>
           <NavLink
             to="/profile"
-            className="sideNav__navlink mb-4"
+            className="sideNav__navlink mb-1"
             activeClassName="sideNav__navlink-active"
           >
             <li>
