@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
 import ProfileInfo from "./ProfileInfo";
 
 const SideNav = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const [backDrop, setBackDrop] = useState(false);
   const [popUp, setPopUp] = useState(false);
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -61,11 +60,14 @@ const SideNav = () => {
               <p className="sideNav__logOut username-text">Log Out</p>
             </div>
           )}
-          <ProfileInfo
-            name={userInfo.name}
-            image={userInfo.image}
-            id={userInfo._id}
-          />
+          {userInfo && (
+            <ProfileInfo
+              name={userInfo.name}
+              image={userInfo.image}
+              id={userInfo._id}
+              link={false}
+            />
+          )}
         </div>
       </nav>
     </section>

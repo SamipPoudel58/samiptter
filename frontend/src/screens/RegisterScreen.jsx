@@ -79,7 +79,7 @@ const RegisterScreen = ({ location, history }) => {
             <p className="mt-1 form__question">
               Already have an account ?{" "}
               <Link className="minor-link" to="/login">
-                Log In
+                Sign In
               </Link>
             </p>
           </form>

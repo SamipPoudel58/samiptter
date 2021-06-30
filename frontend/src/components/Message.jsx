@@ -3,7 +3,7 @@ import React from "react";
 const Message = ({ variant, children }) => {
   return (
     <div className={`alert ${variant}`}>
-      <i class="fas fa-exclamation-circle"></i>
+      <i className="fas fa-exclamation-circle"></i>
       {children}
     </div>
   );

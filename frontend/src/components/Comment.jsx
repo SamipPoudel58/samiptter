@@ -2,30 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { likeComment, deleteComment } from "../actions/tweetActions";
-
-import * as dayjs from "dayjs";
-
-var relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
-var updateLocale = require("dayjs/plugin/updateLocale");
-dayjs.extend(updateLocale);
-dayjs.updateLocale("en", {
-  relativeTime: {
-    future: "in %s",
-    past: "%s",
-    s: "1s",
-    m: "1m",
-    mm: "%dm",
-    h: "1h",
-    hh: "%dh",
-    d: "1d",
-    dd: "%dd",
-    M: "1mon",
-    MM: "%dmon",
-    y: "1y",
-    yy: "%dy",
-  },
-});
+import { getTimeFromNow } from "../utils/getTimeFromNow";
 
 const Comment = ({ tweet, userInfo, mainTweetId }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -79,7 +56,7 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
             </p>
             <span className="subtitle-text">.</span>
             <span className="subtitle-text">
-              {dayjs(tweet.createdAt).fromNow(true)}
+              {getTimeFromNow(tweet.createdAt)}
             </span>
           </section>
           <Link to={`/tweets/${tweet._id}`}>

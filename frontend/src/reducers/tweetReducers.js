@@ -11,6 +11,7 @@ import {
   DELETE_TWEET_FAIL,
   DELETE_TWEET_REQUEST,
   DELETE_TWEET_SUCCESS,
+  DELETE_TWEET_RESET,
   TWEET_DETAILS_FAIL,
   TWEET_DETAILS_REQUEST,
   TWEET_DETAILS_RESET,
@@ -113,6 +114,7 @@ export const commentDeleteReducer = (state = {}, action) => {
       };
     case DELETE_COMMENT_FAIL:
       return { loading: false, error: action.payload };
+
     default:
       return state;
   }
@@ -129,6 +131,8 @@ export const tweetDeleteReducer = (state = {}, action) => {
       };
     case DELETE_TWEET_FAIL:
       return { loading: false, error: action.payload };
+    case DELETE_TWEET_RESET:
+      return {};
     default:
       return state;
   }

@@ -1,33 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { Image, Row, Col } from "react-bootstrap";
-// import Loader from "../components/Loader";
 import { deleteTweet, likeTweet } from "../actions/tweetActions";
-
-import * as dayjs from "dayjs";
 import { getUsername } from "../utils/getUsername";
-var relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
-var updateLocale = require("dayjs/plugin/updateLocale");
-dayjs.extend(updateLocale);
-dayjs.updateLocale("en", {
-  relativeTime: {
-    future: "in %s",
-    past: "%s",
-    s: "1s",
-    m: "1m",
-    mm: "%dm",
-    h: "1h",
-    hh: "%dh",
-    d: "1d",
-    dd: "%dd",
-    M: "1mon",
-    MM: "%dmon",
-    y: "1y",
-    yy: "%dy",
-  },
-});
+import { getTimeFromNow } from "../utils/getTimeFromNow";
+import Loader from "./Loader";
+import Message from "./Message";
+import Toast from "./Toast";
 
 const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -39,7 +18,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   let history = useHistory();
 
   const tweetDelete = useSelector((state) => state.tweetDelete);
-  let { loading } = tweetDelete;
+  let { loading, success, error } = tweetDelete;
 
   useEffect(() => {
     setLike(tweet.isLiked);
@@ -55,6 +34,8 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   };
 
   const tweetDeleteHandler = () => {
+    console.log("delete button clicked");
+    setPopup(false);
     dispatch(deleteTweet(tweet._id));
     if (location.pathname !== "/") {
       history.push("/");
@@ -67,52 +48,79 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
         major && "tweet-major"
       }`}
     >
-      <div className="tweet__profilePic">
-        <img
-          className="profile-image"
-          src={tweet.user.image}
-          alt={"profile picture of" + tweet.user.name}
-        />
-      </div>
-      <div className="tweet__details">
-        <section className="tweet__info">
-          <Link
-            to={
-              userInfo._id === tweet.user._id
-                ? "/profile"
-                : `/profile/${tweet.user._id}`
-            }
-            className="tweet__username username-text"
-          >
-            {tweet.user.name}
-          </Link>
-          <p className="subtitle-text">
-            {tweet.user.name && getUsername(tweet.user.name)}
-          </p>
-          <span className="subtitle-text">.</span>
-          <span className="subtitle-text">
-            {dayjs(tweet.createdAt).fromNow(true)}
-          </span>
-        </section>
-        <Link to={`/tweets/${tweet._id}`}>
-          <section className="tweet__content">{tweet.tweetContent}</section>
-        </Link>
-        <section className="tweet__actions">
-          <div className="tweet__like" onClick={likeHandler}>
-            <i
-              className={`tweet__actionIcon fs-18 ${
-                like ? "fas fa-heart tweet__actionIcon-liked" : "far fa-heart"
-              }`}
-            ></i>
-            <span>{numLikes}</span>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {popup && (
+            <>
+              <div
+                onClick={() => setPopup(false)}
+                className="tweet__backDrop"
+              ></div>
+              <div className="tweet__popup">
+                <p onClick={tweetDeleteHandler} className="tweet__popOption">
+                  <i className="fas fa-trash-alt mr-1"></i>Delete
+                </p>
+              </div>
+            </>
+          )}
+          <div className="tweet__profilePic">
+            <img
+              className="profile-image"
+              src={tweet.user.image}
+              alt={"profile picture of" + tweet.user.name}
+            />
           </div>
+          <div className="tweet__details">
+            <section className="tweet__info">
+              <Link
+                to={
+                  userInfo._id === tweet.user._id
+                    ? "/profile"
+                    : `/profile/${tweet.user._id}`
+                }
+                className="tweet__username username-text"
+              >
+                {tweet.user.name}
+              </Link>
+              <p className="subtitle-text">
+                {tweet.user.name && getUsername(tweet.user.name)}
+              </p>
+              <span className="subtitle-text">.</span>
+              <span className="subtitle-text">
+                {getTimeFromNow(tweet.createdAt)}
+              </span>
+              {tweet.user._id === userInfo._id && (
+                <i
+                  onClick={() => setPopup(true)}
+                  className="fas fa-ellipsis-h tweet__optionIcon"
+                ></i>
+              )}
+            </section>
+            <Link to={`/tweets/${tweet._id}`}>
+              <section className="tweet__content">{tweet.tweetContent}</section>
+            </Link>
+            <section className="tweet__actions">
+              <div className="tweet__like" onClick={likeHandler}>
+                <i
+                  className={`tweet__actionIcon fs-18 ${
+                    like
+                      ? "fas fa-heart tweet__actionIcon-liked"
+                      : "far fa-heart"
+                  }`}
+                ></i>
+                <span>{numLikes}</span>
+              </div>
 
-          <Link to={`/tweets/${tweet._id}`} className="tweet__comment">
-            <i className="tweet__actionIcon tweet__actionIcon-comment far fa-comment-alt"></i>
-            <span>{tweet.numComments}</span>
-          </Link>
-        </section>
-      </div>
+              <Link to={`/tweets/${tweet._id}`} className="tweet__comment">
+                <i className="tweet__actionIcon tweet__actionIcon-comment far fa-comment-alt"></i>
+                <span>{tweet.numComments}</span>
+              </Link>
+            </section>
+          </div>
+        </>
+      )}
     </article>
     // <Row className="py-2 tweet">
     //   {popup && (

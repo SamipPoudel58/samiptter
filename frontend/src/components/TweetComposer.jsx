@@ -22,11 +22,13 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
   return (
     <div className="tweetComposer shadow">
       <div className="tweetComposer__leftCol">
-        <img
-          className="profile-image"
-          src={userInfo.image}
-          alt={userInfo.name}
-        />
+        {userInfo && (
+          <img
+            className="profile-image"
+            src={userInfo.image}
+            alt={userInfo.name}
+          />
+        )}
       </div>
       <div className="tweetComposer__rightCol">
         <form className="tweetComposer__form" onSubmit={submitHandler}>
@@ -47,41 +49,6 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
         </form>
       </div>
     </div>
-    // <Row className="py-3 tweetComposer">
-    //   <Col className="pr-0 picture-col">
-    //     {userInfo && (
-    //       <Image
-    //         className="pr-0 profilePic"
-    //         src={userInfo.image}
-    //         alt={userInfo.name}
-    //         fluid
-    //       />
-    //     )}
-    //   </Col>
-    //   <Col className="pl-0 mr-3" md={10}>
-    //     <Form onSubmit={submitHandler}>
-    //       <Form.Group controlId="tweet">
-    //         <Form.Control
-    //           className="px-0 tweetForm"
-    //           placeholder={
-    //             buttonText === "Comment"
-    //               ? "Write a comment..."
-    //               : "What's happening?"
-    //           }
-    //           as="textarea"
-    //           type="text"
-    //           rows="auto"
-    //           value={text}
-    //           onChange={(e) => setText(e.target.value)}
-    //         />
-    //       </Form.Group>
-
-    //       <Button className="tweetBtn px-5" type="submit" variant="info">
-    //         {buttonText}
-    //       </Button>
-    //     </Form>
-    //   </Col>
-    // </Row>
   );
 };
 

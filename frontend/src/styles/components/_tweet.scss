@@ -3,6 +3,7 @@
   padding: 2rem;
   display: flex;
   gap: 1rem;
+  position: relative;
 
   &-major {
     border: 2px solid var(--c-primary);
@@ -55,6 +56,45 @@
 
     &-liked {
       color: var(--c-pink);
+    }
+  }
+
+  &__optionIcon {
+    display: block;
+    margin-left: auto;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--c-secondary);
+  }
+
+  &__backDrop {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+  }
+
+  &__popup {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    top: 2rem;
+    right: 2rem;
+    border-radius: 1rem;
+    z-index: 11;
+  }
+
+  &__popOption {
+    padding: 1.5rem 2rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--c-background);
     }
   }
 }

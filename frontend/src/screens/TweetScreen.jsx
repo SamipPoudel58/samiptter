@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import { Row, Col } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
@@ -8,33 +7,8 @@ import { listTweetDetails } from "../actions/tweetActions";
 import TweetComposer from "../components/TweetComposer";
 import { TWEET_DETAILS_RESET } from "../constants/tweetConstants";
 import Comment from "../components/Comment";
-
-import * as dayjs from "dayjs";
 import Layout from "../components/Layout";
-import SideNav from "../components/SideNav";
 import TopBar from "../components/TopBar";
-import FollowRecommendation from "../components/FollowRecommendation";
-var relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
-var updateLocale = require("dayjs/plugin/updateLocale");
-dayjs.extend(updateLocale);
-dayjs.updateLocale("en", {
-  relativeTime: {
-    future: "in %s",
-    past: "%s",
-    s: "1s",
-    m: "1m",
-    mm: "%dm",
-    h: "1h",
-    hh: "%dh",
-    d: "1d",
-    dd: "%dd",
-    M: "1mon",
-    MM: "%dmon",
-    y: "1y",
-    yy: "%dy",
-  },
-});
 
 const TweetScreen = ({ match, history }) => {
   const dispatch = useDispatch();

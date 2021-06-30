@@ -9,6 +9,7 @@ import {
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_TWEET_FAIL,
+  DELETE_TWEET_REQUEST,
   DELETE_TWEET_SUCCESS,
   TWEET_DETAILS_FAIL,
   TWEET_DETAILS_REQUEST,
@@ -19,35 +20,40 @@ import {
 } from "../constants/tweetConstants";
 import axios from "axios";
 
-export const listTweets = (keyword = "") => async (dispatch, getState) => {
-  try {
-    dispatch({ type: TWEET_LIST_REQUEST });
+export const listTweets =
+  (keyword = "") =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: TWEET_LIST_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    const { data } = await axios.get(`/api/tweets?keyword=${keyword}`, config);
-    dispatch({
-      type: TWEET_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: TWEET_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const { data } = await axios.get(
+        `/api/tweets?keyword=${keyword}`,
+        config
+      );
+      dispatch({
+        type: TWEET_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: TWEET_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listTweetDetails = (id) => async (dispatch, getState) => {
   try {
@@ -215,6 +221,9 @@ export const deleteComment = (id, comId) => async (dispatch, getState) => {
 
 export const deleteTweet = (id) => async (dispatch, getState) => {
   try {
+    dispatch({
+      type: DELETE_TWEET_REQUEST,
+    });
     const {
       userLogin: { userInfo },
     } = getState();

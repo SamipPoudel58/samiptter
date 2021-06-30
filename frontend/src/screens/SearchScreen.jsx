@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listTweets } from "../actions/tweetActions";
 import { ReactComponent as SearchIcon } from "../assets/search.svg";
-import TopBar from "../components/TopBar";
-import SideNav from "../components/SideNav";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
-import FollowRecommendation from "../components/FollowRecommendation";
 import Layout from "../components/Layout";
+import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 
 const SearchScreen = ({ history }) => {
   const [keyword, setKeyword] = useState("");
@@ -25,11 +23,18 @@ const SearchScreen = ({ history }) => {
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
-    } else {
-      // if (keyword !== "") {
-      //   dispatch(listTweets(keyword));
-      // }
     }
+    return () => {
+      dispatch({ type: TWEET_LIST_RESET });
+      setKeyword("");
+      setSubmitted(false);
+      setFinalKeyword("");
+    };
+    // else {
+    //   if (keyword !== "") {
+    //     dispatch(listTweets(keyword));
+    //   }
+    // }
   }, [history, userInfo, dispatch]);
 
   const submitHandler = (e) => {

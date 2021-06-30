@@ -3,12 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import SideNav from "../components/SideNav";
 import Layout from "../components/Layout";
 
 import { getProfile, addFriendAction } from "../actions/userActions";
 import TopBar from "../components/TopBar";
-import FollowRecommendation from "../components/FollowRecommendation";
 import { getUsername } from "../utils/getUsername";
 
 const ProfileScreen = ({ history, match }) => {
@@ -48,14 +46,11 @@ const ProfileScreen = ({ history, match }) => {
               <TopBar title={user.name} />
               <div className="profileMain mt-2">
                 <div className="profileMain__cover">
-                  <img src={user.cover} alt={`${user.name}'s cover photo`} />
+                  <img src={user.cover} alt={`${user.name}'s cover`} />
                 </div>
                 <div className="profileMain__details shadow">
                   <div className="profileMain__profilePic">
-                    <img
-                      src={user.image}
-                      alt={`${user.name}'s profile photo`}
-                    />
+                    <img src={user.image} alt={`${user.name}'s profile`} />
                   </div>
 
                   {match.params.id && !user.isFriend && (
