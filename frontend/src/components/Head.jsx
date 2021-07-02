@@ -27,7 +27,7 @@ Head.defaultProps = {
   ogtitle: "Samiptter | The Ultimate Social Media Site",
   description:
     "The ultimate social media site of your dreams | Let your social life take off!",
-  image: "https://www.samiptter.herokuapp.com/open_graph.png",
+  image: "https://www.samiptter.herokuapp.com/images/open_graph.png",
   url: "https://www.samiptter.herokuapp.com",
   typeOfContent: "website",
 };
