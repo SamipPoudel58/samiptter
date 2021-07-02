@@ -41,7 +41,7 @@ const FollowRecommendation = () => {
                 image={user.image}
                 id={user._id}
               />
-              <Link to={`/profile/${user._id}`} className="primary-btn-alt">
+              <Link to={`/profile/${user._id}`} className="primary-btn">
                 Follow
               </Link>
             </article>

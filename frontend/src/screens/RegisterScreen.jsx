@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Head from "../components/Head";
 import { ReactComponent as Rocket } from "../assets/rocket.svg";
 import { register } from "../actions/userActions";
 
@@ -36,6 +37,7 @@ const RegisterScreen = ({ location, history }) => {
 
   return (
     <section className="authScreen">
+      <Head title="Register" />
       <div className="authScreen__content">
         <h1 className="logo-text">Samiptter</h1>
         <div className="authScreen__formContainer">

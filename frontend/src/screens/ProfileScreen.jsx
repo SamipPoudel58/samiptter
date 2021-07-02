@@ -4,6 +4,7 @@ import Tweet from "../components/Tweet";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
+import Head from "../components/Head";
 
 import { getProfile, addFriendAction } from "../actions/userActions";
 import TopBar from "../components/TopBar";
@@ -35,6 +36,7 @@ const ProfileScreen = ({ history, match }) => {
   };
   return (
     <div className="profileScreen">
+      <Head title={`${user.name ? user.name : "Profile"}`} />
       <Layout>
         <section className="middle-section">
           {loading ? (

@@ -9,6 +9,7 @@ import { TWEET_DETAILS_RESET } from "../constants/tweetConstants";
 import Comment from "../components/Comment";
 import Layout from "../components/Layout";
 import TopBar from "../components/TopBar";
+import Head from "../components/Head";
 
 const TweetScreen = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const TweetScreen = ({ match, history }) => {
 
   return (
     <div className="tweetScreen">
+      <Head title={`Post by ${tweet.user.name ? tweet.user.name : "user"}`} />
       <Layout>
         <section className="mainTweet middle-section">
           {loading ? (

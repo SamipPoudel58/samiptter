@@ -8,6 +8,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import TweetComposer from "../components/TweetComposer";
 import Tweet from "../components/Tweet";
+import Head from "../components/Head";
 
 const HomeScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const HomeScreen = ({ history }) => {
 
   return (
     <div className="homeScreen">
+      <Head title="Home" />
       <Layout>
         <section className="newsFeed">
           <TweetComposer buttonText="Post" />

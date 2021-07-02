@@ -5,6 +5,7 @@ import { ReactComponent as SearchIcon } from "../assets/search.svg";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
+import Head from "../components/Head";
 import Layout from "../components/Layout";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 
@@ -47,6 +48,7 @@ const SearchScreen = ({ history }) => {
   };
   return (
     <div className="searchScreen">
+      <Head title="Search" />
       <Layout>
         <section className="middle-section">
           <div className="searchScreen__searchbar">

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { login } from "../actions/userActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Head from "../components/Head";
 import { ReactComponent as Rocket } from "../assets/rocket.svg";
 
 const LoginScreen = ({ location, history }) => {
@@ -28,6 +29,7 @@ const LoginScreen = ({ location, history }) => {
   };
   return (
     <section className="authScreen">
+      <Head title="Sign In" />
       <div className="authScreen__content">
         <h1 className="logo-text">Samiptter</h1>
         <div className="authScreen__formContainer">
