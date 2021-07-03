@@ -5,20 +5,35 @@
   &__content {
     width: 50%;
     padding: 3rem 11.5rem 0 11.5rem;
+    @media only screen and (max-width: 1200px) {
+      width: 500px;
+      margin: 0 auto;
+      padding: 3rem 0 0;
+    }
+    @media only screen and (max-width: 650px) {
+      padding: 3rem 3rem 0;
+    }
   }
 
   &__formContainer {
     padding-top: 3rem;
+    @media only screen and (max-width: 1200px) {
+      width: 100%;
+    }
   }
 
   &__decor {
     width: 50%;
     height: 100vh;
     padding: 3rem 3rem 3rem 0;
+
+    @media only screen and (max-width: 1200px) {
+      display: none;
+    }
   }
 
   &__background {
-    height: 100%;
+    aspect-ratio: 1/1;
     width: 100%;
     background-image: linear-gradient(rgba(#818cf8, 0.6), #818cf8);
     border-radius: 4rem;
