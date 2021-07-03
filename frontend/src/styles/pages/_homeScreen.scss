@@ -1,26 +1,72 @@
 .homeScreen {
-  min-height: 100vh;
+  max-height: 100vh;
+  position: relative;
+
+  &__topNav {
+    display: none;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0 0 1rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+    color: var(--c-primary);
+    font-size: 2.5rem;
+    position: relative;
+
+    & > .logo-text {
+      display: block;
+      text-align: center;
+      color: var(--c-primary);
+    }
+
+    & > i {
+      position: absolute;
+      top: 50%;
+      left: 3rem;
+      transform: translateY(-50%);
+    }
+
+    @media only screen and (max-width: 800px) {
+      display: block;
+    }
+  }
 }
 
 .rightNav {
   height: 100%;
+
   padding: 0 4rem 0 4rem;
   &__wrapper {
     position: absolute;
     top: 0;
     right: 0;
     height: 100vh;
-    padding: 3rem 0;
+    padding: 0 0 3rem;
     width: 38rem;
+
+    @media only screen and (max-width: 1100px) {
+      display: none;
+    }
   }
 }
 
 .newsFeed {
   margin: 0 38rem 0 25rem;
-  min-height: 100vh;
   background-color: var(--c-background);
-  overflow-y: scroll;
   padding: 3rem 2rem;
+
+  @media only screen and (max-width: 1100px) {
+    margin: 0 0 0 23rem;
+  }
+
+  @media only screen and (max-width: 800px) {
+    overflow-x: hidden;
+    margin: 0;
+    padding-top: 2rem;
+  }
 
   &::-webkit-scrollbar {
     display: none;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import openSocket from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import { listTweets } from "../actions/tweetActions";
@@ -9,8 +9,10 @@ import Loader from "../components/Loader";
 import TweetComposer from "../components/TweetComposer";
 import Tweet from "../components/Tweet";
 import Head from "../components/Head";
+import { Link } from "react-router-dom";
 
 const HomeScreen = ({ history }) => {
+  const [sideNavVisible, setSideNavVisible] = useState(false);
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
