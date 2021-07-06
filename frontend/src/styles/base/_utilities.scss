@@ -29,6 +29,7 @@
 // centers the middle section between the two navbars
 .middle-section {
   margin: 0 38rem 0 25rem;
+  min-height: 100vh;
   background-color: var(--c-background);
   min-height: 100vh;
   overflow-y: scroll;
