@@ -25,9 +25,11 @@ const Layout = ({ children }) => {
       <SideNav />
       <section className="homeScreen__topNav">
         <i onClick={() => setNavVisible(true)} className="fas fa-bars"></i>
-        <Link to="/" className="logo-text">
-          Samiptter
-        </Link>
+        <div className="logoHolder">
+          <Link to="/" className="logo-text">
+            Samiptter
+          </Link>
+        </div>
       </section>
 
       <div className="mobileNav">
