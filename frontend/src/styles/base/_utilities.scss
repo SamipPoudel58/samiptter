@@ -61,7 +61,7 @@
 }
 
 .shadow {
-  box-shadow: 0 4px 40px 5px rgba(16, 137, 255, 0.05);
+  box-shadow: var(--shadow);
 }
 
 .text-centered {
@@ -73,10 +73,10 @@
 }
 
 .border-b {
-  border-bottom: 1px solid var(--c-gray-light);
+  border-bottom: 1px solid var(--c-border);
 }
 .border-t {
-  border-top: 1px solid var(--c-gray-light);
+  border-top: 1px solid var(--c-border);
 }
 
 .primary-btn {

@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import Head from "../components/Head";
 import { ReactComponent as Rocket } from "../assets/rocket.svg";
 import { register } from "../actions/userActions";
+import FullLogo from "../components/FullLogo";
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState("");
@@ -39,7 +40,7 @@ const RegisterScreen = ({ location, history }) => {
     <section className="authScreen">
       <Head title="Register" />
       <div className="authScreen__content">
-        <h1 className="logo-text">Samiptter</h1>
+        <FullLogo />
         <div className="authScreen__formContainer">
           <h2 className="heading-md">Create an account</h2>
           {error && <Message variant="danger">{error}</Message>}

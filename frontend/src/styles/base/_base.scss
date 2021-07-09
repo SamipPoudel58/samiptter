@@ -8,7 +8,24 @@
   --c-gray-lighter: #f9f9f9;
   --c-black: #55595c;
   --c-pink: #e63946;
+  --c-body: #fff;
   --shadow: 0 4px 40px 5px rgba(16, 137, 255, 0.05);
+  --c-tile: #fff;
+  --c-border: #d8e4f2;
+  --c-formInput: #f9f9f9;
+  --c-formLabel: #25396f;
+}
+
+[class="dark"] {
+  --c-body: #242636;
+  --c-background: #1e1e2c;
+  --c-tile: #2d2e40;
+  --c-black: rgb(218, 214, 214);
+  --c-secondary: #626f92;
+  --c-border: #1e1e2c;
+  --c-formInput: #2d2e40;
+  --c-formLabel: #f9f9f9;
+  --shadow: 0 4px 32px 5px rgba(94, 94, 94, 0.1);
 }
 
 *,
@@ -45,6 +62,10 @@ html {
   @media only screen and (max-width: 800px) {
     font-size: 50%;
   }
+}
+
+body {
+  background-color: var(--c-body);
 }
 
 main {

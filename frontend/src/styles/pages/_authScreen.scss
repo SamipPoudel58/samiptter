@@ -16,7 +16,6 @@
   }
 
   &__formContainer {
-    padding-top: 3rem;
     @media only screen and (max-width: 1200px) {
       width: 100%;
     }
@@ -42,6 +41,7 @@
     align-items: flex-end;
     justify-content: flex-end;
     position: relative;
+    overflow: hidden;
   }
 
   &__intro {

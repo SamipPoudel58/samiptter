@@ -1,5 +1,5 @@
 .tweetComposer {
-  background-color: white;
+  background-color: var(--c-tile);
   padding: 2rem;
   border-radius: 2rem;
   display: flex;
@@ -20,6 +20,7 @@
     font-size: 1.4rem;
     border: none;
     padding: 1rem;
+    background-color: var(--c-tile);
     color: var(--c-black);
 
     &:focus {

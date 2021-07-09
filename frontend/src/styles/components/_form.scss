@@ -6,7 +6,7 @@
 
   &__label {
     font-size: 1.4rem;
-    color: var(--c-secondary);
+    color: var(--c-formLabel);
   }
 
   &__input {
@@ -15,7 +15,7 @@
     font-size: 1.6rem;
     border: none;
     color: var(--c-black);
-    background-color: var(--c-gray-lighter);
+    background-color: var(--c-formInput);
     border-radius: 5px;
     font-family: inherit;
   }

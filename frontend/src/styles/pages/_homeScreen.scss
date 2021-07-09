@@ -2,10 +2,25 @@
   max-height: 100vh;
   position: relative;
 
+  &__samiptterLogo {
+    height: 5rem;
+  }
+
+  &__logoHolder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    &-left {
+      justify-content: flex-start;
+    }
+  }
+
   &__topNav {
     display: none;
     padding: 2rem;
-    background-color: white;
+    background-color: var(--c-tile);
     border-radius: 0 0 1rem 1rem;
     position: fixed;
     top: 0;
@@ -16,11 +31,6 @@
     font-size: 2.5rem;
     position: relative;
 
-    & > .logoHolder {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
     & > .logo-text {
       color: var(--c-primary);
     }
@@ -49,6 +59,7 @@
     height: 100vh;
     padding: 0 0 3rem;
     width: 38rem;
+    background-color: var(--c-body);
 
     @media only screen and (max-width: 1100px) {
       display: none;

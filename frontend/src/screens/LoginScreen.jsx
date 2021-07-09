@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { login } from "../actions/userActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import FullLogo from "../components/FullLogo";
 import Head from "../components/Head";
 import { ReactComponent as Rocket } from "../assets/rocket.svg";
 
@@ -31,7 +32,7 @@ const LoginScreen = ({ location, history }) => {
     <section className="authScreen">
       <Head title="Sign In" />
       <div className="authScreen__content">
-        <h1 className="logo-text">Samiptter</h1>
+        <FullLogo />
         <div className="authScreen__formContainer">
           <h2 className="heading-md">Sign In</h2>
           {error && <Message variant="danger">{error}</Message>}

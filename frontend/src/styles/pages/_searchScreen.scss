@@ -1,6 +1,6 @@
 .searchScreen {
   &__form {
-    background-color: white;
+    background-color: var(--c-tile);
     padding: 1rem 1rem 1rem 2rem;
     border-radius: 1.5rem;
     display: flex;
@@ -8,10 +8,11 @@
   }
 
   &__input {
+    background-color: var(--c-tile);
     padding: 1rem;
     font-family: inherit;
     font-size: 1.6rem;
-    color: var(--c-gray-dark);
+    color: var(--c-black);
     border: none;
     outline: none;
     flex: 1;

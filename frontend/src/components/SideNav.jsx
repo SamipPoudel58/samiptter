@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
 import ProfileInfo from "./ProfileInfo";
+import Switch from "./Switch";
+import FullLogo from "./FullLogo";
 
 const SideNav = () => {
   const dispatch = useDispatch();
@@ -20,7 +22,7 @@ const SideNav = () => {
   return (
     <section className="sideNav">
       <nav className="sideNav__nav">
-        <h1 className="logo-text mb-2 text-centered">Samiptter</h1>
+        <FullLogo />
         <ul className="sideNav__navlinks">
           <NavLink
             exact
@@ -56,8 +58,16 @@ const SideNav = () => {
           className="sideNav__profileInfo"
         >
           {popUp && (
-            <div onClick={logOutHandler} className="sideNav__popup">
-              <p className="sideNav__logOut username-text">Log Out</p>
+            <div className="sideNav__popup">
+              <p
+                onClick={logOutHandler}
+                className="sideNav__popupOption sideNav__logOut username-text"
+              >
+                Log Out
+              </p>
+              <div className="sideNav__popupOption sideNav__darkSwitch">
+                <Switch className="sideNav__logOut" />
+              </div>
             </div>
           )}
           {userInfo && (

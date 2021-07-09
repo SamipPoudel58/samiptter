@@ -1,5 +1,5 @@
 .tweet {
-  background-color: white;
+  background-color: var(--c-tile);
   padding: 2rem;
   display: flex;
   gap: 1rem;
@@ -79,7 +79,7 @@
 
   &__popup {
     position: absolute;
-    background-color: white;
+    background-color: var(--c-tile);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     top: 2rem;

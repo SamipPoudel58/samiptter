@@ -2,11 +2,20 @@
   position: fixed;
   height: 100vh;
   width: 25rem;
+  background-color: var(--c-body);
   @media only screen and (max-width: 1100px) {
     width: 23rem;
   }
   @media only screen and (max-width: 800px) {
     display: none;
+  }
+  &__logoHolder {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  &__logo {
+    height: 5rem;
   }
 
   &__nav {
@@ -34,10 +43,6 @@
     color: var(--c-gray-md);
     transition: color 0.3s;
 
-    & i {
-      opacity: 0.6;
-    }
-
     &:hover,
     &-active {
       color: var(--c-secondary);
@@ -55,30 +60,39 @@
     transition: all 0.3s ease;
     border: 2px solid transparent;
     &:hover {
-      background-color: var(--c-gray-lighter);
       border: 2px solid var(--c-primary);
     }
   }
 
   &__popup {
     position: absolute;
-    top: -6rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    top: -2rem;
     left: 0;
+    transform: translateY(-100%);
     width: 100%;
-    background-color: var(--c-gray-light);
-    box-shadow: var(--shadow);
+    background-color: var(--c-background);
     border-radius: 2rem;
     overflow: hidden;
   }
 
-  &__logOut {
+  &__popupOption {
     padding: 1.5rem;
+  }
+
+  &__logOut {
     text-align: center;
+
     transition: all 0.3s ease;
 
     &:hover {
-      background-color: var(--c-primary);
-      color: white;
+      color: var(--c-primary);
     }
+  }
+
+  &__darkSwitch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

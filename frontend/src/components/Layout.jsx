@@ -25,7 +25,8 @@ const Layout = ({ children }) => {
       <SideNav />
       <section className="homeScreen__topNav">
         <i onClick={() => setNavVisible(true)} className="fas fa-bars"></i>
-        <div className="logoHolder">
+        <div className="homeScreen__logoHolder">
+          <img className="homeScreen__samiptterLogo" src="/images/logo.png" />
           <Link to="/" className="logo-text">
             Samiptter
           </Link>
@@ -40,8 +41,13 @@ const Layout = ({ children }) => {
           ></div>
         )}
         <nav className={`mobileNav__nav ${navVisible && "visible"}`}>
-          <h1 className="logo-text mb-2">Samiptter</h1>
-          <ul className="mobileNav__links">
+          <div className="homeScreen__logoHolder homeScreen__logoHolder-left">
+            <img className="homeScreen__samiptterLogo" src="/images/logo.png" />
+            <Link to="/" className="logo-text">
+              Samiptter
+            </Link>
+          </div>
+          <ul className="mobileNav__links mt-2">
             <NavLink
               exact
               to="/"
