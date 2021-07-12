@@ -16,6 +16,7 @@ import {
   userLoginReducer,
   userRegisterReducer,
 } from "./reducers/userReducers";
+import { uiThemeReducer } from "./reducers/uiReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -29,14 +30,20 @@ const reducer = combineReducers({
   commentCreate: commentCreateReducer,
   commentDelete: commentDeleteReducer,
   userProfile: getProfileReducer,
+  uiTheme: uiThemeReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
+const darkMode = localStorage.getItem("darkModeOn")
+  ? JSON.parse(localStorage.getItem("darkModeOn"))
+  : null;
+
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
+  uiTheme: { darkMode: darkMode },
 };
 
 const middleware = [thunk];

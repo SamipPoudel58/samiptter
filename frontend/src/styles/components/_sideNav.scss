@@ -74,6 +74,11 @@
     background-color: var(--c-background);
     border-radius: 2rem;
     overflow: hidden;
+    display: none;
+
+    &-visible {
+      display: block;
+    }
   }
 
   &__popupOption {

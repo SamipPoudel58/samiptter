@@ -1,4 +1,4 @@
-:root {
+main {
   --c-primary: #818cf8;
   --c-secondary: #25396f;
   --c-background: #f7faff;
@@ -16,12 +16,12 @@
   --c-formLabel: #25396f;
 }
 
-[class="dark"] {
+main.dark {
   --c-body: #242636;
   --c-background: #1e1e2c;
   --c-tile: #2d2e40;
   --c-black: rgb(218, 214, 214);
-  --c-secondary: #626f92;
+  --c-secondary: #ffb6b9;
   --c-border: #1e1e2c;
   --c-formInput: #2d2e40;
   --c-formLabel: #f9f9f9;
@@ -69,6 +69,12 @@ body {
 }
 
 main {
+  background-color: var(--c-body);
+  // max-height: 100vh;
+}
+
+.mainContainer {
   max-width: 1366px;
   margin: 0 auto;
+  background-color: var(--c-body);
 }

@@ -1,4 +1,7 @@
 .searchScreen {
+  max-height: 100vh;
+  position: relative;
+
   &__form {
     background-color: var(--c-tile);
     padding: 1rem 1rem 1rem 2rem;

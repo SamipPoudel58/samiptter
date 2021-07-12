@@ -57,19 +57,20 @@ const SideNav = () => {
           onClick={() => setPopUp((prevValue) => !prevValue)}
           className="sideNav__profileInfo"
         >
-          {popUp && (
-            <div className="sideNav__popup">
-              <p
-                onClick={logOutHandler}
-                className="sideNav__popupOption sideNav__logOut username-text"
-              >
-                Log Out
-              </p>
-              <div className="sideNav__popupOption sideNav__darkSwitch">
-                <Switch className="sideNav__logOut" />
-              </div>
-            </div>
-          )}
+          <div
+            className={`sideNav__popup ${popUp && "sideNav__popup-visible"}`}
+          >
+            <p
+              onClick={logOutHandler}
+              className="sideNav__popupOption sideNav__logOut username-text"
+            >
+              Log Out
+            </p>
+            {/* <div className="sideNav__popupOption sideNav__darkSwitch">
+              <Switch className="sideNav__logOut" />
+            </div> */}
+          </div>
+
           {userInfo && (
             <ProfileInfo
               name={userInfo.name}
