@@ -20,6 +20,7 @@ import {
   TWEET_LIST_REQUEST,
   TWEET_LIST_RESET,
   TWEET_LIST_SUCCESS,
+  CREATE_TWEET_RESET,
 } from "../constants/tweetConstants";
 
 export const tweetListReducer = (state = { tweets: [] }, action) => {
@@ -82,6 +83,9 @@ export const tweetCreateReducer = (state = {}, action) => {
       };
     case CREATE_TWEET_FAIL:
       return { loading: false, error: action.payload };
+    case CREATE_TWEET_RESET:
+      return {};
+
     default:
       return state;
   }
