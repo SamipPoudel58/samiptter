@@ -213,7 +213,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Tweet not found");
   }
-  if (tweet.user.toString() !== req.user._id.toString()) {
+  if (tweet.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
     res.status(401);
     throw new Error("UnAuthorized User of the tweet");
   }

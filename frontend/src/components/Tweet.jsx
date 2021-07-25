@@ -86,7 +86,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           <span className="subtitle-text">
             {getTimeFromNow(tweet.createdAt)}
           </span>
-          {tweet.user._id === userInfo._id && (
+          {(tweet.user._id === userInfo._id || userInfo.isAdmin) && (
             <i
               onClick={() => setPopup(true)}
               className="fas fa-ellipsis-h tweet__optionIcon"
