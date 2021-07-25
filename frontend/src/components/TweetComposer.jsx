@@ -5,12 +5,13 @@ import { createComment, createTweet } from "../actions/tweetActions";
 const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
-
+  
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setText("")
     if (buttonText === "Comment") {
       return dispatch(createComment(tweet._id, { commentContent: text }));
     }
