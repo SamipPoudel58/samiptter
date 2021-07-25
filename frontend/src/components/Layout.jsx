@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
       <section className="homeScreen__topNav">
         <i onClick={() => setNavVisible(true)} className="fas fa-bars"></i>
         <div className="homeScreen__logoHolder">
-          <img className="homeScreen__samiptterLogo" src="/images/logo.png" />
+          <img className="homeScreen__samiptterLogo" src="/images/logo.png" alt="logo" />
           <Link to="/" className="logo-text">
             Samiptter
           </Link>
@@ -42,7 +42,7 @@ const Layout = ({ children }) => {
         )}
         <nav className={`mobileNav__nav ${navVisible && "visible"}`}>
           <div className="homeScreen__logoHolder homeScreen__logoHolder-left">
-            <img className="homeScreen__samiptterLogo" src="/images/logo.png" />
+            <img className="homeScreen__samiptterLogo" src="/images/logo.png" alt="logo" />
             <Link to="/" className="logo-text">
               Samiptter
             </Link>

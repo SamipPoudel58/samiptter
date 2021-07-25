@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
 import ProfileInfo from "./ProfileInfo";
-import Switch from "./Switch";
+// import Switch from "./Switch";
 import FullLogo from "./FullLogo";
 
 const SideNav = () => {
