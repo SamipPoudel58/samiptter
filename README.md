@@ -28,6 +28,49 @@
 - Node.js
 - MongoDB
 
+## 🚀 Local Development
+
+Run the project in your machine locally.
+
+### Step 1: Clone the repository
+
+Clone the repo locally using:
+
+```sh
+git clone https://github.com/SamipPoudel58/samiptter.git
+```
+
+### Step 2: Install Dependencies
+
+Install dependencies in the root folder
+
+```sh
+cd samiptter
+npm install
+```
+
+Install dependencies in the frontend folder
+
+```sh
+cd frontend
+npm install
+```
+
+### Step 3: Setup Environment Variables
+
+You will need to provide your own `.env` variables, here's how you can do it:
+
+- create a new file `.env` in the root
+- open [.env.EXAMPLE](./.env.EXAMPLE)
+- copy the contents and paste it into your own `.env` file
+- make sure you replace the values with your own valid values
+
+### Step 4: Run the server
+
+```sh
+npm run dev
+```
+
 ## 🙏 Contributing
 
 I'd love if you'd contribute to the project.
@@ -41,7 +84,3 @@ git add .
 git commit -m "feat: added new stuff"
 git push YOUR_REPO_URL BRANCH_NAME
 ```
-
-## 🚀 Local Development
-
-Work In Progress...
