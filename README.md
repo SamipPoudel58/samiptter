@@ -87,4 +87,4 @@ git push YOUR_REPO_URL BRANCH_NAME
 
 ## 💡 Troubleshooting
 
-If you run into errors, try checking out fixes for some frequently occuring errors in the [Troubleshooting Guide](./TROUBLESHOOTING.md)
+If you run into errors, try checking out fixes for some frequently occuring errors in the [Troubleshooting Guide](./TROUBLESHOOT.md)
