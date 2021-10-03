@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
 import ProfileInfo from "./ProfileInfo";
 // import Switch from "./Switch";
 import FullLogo from "./FullLogo";
+import { changeTheme } from "../actions/uiActions";
 
 const SideNav = () => {
   const dispatch = useDispatch();
@@ -14,9 +15,16 @@ const SideNav = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const uiTheme = useSelector((state) => state.uiTheme);
+  const { darkMode } = uiTheme;
+
   const logOutHandler = () => {
     dispatch(logout());
     history.push("/login");
+  };
+
+  const toggleHandler = () => {
+    dispatch(changeTheme(!darkMode));
   };
 
   return (
@@ -52,6 +60,10 @@ const SideNav = () => {
               <i className="fas fa-user mr-1"></i> Profile
             </li>
           </NavLink>
+          <div className="sideNav__themeToggle" onClick={toggleHandler}>
+            <i className={`fas ${darkMode ? "fa-moon" : "fa-sun"} mr-1`}></i>{" "}
+            Theme
+          </div>
         </ul>
         <div
           onClick={() => setPopUp((prevValue) => !prevValue)}

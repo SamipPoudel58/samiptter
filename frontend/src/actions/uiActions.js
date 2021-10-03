@@ -1,11 +1,10 @@
+import { CHANGE_THEME } from "../constants/uiConstants";
+
 export const changeTheme = (theme) => async (dispatch) => {
-  if (theme === false) {
-    localStorage.setItem("darkModeOn", true);
-  } else {
-    localStorage.setItem("darkModeOn", true);
-    dispatch({
-      type: "CHANGE_THEME",
-      payload: theme,
-    });
-  }
+  // TODO: add to local storage
+  localStorage.setItem("darkModeOn", JSON.stringify(theme));
+  dispatch({
+    type: CHANGE_THEME,
+    payload: theme,
+  });
 };

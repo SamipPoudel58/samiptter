@@ -4,6 +4,10 @@
     display: block;
   }
 
+  &__themeIcon {
+    font-size: 1.5rem;
+  }
+
   &__backdrop {
     position: fixed;
     top: 0;

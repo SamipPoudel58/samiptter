@@ -5,6 +5,7 @@ import FollowRecommendation from "../components/FollowRecommendation";
 import ProfileInfo from "../components/ProfileInfo";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
+import { changeTheme } from "../actions/uiActions";
 
 const Layout = ({ children }) => {
   const [navVisible, setNavVisible] = useState(false);
@@ -15,9 +16,16 @@ const Layout = ({ children }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const uiTheme = useSelector((state) => state.uiTheme);
+  const { darkMode } = uiTheme;
+
   const logOutHandler = () => {
     dispatch(logout());
     history.push("/login");
+  };
+
+  const toggleHandler = () => {
+    dispatch(changeTheme(!darkMode));
   };
 
   return (
@@ -26,7 +34,11 @@ const Layout = ({ children }) => {
       <section className="homeScreen__topNav">
         <i onClick={() => setNavVisible(true)} className="fas fa-bars"></i>
         <div className="homeScreen__logoHolder">
-          <img className="homeScreen__samiptterLogo" src="/images/logo.png" alt="logo" />
+          <img
+            className="homeScreen__samiptterLogo"
+            src="/images/logo.png"
+            alt="logo"
+          />
           <Link to="/" className="logo-text">
             Samiptter
           </Link>
@@ -42,7 +54,11 @@ const Layout = ({ children }) => {
         )}
         <nav className={`mobileNav__nav ${navVisible && "visible"}`}>
           <div className="homeScreen__logoHolder homeScreen__logoHolder-left">
-            <img className="homeScreen__samiptterLogo" src="/images/logo.png" alt="logo" />
+            <img
+              className="homeScreen__samiptterLogo"
+              src="/images/logo.png"
+              alt="logo"
+            />
             <Link to="/" className="logo-text">
               Samiptter
             </Link>
@@ -72,6 +88,15 @@ const Layout = ({ children }) => {
             >
               <li>Profile</li>
             </NavLink>
+
+            <div className="sideNav__themeToggle" onClick={toggleHandler}>
+              Theme
+              <i
+                className={`fas ${
+                  !darkMode ? "fa-moon" : "fa-sun"
+                } ml-1 mobileNav__themeIcon`}
+              ></i>{" "}
+            </div>
 
             <li onClick={logOutHandler} className="sideNav__navlink mb-2">
               Log Out
