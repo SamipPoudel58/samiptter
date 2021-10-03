@@ -50,8 +50,8 @@
 
 .rightNav {
   height: 100%;
-
   padding: 0 4rem 0 4rem;
+
   &__wrapper {
     position: absolute;
     top: 0;
@@ -63,6 +63,52 @@
 
     @media only screen and (max-width: 1100px) {
       display: none;
+    }
+  }
+
+  &__showcase {
+    // background-image: linear-gradient(to right bottom, #07163b, #0d4872);
+    background-image: linear-gradient(to right bottom, #28313b, #485461);
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 2rem;
+    // border: 2px solid black;
+    color: white;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    position: relative;
+    transition: transform 0.3s ease;
+
+    &-creator {
+      background-image: linear-gradient(to right top, #eac886, #fce4b3);
+      color: black;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  &__showcaseIntro {
+    margin-bottom: 2rem;
+  }
+
+  &__showcaseImage {
+    height: 3rem;
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    &-creator {
+      height: 3.5rem;
+      border-radius: 50%;
+    }
+  }
+
+  &__showcaseLink {
+    color: white;
+    font-size: 1rem;
+    &-creator {
+      color: black;
     }
   }
 }
