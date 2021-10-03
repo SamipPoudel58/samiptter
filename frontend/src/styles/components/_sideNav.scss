@@ -50,6 +50,26 @@
     }
   }
 
+  &__themeToggle {
+    padding: 2rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: var(--c-gray-md);
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover,
+    &-active {
+      color: var(--c-secondary);
+      background-color: var(--c-background);
+    }
+
+    & > i {
+      transition: all 0.3s;
+    }
+  }
+
   &__profileInfo {
     cursor: pointer;
     user-select: none;
