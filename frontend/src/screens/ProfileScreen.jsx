@@ -9,6 +9,7 @@ import Head from "../components/Head";
 import { getProfile, addFriendAction } from "../actions/userActions";
 import TopBar from "../components/TopBar";
 import { getUsername } from "../utils/getUsername";
+import { Link } from "react-router-dom";
 
 const ProfileScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -72,6 +73,13 @@ const ProfileScreen = ({ history, match }) => {
                       Unfollow
                     </button>
                   )}
+
+                  <Link
+                    to="/profile/edit"
+                    className="profileMain__followBtn primary-btn-alt"
+                  >
+                    Edit
+                  </Link>
                   <h3 className="heading-md text-centered mt-1">{user.name}</h3>
                   <p className="text-centered subtitle-text">
                     {user.name && getUsername(user.name)}

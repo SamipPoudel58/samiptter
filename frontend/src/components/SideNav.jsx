@@ -78,9 +78,6 @@ const SideNav = () => {
             >
               Log Out
             </p>
-            {/* <div className="sideNav__popupOption sideNav__darkSwitch">
-              <Switch className="sideNav__logOut" />
-            </div> */}
           </div>
 
           {userInfo && (

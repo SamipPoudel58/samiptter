@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const Tweet = require("../models/tweetModel");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken.js");
+const { update } = require("../models/userModel");
 
 // @desc Auth user and get token
 // @route POST /api/users/login
@@ -63,6 +64,38 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid User Data");
   }
+});
+
+// @desc Edit user profile details
+// @route PUT /api/users
+// @access Private
+const editUser = asyncHandler(async (req, res) => {
+  const { name, bio, password, image, cover } = req.body;
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User Not Found");
+  }
+
+  user.name = name || user.name;
+  if (password) {
+    user.password = password;
+  }
+  user.bio = bio || user.bio;
+  user.image = image || user.image;
+  user.cover = cover || user.cover;
+
+  const updatedUser = await user.save();
+  res.json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    isAdmin: updatedUser.isAdmin,
+    image: updatedUser.image,
+    cover: updatedUser.cover,
+    friends: updatedUser.friends,
+    token: generateToken(updatedUser._id),
+  });
 });
 
 // @desc Get User Profile
@@ -164,4 +197,5 @@ module.exports = {
   getUserProfile,
   addFriend,
   getRecommendedUser,
+  editUser,
 };
