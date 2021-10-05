@@ -7,6 +7,7 @@ import HomeScreen from "./screens/HomeScreen";
 import TweetScreen from "./screens/TweetScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
+import ProfileEditScreen from "./screens/ProfileEditScreen";
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -18,6 +19,7 @@ function App() {
         <div className="mainContainer">
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
+          <Route path="/profile-edit" component={ProfileEditScreen} exact />
           <Route path="/tweets/:id" component={TweetScreen} />
           <Route path="/profile/:id?" component={ProfileScreen} />
           <Route path="/search" component={SearchScreen} />

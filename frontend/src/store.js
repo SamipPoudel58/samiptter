@@ -11,6 +11,7 @@ import {
 } from "./reducers/tweetReducers";
 import {
   addFriendReducer,
+  editProfileReducer,
   getProfileReducer,
   getRecommendedUsersReducer,
   userLoginReducer,
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   commentCreate: commentCreateReducer,
   commentDelete: commentDeleteReducer,
   userProfile: getProfileReducer,
+  editProfile: editProfileReducer,
   uiTheme: uiThemeReducer,
 });
 

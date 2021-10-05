@@ -19,6 +19,7 @@ const loginUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       friends: user.friends,
+      bio: user.bio,
       image: user.image,
       cover: user.cover,
       token: generateToken(user._id),
@@ -56,6 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       friends: user.friends,
       isAdmin: user.isAdmin,
+      bio: user.bio,
       image: user.image,
       cover: user.cover,
       token: generateToken(user._id),
@@ -89,10 +91,12 @@ const editUser = asyncHandler(async (req, res) => {
   const updatedUser = await user.save();
   res.json({
     _id: updatedUser._id,
+    email: updatedUser.email,
     name: updatedUser.name,
     isAdmin: updatedUser.isAdmin,
     image: updatedUser.image,
     cover: updatedUser.cover,
+    bio: updatedUser.bio,
     friends: updatedUser.friends,
     token: generateToken(updatedUser._id),
   });

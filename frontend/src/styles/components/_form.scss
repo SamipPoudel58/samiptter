@@ -18,6 +18,11 @@
     background-color: var(--c-formInput);
     border-radius: 5px;
     font-family: inherit;
+
+    &-alt {
+      background-color: var(--c-formInput-alt);
+      box-shadow: var(--shadow);
+    }
   }
 
   &__submitBtn {

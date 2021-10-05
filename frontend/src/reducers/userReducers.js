@@ -2,6 +2,10 @@ import {
   ADD_FRIEND_FAIL,
   ADD_FRIEND_REQUEST,
   ADD_FRIEND_SUCCESS,
+  EDIT_PROFILE_FAIL,
+  EDIT_PROFILE_REQUEST,
+  EDIT_PROFILE_RESET,
+  EDIT_PROFILE_SUCCESS,
   GET_PROFILE_FAIL,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -65,6 +69,20 @@ export const getProfileReducer = (
   }
 };
 
+export const editProfileReducer = (state = {}, action) => {
+  switch (action.type) {
+    case EDIT_PROFILE_REQUEST:
+      return { loading: true };
+    case EDIT_PROFILE_SUCCESS:
+      return { loading: false, success: true, userInfo: action.payload };
+    case EDIT_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+    case EDIT_PROFILE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
 export const addFriendReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_FRIEND_REQUEST:

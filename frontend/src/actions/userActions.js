@@ -2,6 +2,9 @@ import axios from "axios";
 import {
   ADD_FRIEND_FAIL,
   ADD_FRIEND_SUCCESS,
+  EDIT_PROFILE_FAIL,
+  EDIT_PROFILE_REQUEST,
+  EDIT_PROFILE_SUCCESS,
   GET_PROFILE_FAIL,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -128,6 +131,47 @@ export const getProfile = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+export const editProfile =
+  (name, bio, image, cover, password) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: EDIT_PROFILE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        "/api/users",
+        { name, bio, image, cover, password },
+        config
+      );
+
+      dispatch({
+        type: EDIT_PROFILE_SUCCESS,
+        payload: data,
+      });
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: EDIT_PROFILE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const addFriendAction = (id) => async (dispatch, getState) => {
   try {

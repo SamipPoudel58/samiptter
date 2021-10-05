@@ -51,8 +51,10 @@
 }
 
 .profile-image {
+  display: block;
   height: 4.5rem;
   width: 4.5rem;
+  object-fit: cover;
   border-radius: 50%;
 }
 

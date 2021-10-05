@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema(
     },
     bio: {
       type: String,
+      default: "I am a user of Samiptter",
     },
     email: {
       type: String,
