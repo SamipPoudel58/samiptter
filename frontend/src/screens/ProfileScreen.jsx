@@ -10,6 +10,8 @@ import { getProfile, addFriendAction } from "../actions/userActions";
 import TopBar from "../components/TopBar";
 import { getUsername } from "../utils/getUsername";
 import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { EDIT_PROFILE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -22,13 +24,21 @@ const ProfileScreen = ({ history, match }) => {
   const addFriend = useSelector((state) => state.addFriend);
   let { error: followError } = addFriend;
 
+  const editProfileData = useSelector((state) => state.editProfile);
+  const { success: editProfileSuccess } = editProfileData;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
       dispatch(getProfile(match.params.id || userInfo._id));
     }
-  }, [history, userInfo, dispatch, match.params.id]);
+
+    if (editProfileSuccess) {
+      toast.success("Profile Edited Successfully");
+      dispatch({ type: EDIT_PROFILE_RESET });
+    }
+  }, [history, userInfo, dispatch, match.params.id, editProfileSuccess]);
 
   const followHandler = (e) => {
     e.preventDefault();
@@ -39,6 +49,13 @@ const ProfileScreen = ({ history, match }) => {
     <div className="profileScreen">
       <Head title={`${user.name ? user.name : "Profile"}`} />
       <Layout>
+        <Toaster
+          toastOptions={{
+            style: {
+              fontSize: "1.6rem",
+            },
+          }}
+        />
         <section className="middle-section">
           {loading ? (
             <Loader />

@@ -38,7 +38,7 @@ const HomeScreen = ({ history }) => {
       dispatch(listTweets());
       if (successDelete) {
         dispatch(listTweets());
-        toast.error("Tweet Deleted Successfully.");
+        toast.success("Tweet Deleted Successfully.");
       }
       if (successTweetCreate) {
         toast.success("Tweet Created Successfully.");

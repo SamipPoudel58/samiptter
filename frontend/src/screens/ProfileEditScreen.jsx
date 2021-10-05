@@ -32,7 +32,7 @@ const ProfileEditScreen = ({ history }) => {
       history.push("/login");
     } else {
       setName(userInfo.name);
-      setBio(userInfo.bio);
+      setBio(userInfo.bio || "");
       setImage(userInfo.image);
       setCover(userInfo.cover);
     }
@@ -41,10 +41,6 @@ const ProfileEditScreen = ({ history }) => {
       dispatch({ type: USER_LOGIN_SUCCESS, payload: newUserInfo });
       history.push("/profile");
     }
-
-    return () => {
-      dispatch({ type: EDIT_PROFILE_RESET });
-    };
   }, [history, userInfo, success]);
 
   const submitHandler = (e) => {
