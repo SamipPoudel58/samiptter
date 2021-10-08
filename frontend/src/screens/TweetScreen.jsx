@@ -49,7 +49,7 @@ const TweetScreen = ({ match, history }) => {
     <div className="tweetScreen">
       <Head title={`Post by ${tweet.user.name ? tweet.user.name : "user"}`} />
       <Layout>
-        <section className="mainTweet middle-section">
+        <section className="mainTweet newsFeed">
           {loading ? (
             <Loader />
           ) : error ? (
