@@ -59,9 +59,9 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
               {getTimeFromNow(tweet.createdAt)}
             </span>
           </section>
-          <Link to={`/tweets/${tweet._id}`}>
-            <section className="tweet__content">{tweet.tweetContent}</section>
-          </Link>
+
+          <section className="tweet__content">{tweet.tweetContent}</section>
+
           <section className="tweet__actions">
             <div className="tweet__like" onClick={likeHandler}>
               <i
