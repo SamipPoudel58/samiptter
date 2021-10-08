@@ -56,7 +56,7 @@ const ProfileScreen = ({ history, match }) => {
             },
           }}
         />
-        <section className="middle-section">
+        <section className="newsFeed">
           {loading ? (
             <Loader />
           ) : error ? (
@@ -91,12 +91,14 @@ const ProfileScreen = ({ history, match }) => {
                     </button>
                   )}
 
-                  <Link
-                    to="/profile-edit"
-                    className="profileMain__followBtn primary-btn-alt"
-                  >
-                    Edit
-                  </Link>
+                  {history.location.pathname === "/profile" && (
+                    <Link
+                      to="/profile-edit"
+                      className="profileMain__followBtn primary-btn-alt"
+                    >
+                      Edit
+                    </Link>
+                  )}
                   <h3 className="heading-md text-centered mt-1">{user.name}</h3>
                   <p className="text-centered subtitle-text">
                     {user.name && getUsername(user.name)}

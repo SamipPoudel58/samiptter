@@ -50,7 +50,7 @@ const SearchScreen = ({ history }) => {
     <div className="searchScreen">
       <Head title="Search" />
       <Layout>
-        <section className="middle-section">
+        <section className="newsFeed">
           <div className="searchScreen__searchbar">
             <form
               onSubmit={submitHandler}
