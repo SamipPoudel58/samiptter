@@ -101,7 +101,8 @@ const Layout = ({ children }) => {
             <li onClick={logOutHandler} className="sideNav__navlink mb-2">
               Log Out
             </li>
-
+          </ul>
+          <div className="ml-1">
             {userInfo && (
               <ProfileInfo
                 name={userInfo.name}
@@ -110,7 +111,7 @@ const Layout = ({ children }) => {
                 link={false}
               />
             )}
-          </ul>
+          </div>
         </nav>
       </div>
       {children}
