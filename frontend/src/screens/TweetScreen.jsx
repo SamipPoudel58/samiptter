@@ -25,7 +25,7 @@ const TweetScreen = ({ match, history }) => {
   const commentDelete = useSelector((state) => state.commentDelete);
   const { error: errorDelete, success: successDelete } = commentDelete;
 
-  const reversedComments = [...tweet.comments].reverse();
+  // const reversedComments = [...tweet.comments].reverse();
 
   useEffect(() => {
     if (!userInfo) {
@@ -81,7 +81,7 @@ const TweetScreen = ({ match, history }) => {
                   </h3>
                 </div>
                 <div className="commentSection__comments">
-                  {reversedComments.map((comment) => (
+                  {tweet.comments.map((comment) => (
                     <Comment
                       mainTweetId={tweet._id}
                       tweet={comment}
