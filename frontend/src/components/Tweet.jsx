@@ -61,11 +61,19 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
       )}
 
       <div className="tweet__profilePic">
-        <img
-          className="profile-image"
-          src={tweet.user.image}
-          alt={"profile picture of" + tweet.user.name}
-        />
+        <Link
+          to={
+            userInfo._id === tweet.user._id
+              ? "/profile"
+              : `/profile/${tweet.user._id}`
+          }
+        >
+          <img
+            className="profile-image"
+            src={tweet.user.image}
+            alt={"profile picture of" + tweet.user.name}
+          />
+        </Link>
       </div>
       <div className="tweet__details">
         <section className="tweet__info">
