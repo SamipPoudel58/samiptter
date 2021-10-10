@@ -101,9 +101,14 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
             ></i>
           )}
         </section>
-        <Link to={`/tweets/${tweet._id}`}>
+
+        {major ? (
           <section className="tweet__content">{tweet.tweetContent}</section>
-        </Link>
+        ) : (
+          <Link to={`/tweets/${tweet._id}`}>
+            <section className="tweet__content">{tweet.tweetContent}</section>
+          </Link>
+        )}
         <section className="tweet__actions">
           <div className="tweet__like" onClick={likeHandler}>
             <i

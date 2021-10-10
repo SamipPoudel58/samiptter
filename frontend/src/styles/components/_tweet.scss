@@ -79,7 +79,7 @@
 
   &__popup {
     position: absolute;
-    background-color: var(--c-tile);
+    background-color: var(--c-background);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     top: 2rem;
@@ -92,9 +92,11 @@
     padding: 1.5rem 2rem;
     font-size: 1.4rem;
     cursor: pointer;
+    color: var(--c-black);
 
     &:hover {
-      background-color: var(--c-background);
+      background-color: var(--c-black);
+      color: var(--c-background);
     }
   }
 }
