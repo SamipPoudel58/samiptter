@@ -31,6 +31,9 @@ const HomeScreen = ({ history }) => {
   const tweetDelete = useSelector((state) => state.tweetDelete);
   let { success: successDelete } = tweetDelete;
 
+  const uiTheme = useSelector((state) => state.uiTheme);
+  const { darkMode } = uiTheme;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -38,10 +41,10 @@ const HomeScreen = ({ history }) => {
       dispatch(listTweets());
       if (successDelete) {
         dispatch(listTweets());
-        toast.success("Tweet Deleted Successfully.");
+        toast.success("Post Deleted Successfully.");
       }
       if (successTweetCreate) {
-        toast.success("Tweet Created Successfully.");
+        toast.success("Post Created Successfully.");
       }
 
       const socket = openSocket("/");
@@ -63,11 +66,21 @@ const HomeScreen = ({ history }) => {
       <Head title="Home" />
       <Layout>
         <Toaster
-          toastOptions={{
-            style: {
-              fontSize: "1.6rem",
-            },
-          }}
+          toastOptions={
+            darkMode
+              ? {
+                  style: {
+                    fontSize: "1.6rem",
+                    background: "#333",
+                    color: "#fff",
+                  },
+                }
+              : {
+                  style: {
+                    fontSize: "1.6rem",
+                  },
+                }
+          }
         />
         <section className="newsFeed">
           <TweetComposer buttonText="Post" />

@@ -27,6 +27,9 @@ const ProfileScreen = ({ history, match }) => {
   const editProfileData = useSelector((state) => state.editProfile);
   const { success: editProfileSuccess } = editProfileData;
 
+  const uiTheme = useSelector((state) => state.uiTheme);
+  const { darkMode } = uiTheme;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -50,11 +53,21 @@ const ProfileScreen = ({ history, match }) => {
       <Head title={`${user.name ? user.name : "Profile"}`} />
       <Layout>
         <Toaster
-          toastOptions={{
-            style: {
-              fontSize: "1.6rem",
-            },
-          }}
+          toastOptions={
+            darkMode
+              ? {
+                  style: {
+                    fontSize: "1.6rem",
+                    background: "#333",
+                    color: "#fff",
+                  },
+                }
+              : {
+                  style: {
+                    fontSize: "1.6rem",
+                  },
+                }
+          }
         />
         <section className="newsFeed">
           {loading ? (
