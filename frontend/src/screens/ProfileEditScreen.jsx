@@ -24,6 +24,9 @@ const ProfileEditScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userProfile = useSelector((state) => state.userProfile);
+  let { user } = userProfile;
+
   const editProfileData = useSelector((state) => state.editProfile);
   const { loading, userInfo: newUserInfo, success, error } = editProfileData;
 
@@ -31,10 +34,10 @@ const ProfileEditScreen = ({ history }) => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      setName(userInfo.name);
-      setBio(userInfo.bio || "");
-      setImage(userInfo.image);
-      setCover(userInfo.cover);
+      setName(user.name);
+      setBio(user.bio || "");
+      setImage(user.image);
+      setCover(user.cover);
     }
 
     if (success) {
