@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Tweet from "../components/Tweet";
 import Message from "../components/Message";
@@ -14,6 +14,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { EDIT_PROFILE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = ({ history, match }) => {
+  const [preview, setPreview] = useState(false);
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -69,6 +70,27 @@ const ProfileScreen = ({ history, match }) => {
                 }
           }
         />
+        {preview && (
+          <>
+            <div
+              onClick={() => setPreview(false)}
+              className="tweet__backDrop tweet__backDrop-dark"
+            ></div>
+            <i
+              onClick={() => setPreview(false)}
+              className="fas fa-times profileMain__previewClose"
+            ></i>
+            <img
+              className={`profileMain__popupImage ${
+                preview === "cover"
+                  ? "profileMain__popupImage-cover"
+                  : "profileMain__popupImage-profile"
+              }`}
+              src={preview === "cover" ? user.cover : user.image}
+              alt="user profile"
+            />
+          </>
+        )}
         <section className="newsFeed">
           {loading ? (
             <Loader />
@@ -79,11 +101,19 @@ const ProfileScreen = ({ history, match }) => {
               <TopBar title={user.name} />
               <div className="profileMain mt-2">
                 <div className="profileMain__cover">
-                  <img src={user.cover} alt={`${user.name}'s cover`} />
+                  <img
+                    onClick={() => setPreview("cover")}
+                    src={user.cover}
+                    alt={`${user.name}'s cover`}
+                  />
                 </div>
                 <div className="profileMain__details shadow">
                   <div className="profileMain__profilePic">
-                    <img src={user.image} alt={`${user.name}'s profile`} />
+                    <img
+                      onClick={() => setPreview("image")}
+                      src={user.image}
+                      alt={`${user.name}'s profile`}
+                    />
                   </div>
 
                   {match.params.id && !user.isFriend && (

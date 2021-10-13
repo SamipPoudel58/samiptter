@@ -5,6 +5,7 @@
 
 .profileMain {
   &__cover {
+    cursor: pointer;
     & > img {
       display: block;
       width: 100%;
@@ -17,6 +18,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     & > img {
       display: block;
       height: 13rem;
@@ -35,6 +37,38 @@
     border-radius: 2rem;
     padding: 0 2rem 2rem;
     margin-top: -2rem;
+  }
+
+  &__popupImage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
+
+    &-profile {
+      height: 70vw;
+      width: 70vw;
+      max-height: 50rem;
+      max-width: 50rem;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    &-cover {
+      width: 100%;
+      max-height: 80vh;
+    }
+  }
+
+  &__previewClose {
+    cursor: pointer;
+    position: absolute;
+    top: 3rem;
+    left: 3rem;
+    color: white;
+    font-size: 3rem;
+    z-index: 11;
   }
 
   &__followBtn {
