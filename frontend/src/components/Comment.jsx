@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { likeComment, deleteComment } from "../actions/tweetActions";
 import { getTimeFromNow } from "../utils/getTimeFromNow";
+import { ReactComponent as Verified } from "../assets/verified.svg";
 
 const Comment = ({ tweet, userInfo, mainTweetId }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -49,6 +50,7 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
               className="tweet__username username-text"
             >
               {tweet.user.name}
+              {tweet.user.isAdmin && <Verified className="verified-badge" />}
             </Link>
             <p className="subtitle-text">
               {tweet.user.name &&

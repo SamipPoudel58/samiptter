@@ -16,6 +16,8 @@ const FollowRecommendation = () => {
     users: usersRecommended,
   } = getRecommendedUsers;
 
+  console.log(usersRecommended);
+
   useEffect(() => {
     dispatch(recommendUsers());
   }, [dispatch]);
@@ -40,6 +42,7 @@ const FollowRecommendation = () => {
                 username={user.name}
                 image={user.image}
                 id={user._id}
+                isAdmin={user.isAdmin}
               />
               <Link to={`/profile/${user._id}`} className="primary-btn">
                 Follow

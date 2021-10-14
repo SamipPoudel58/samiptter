@@ -5,5 +5,8 @@
 
   &__name {
     word-break: break-word;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
   }
 }
