@@ -71,6 +71,13 @@
     z-index: 11;
   }
 
+  &__userName {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
   &__followBtn {
     position: absolute;
     top: 2rem;

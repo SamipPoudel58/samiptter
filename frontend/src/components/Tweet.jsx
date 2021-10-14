@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteTweet, likeTweet } from "../actions/tweetActions";
 import { getUsername } from "../utils/getUsername";
 import { getTimeFromNow } from "../utils/getTimeFromNow";
+import { ReactComponent as Verified } from "../assets/verified.svg";
 
 const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -86,7 +87,9 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
             className="tweet__username username-text"
           >
             {tweet.user.name}
+            {tweet.user.isAdmin && <Verified className="verified-badge" />}
           </Link>
+
           <p className="subtitle-text">
             {tweet.user.name && getUsername(tweet.user.name)}
           </p>

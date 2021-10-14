@@ -20,6 +20,12 @@
     gap: 0.5rem;
   }
 
+  &__username {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
   &__content {
     font-family: "Open Sans";
     font-size: 1.4rem;

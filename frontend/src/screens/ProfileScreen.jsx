@@ -12,6 +12,7 @@ import { getUsername } from "../utils/getUsername";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { EDIT_PROFILE_RESET } from "../constants/userConstants";
+import { ReactComponent as Verified } from "../assets/verified.svg";
 
 const ProfileScreen = ({ history, match }) => {
   const [preview, setPreview] = useState(false);
@@ -142,7 +143,12 @@ const ProfileScreen = ({ history, match }) => {
                       Edit
                     </Link>
                   )}
-                  <h3 className="heading-md text-centered mt-1">{user.name}</h3>
+                  <h3 className="profileMain__userName heading-md text-centered mt-1">
+                    {user.name}{" "}
+                    {user.isAdmin && (
+                      <Verified className="verified-badge verified-badge-lg" />
+                    )}
+                  </h3>
                   <p className="text-centered subtitle-text">
                     {user.name && getUsername(user.name)}
                   </p>

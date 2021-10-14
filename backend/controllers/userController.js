@@ -134,7 +134,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     isFriend,
   };
   const tweets = await Tweet.find({ user: id })
-    .populate("user", "id name image")
+    .populate("user", "id name image isAdmin")
     .sort({ createdAt: -1 });
   res.json({ user: userData, tweets });
 });
