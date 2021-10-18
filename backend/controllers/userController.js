@@ -140,6 +140,22 @@ const getUserProfile = asyncHandler(async (req, res) => {
   const tweets = await Tweet.find({ user: id })
     .populate("user", "id name image isAdmin isVerified")
     .sort({ createdAt: -1 });
+
+  const tweetsLikedByUser = await Tweet.find(
+    {
+      "likes.user": req.user._id,
+    },
+    "_id"
+  );
+
+  tweets.forEach((tweet) => {
+    tweetsLikedByUser.forEach((t) => {
+      if (t._id.toString() === tweet._id.toString()) {
+        tweet.isLiked = true;
+      }
+    });
+  });
+
   res.json({ user: userData, tweets });
 });
 
