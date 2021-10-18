@@ -8,6 +8,7 @@ const users = [
     password: bcrypt.hashSync("123456", 10),
     image: "/images/1.jpg",
     isAdmin: true,
+    isVerified: true,
   },
   {
     name: "John Doe",

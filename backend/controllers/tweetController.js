@@ -15,7 +15,7 @@ const getAllTweets = asyncHandler(async (req, res) => {
       }
     : {};
   let tweets = await Tweet.find({ ...keyword })
-    .populate("user", "id name image isAdmin")
+    .populate("user", "id name image isAdmin isVerified")
     .sort({ createdAt: -1 });
 
   const tweetsLikedByUser = await Tweet.find(
@@ -40,8 +40,8 @@ const getAllTweets = asyncHandler(async (req, res) => {
 // @access Private
 const getTweetById = asyncHandler(async (req, res) => {
   let tweet = await Tweet.findById(req.params.id)
-    .populate("user", "id name image isAdmin")
-    .populate("comments.user", "id name image isAdmin");
+    .populate("user", "id name image isAdmin isVerified")
+    .populate("comments.user", "id name image isAdmin isVerified");
   if (tweet) {
     const tweetsLikedByUser = await Tweet.find(
       {

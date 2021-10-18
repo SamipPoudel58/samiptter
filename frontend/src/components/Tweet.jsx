@@ -32,7 +32,6 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   };
 
   const tweetDeleteHandler = () => {
-    console.log("delete button clicked");
     setPopup(false);
     dispatch(deleteTweet(tweet._id));
     if (location.pathname !== "/") {
@@ -87,7 +86,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
             className="tweet__username username-text"
           >
             {tweet.user.name}
-            {tweet.user.isAdmin && <Verified className="verified-badge" />}
+            {tweet.user.isVerified && <Verified className="verified-badge" />}
           </Link>
 
           <p className="subtitle-text">

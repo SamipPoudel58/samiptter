@@ -18,6 +18,7 @@ const loginUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isVerified: user.isVerified,
       friends: user.friends,
       bio: user.bio,
       image: user.image,
@@ -57,6 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       friends: user.friends,
       isAdmin: user.isAdmin,
+      isVerified: user.isVerified,
       bio: user.bio,
       image: user.image,
       cover: user.cover,
@@ -94,6 +96,7 @@ const editUser = asyncHandler(async (req, res) => {
     email: updatedUser.email,
     name: updatedUser.name,
     isAdmin: updatedUser.isAdmin,
+    isVerified: updatedUser.isVerified,
     image: updatedUser.image,
     cover: updatedUser.cover,
     bio: updatedUser.bio,
@@ -128,13 +131,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
     email: user.email,
     friends: user.friends,
     isAdmin: user.isAdmin,
+    isVerified: user.isVerified,
     image: user.image,
     cover: user.cover,
     bio: user.bio,
     isFriend,
   };
   const tweets = await Tweet.find({ user: id })
-    .populate("user", "id name image isAdmin")
+    .populate("user", "id name image isAdmin isVerified")
     .sort({ createdAt: -1 });
   res.json({ user: userData, tweets });
 });

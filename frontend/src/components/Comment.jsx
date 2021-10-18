@@ -50,7 +50,7 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
               className="tweet__username username-text"
             >
               {tweet.user.name}
-              {tweet.user.isAdmin && <Verified className="verified-badge" />}
+              {tweet.user.isVerified && <Verified className="verified-badge" />}
             </Link>
             <p className="subtitle-text">
               {tweet.user.name &&

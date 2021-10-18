@@ -2,8 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 
-const ProfileInfo = ({ image, id, name, username, isAdmin, link = true }) => {
-  console.log(name, isAdmin);
+const ProfileInfo = ({
+  image,
+  id,
+  name,
+  username,
+  isAdmin,
+  isVerified,
+  link = true,
+}) => {
   return (
     <div className="profileInfo">
       <div className="profileInfo__imageHolder">
@@ -19,11 +26,11 @@ const ProfileInfo = ({ image, id, name, username, isAdmin, link = true }) => {
             to={`/profile/${id}`}
             className="profileInfo__name username-text"
           >
-            {name} {isAdmin && <Verified className="verified-badge" />}
+            {name} {isVerified && <Verified className="verified-badge" />}
           </Link>
         ) : (
           <p className="profileInfo__name username-text">
-            {name} {isAdmin && <Verified className="verified-badge" />}
+            {name} {isVerified && <Verified className="verified-badge" />}
           </p>
         )}
         <p className="profileInfo__more subtitle-text">
