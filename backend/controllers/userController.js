@@ -215,6 +215,31 @@ const getRecommendedUser = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
+// @desc Verify a  user
+// @route Get /api/user/verify/:id
+// @access Private
+const verifyUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User Not Found");
+  }
+  let msg = "";
+  if (user.isVerified) {
+    user.isVerified = false;
+    msg = "Unverified";
+  } else {
+    user.isVerified = true;
+    msg = "Verified";
+  }
+
+  await user.save();
+  res.json({ message: `User is now ${msg}` });
+});
+
 module.exports = {
   loginUser,
   registerUser,
@@ -222,4 +247,5 @@ module.exports = {
   addFriend,
   getRecommendedUser,
   editUser,
+  verifyUser,
 };
