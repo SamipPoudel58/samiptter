@@ -122,7 +122,7 @@ const Layout = ({ children }) => {
           <a
             href="https://github.com/SamipPoudel58/samiptter"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             <article className="rightNav__showcase">
               <p className="rightNav__showcaseIntro">
@@ -137,7 +137,11 @@ const Layout = ({ children }) => {
             </article>
           </a>
 
-          <a href="https://samippoudel.com.np" target="_blank" rel="noreferrer">
+          <a
+            href="https://samippoudel.com.np"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <article className="rightNav__showcase rightNav__showcase-creator">
               <p className="rightNav__showcaseIntro rightNav__showcaseIntro-creator">
                 Hi! I am Samip. Check out my other projects.

@@ -20,10 +20,10 @@ const TweetScreen = ({ match, history }) => {
   let { loading, error, tweet } = tweetDetails;
 
   const commentCreate = useSelector((state) => state.commentCreate);
-  const { error: errorComment, success: successComment } = commentCreate;
+  const { success: successComment } = commentCreate;
 
   const commentDelete = useSelector((state) => state.commentDelete);
-  const { error: errorDelete, success: successDelete } = commentDelete;
+  const { success: successDelete } = commentDelete;
 
   // const reversedComments = [...tweet.comments].reverse();
 
@@ -96,48 +96,6 @@ const TweetScreen = ({ match, history }) => {
         </section>
       </Layout>
     </div>
-    // <>
-    //   <Row>
-    //     <Col>
-    //       <SideNav />
-    //     </Col>
-    //     <Col className="newsFeed" md={6}>
-    //       {loading ? (
-    //         <Loader />
-    //       ) : error ? (
-    //         <Message variant="danger">{error}</Message>
-    //       ) : (
-    //         <>
-    //           <Row className="p-3 u-line">
-    //             <BackButton />
-    //             <span className="ml-3 go-back-heading">Tweet</span>
-    //           </Row>
-    //           {errorComment && (
-    //             <Message variant="danger">{errorComment}</Message>
-    //           )}
-    //           {errorDelete && <Message variant="danger">{errorDelete}</Message>}
-    //           <Tweet userInfo={userInfo} tweet={tweet} />
-    //           <TweetComposer tweet={tweet} buttonText="Comment" />
-    //           <Row className="p-3 u-line">
-    //             <i className="far fa-comment-alt"></i>
-    //             <span className="ml-3 go-back-heading">Comments</span>
-    //           </Row>
-    //           {tweet.comments.map((comment) => (
-    //             <Comment
-    //               mainTweetId={tweet._id}
-    //               tweet={comment}
-    //               userInfo={userInfo}
-    //               key={comment._id}
-    //             />
-    //           ))}
-    //         </>
-    //       )}
-    //     </Col>
-    //     <Col>
-    //       <FollowRecommendation />
-    //     </Col>
-    //   </Row>
-    // </>
   );
 };
 

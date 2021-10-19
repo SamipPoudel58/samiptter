@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
 import ProfileInfo from "./ProfileInfo";
-// import Switch from "./Switch";
 import FullLogo from "./FullLogo";
 import { changeTheme } from "../actions/uiActions";
 

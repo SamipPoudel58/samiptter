@@ -12,12 +12,6 @@ const Head = ({ title, ogtitle, description, image, url, typeOfContent }) => {
         name="keyword"
         content="The ultimate social media site of your dreams | Let your social life take off!"
       ></meta>
-
-      {/* <meta property="og:title" content={ogtitle} />
-      <meta property="og:type" content={typeOfContent} />
-      <meta property="og:image" content={image} />
-      <meta property="og:description" content={description} />
-      <meta property="og:url" content={url} /> */}
     </Helmet>
   );
 };

@@ -31,11 +31,6 @@ const SearchScreen = ({ history }) => {
       setSubmitted(false);
       setFinalKeyword("");
     };
-    // else {
-    //   if (keyword !== "") {
-    //     dispatch(listTweets(keyword));
-    //   }
-    // }
   }, [history, userInfo, dispatch]);
 
   const submitHandler = (e) => {
@@ -96,54 +91,6 @@ const SearchScreen = ({ history }) => {
         </section>
       </Layout>
     </div>
-    // <Row>
-    //   <Col>
-    //     <SideNav />
-    //   </Col>
-    //   <Col className="newsFeed" md={6}>
-    //     <Row className="p-3 u-line d-flex align-items-center">
-    //       <BackButton />
-    //       <form
-    //         onSubmit={submitHandler}
-    //         className="searchScreen__searchbar ml-3"
-    //       >
-    //         <i className="fas fa-search"></i>
-    //         <input
-    //           value={keyword}
-    //           onChange={(e) => setKeyword(e.target.value)}
-    //           className="searchScreen__searchbar-input"
-    //           type="text"
-    //         />
-    //       </form>
-    //     </Row>
-    //     {loading ? (
-    //       <Loader />
-    //     ) : error ? (
-    //       <Message variant="danger">{error}</Message>
-    //     ) : (
-    //       <>
-    // {tweets.length > 0 && (
-    //   <Row className="p-3 u-line">
-    //     Search Result for
-    //     <strong className="ml-2 font-weight-bold my-font">{`"${finalKeyword}"`}</strong>
-    //   </Row>
-    // )}
-    //         {tweets.length === 0 && submitted && (
-    //           <Row className="p-3 u-line">
-    //             No results for
-    //             <strong className="ml-2 font-weight-bold my-font">{`"${keyword}"`}</strong>
-    //           </Row>
-    //         )}
-    //         {tweets.map((tweet) => (
-    //           <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
-    //         ))}
-    //       </>
-    //     )}
-    //   </Col>
-    //   <Col>
-    //     <FollowRecommendation />
-    //   </Col>
-    // </Row>
   );
 };
 

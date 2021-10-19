@@ -83,57 +83,6 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
         </div>
       </div>
     </article>
-    // <>
-    //   {tweet && (
-    //     <Row className="py-2 tweet">
-    //       <Col className="pr-0 picture-col">
-    //         <Image
-    //           className="pr-0 profilePic"
-    //           src={tweet.user.image}
-    //           alt={tweet.user.name}
-    //           fluid
-    //         />
-    //       </Col>
-    //       <Col className="pl-0 pt-1" md={10}>
-    //         <Row className="mb-1">
-    //           <strong className="pl-0 font-weight-bold text-primary font-f-os">
-    //             {tweet.user.name}
-    //           </strong>
-
-    //           <span className="text-muted font-weight-bold mx-1 font-f-os">
-    //             .
-    //           </span>
-    //           <span className="text-muted ml-1">
-    //             {dayjs(tweet.createdAt).fromNow(true)}
-    //           </span>
-    //         </Row>
-    //         <Link className="tweetContent" to={`/tweets/${tweet._id}`}>
-    //           <Row className="pr-3">{tweet.tweetContent}</Row>
-    //         </Link>
-    //         <Row className="mt-3">
-    //           <Col
-    //             onClick={likeHandler}
-    //             className="pl-0 d-flex align-items-center likeButton"
-    //           >
-    //             <i
-    //               className={`fs-18 ${like ? "fas fa-heart" : "far fa-heart"}`}
-    //             ></i>
-
-    //             <span className="fs-12 ml-2">{numLikes}</span>
-    //           </Col>
-    //           {tweet.user._id.toString() === userInfo._id && (
-    //             <Col
-    //               onClick={deleteHandler}
-    //               className="pl-0 d-flex align-items-center deleteButton"
-    //             >
-    //               <i className="far fa-trash-alt"></i>
-    //             </Col>
-    //           )}
-    //         </Row>
-    //       </Col>
-    //     </Row>
-    //   )}
-    // </>
   );
 };
 

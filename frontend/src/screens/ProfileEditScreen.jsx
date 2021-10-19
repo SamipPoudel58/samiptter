@@ -6,10 +6,7 @@ import { editProfile } from "../actions/userActions";
 import Head from "../components/Head";
 import Layout from "../components/Layout";
 import TopBar from "../components/TopBar";
-import {
-  EDIT_PROFILE_RESET,
-  USER_LOGIN_SUCCESS,
-} from "../constants/userConstants";
+import { USER_LOGIN_SUCCESS } from "../constants/userConstants";
 
 const ProfileEditScreen = ({ history }) => {
   const [name, setName] = useState("");
@@ -17,7 +14,6 @@ const ProfileEditScreen = ({ history }) => {
   const [image, setImage] = useState("");
   const [cover, setCover] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -44,7 +40,7 @@ const ProfileEditScreen = ({ history }) => {
       dispatch({ type: USER_LOGIN_SUCCESS, payload: newUserInfo });
       history.push("/profile");
     }
-  }, [history, userInfo, success]);
+  }, [history, userInfo, success, dispatch, newUserInfo, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -59,7 +55,6 @@ const ProfileEditScreen = ({ history }) => {
         <section className="middle-section">
           <TopBar title="Edit Your Profile" />
           {error && <Message variant="danger">{error}</Message>}
-          {message && <Message variant="danger">{message}</Message>}
           {loading && <Loader />}
           <form onSubmit={submitHandler}>
             <div className="form__group mt-2">
