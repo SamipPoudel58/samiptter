@@ -41,9 +41,14 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
-const darkMode = localStorage.getItem("darkModeOn")
+let darkMode = false;
+if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+  darkMode = true;
+}
+
+darkMode = localStorage.getItem("darkModeOn")
   ? JSON.parse(localStorage.getItem("darkModeOn"))
-  : false;
+  : darkMode;
 
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
