@@ -14,6 +14,7 @@ import {
   editProfileReducer,
   getProfileReducer,
   getRecommendedUsersReducer,
+  toggleVerifyReducer,
   userLoginReducer,
   userRegisterReducer,
 } from "./reducers/userReducers";
@@ -33,6 +34,7 @@ const reducer = combineReducers({
   userProfile: getProfileReducer,
   editProfile: editProfileReducer,
   uiTheme: uiThemeReducer,
+  toggleVerify: toggleVerifyReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

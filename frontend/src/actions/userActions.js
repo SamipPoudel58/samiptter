@@ -11,6 +11,9 @@ import {
   GET_RECOMMENDED_USERS_FAIL,
   GET_RECOMMENDED_USERS_REQUEST,
   GET_RECOMMENDED_USERS_SUCCESS,
+  TOGGLE_VERIFY_FAIL,
+  TOGGLE_VERIFY_REQUEST,
+  TOGGLE_VERIFY_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -225,6 +228,36 @@ export const recommendUsers = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_RECOMMENDED_USERS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const toggleVerify = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TOGGLE_VERIFY_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.get(`/api/users/verify/${id}`, config);
+    dispatch({
+      type: TOGGLE_VERIFY_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: TOGGLE_VERIFY_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

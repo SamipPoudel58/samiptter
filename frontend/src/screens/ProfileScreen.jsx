@@ -6,12 +6,19 @@ import Loader from "../components/Loader";
 import Layout from "../components/Layout";
 import Head from "../components/Head";
 
-import { getProfile, addFriendAction } from "../actions/userActions";
+import {
+  getProfile,
+  addFriendAction,
+  toggleVerify,
+} from "../actions/userActions";
 import TopBar from "../components/TopBar";
 import { getUsername } from "../utils/getUsername";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import { EDIT_PROFILE_RESET } from "../constants/userConstants";
+import {
+  EDIT_PROFILE_RESET,
+  TOGGLE_VERIFY_RESET,
+} from "../constants/userConstants";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 
 const ProfileScreen = ({ history, match }) => {
@@ -29,6 +36,9 @@ const ProfileScreen = ({ history, match }) => {
   const editProfileData = useSelector((state) => state.editProfile);
   const { success: editProfileSuccess } = editProfileData;
 
+  const toggleVerifyData = useSelector((state) => state.toggleVerify);
+  const { success: toggleVerifySuccess } = toggleVerifyData;
+
   const uiTheme = useSelector((state) => state.uiTheme);
   const { darkMode } = uiTheme;
 
@@ -43,7 +53,19 @@ const ProfileScreen = ({ history, match }) => {
       toast.success("Profile Edited Successfully");
       dispatch({ type: EDIT_PROFILE_RESET });
     }
-  }, [history, userInfo, dispatch, match.params.id, editProfileSuccess]);
+
+    if (toggleVerifySuccess) {
+      toast.success("Verification Changed Successfully");
+      dispatch({ type: TOGGLE_VERIFY_RESET });
+    }
+  }, [
+    history,
+    userInfo,
+    dispatch,
+    match.params.id,
+    editProfileSuccess,
+    toggleVerifySuccess,
+  ]);
 
   const followHandler = (e) => {
     e.preventDefault();
@@ -161,6 +183,19 @@ const ProfileScreen = ({ history, match }) => {
                   )}
                 </div>
               </div>
+              {userInfo.isAdmin && (
+                <div className="profileMain__adminPanel mt-2">
+                  <h3 className="username-text">Admin Panel</h3>
+                  <div className="mt-1">
+                    <button
+                      onClick={() => dispatch(toggleVerify(user._id))}
+                      className="primary-btn"
+                    >
+                      {user.isVerified ? "Unverify User" : "Verify User"}
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <div className="profileTweets mt-2 shadow ">
                 <div className="profileTweets__header">
@@ -190,77 +225,6 @@ const ProfileScreen = ({ history, match }) => {
         </section>
       </Layout>
     </div>
-
-    // <Row className="mainRow">
-    //   <Col className="firstCol">
-    //     <SideNav />
-    //   </Col>
-    //   {loading ? (
-    //     <Loader />
-    //   ) : error ? (
-    //     <Message variant="danger">{error}</Message>
-    //   ) : (
-    //     <Col className="newsFeed" md={6}>
-    //       <Row className="p-3 u-line">
-    //         <BackButton />
-    //         <span className="ml-3 go-back-heading">{user.name}</span>
-    //       </Row>
-    //       <Row className="profileScreen__images">
-    //         <Image
-    //           className="profileScreen__coverpic"
-    //           src={user.cover}
-    //           alt={`${user.name} cover photo`}
-    //           fluid
-    //         />
-    //         <Image
-    //           className="profileScreen__profilepic"
-    //           src={user.image}
-    //           alt={`${user.name} profile photo`}
-    //           fluid
-    //         />
-    //       </Row>
-    //       <Row className="profileScreen__details">
-    //         <h4 className="profileScreen__details-name">{user.name}</h4>
-    //         {user.isFriend && <p className="ml-2 text-info">Following</p>}
-    //         {followError && <Message variant="danger">{followError}</Message>}
-
-    //         {match.params.id && !user.isFriend && (
-    //           <button
-    //             onClick={followHandler}
-    //             className="profileScreen__follow ml-auto"
-    //           >
-    //             Follow
-    //           </button>
-    //         )}
-    //         {match.params.id && user.isFriend && (
-    //           <button
-    //             onClick={followHandler}
-    //             className="profileScreen__follow ml-auto"
-    //           >
-    //             Unfollow
-    //           </button>
-    //         )}
-    //       </Row>
-    //       <Row className="profileScreen__details-bio u-line">
-    //         <p>{user.bio}</p>
-    //       </Row>
-    //       <Row className="profileScreen__details-friends flex align-items-center u-line py-2">
-    //         <h4 className="m-0 p-0 my-font font-weight-bold pr-2">
-    //           {user.friends.length}
-    //         </h4>
-    //         Friends
-    //       </Row>
-    //       <Row className="p-3 my-font font-weight-bold u-line">Tweets</Row>
-    //       {tweets.map((tweet) => (
-    //         <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
-    //       ))}
-    //     </Col>
-    //   )}
-
-    //   <Col className="thirdCol">
-    //     <FollowRecommendation />
-    //   </Col>
-    // </Row>
   );
 };
 

@@ -95,6 +95,12 @@
       font-weight: bold;
     }
   }
+
+  &__adminPanel {
+    background-color: var(--c-tile);
+    padding: 2rem;
+    border-radius: 2rem;
+  }
 }
 
 .profileTweets {

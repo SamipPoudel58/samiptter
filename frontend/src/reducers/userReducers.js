@@ -12,6 +12,10 @@ import {
   GET_RECOMMENDED_USERS_FAIL,
   GET_RECOMMENDED_USERS_REQUEST,
   GET_RECOMMENDED_USERS_SUCCESS,
+  TOGGLE_VERIFY_FAIL,
+  TOGGLE_VERIFY_REQUEST,
+  TOGGLE_VERIFY_RESET,
+  TOGGLE_VERIFY_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -110,6 +114,24 @@ export const getRecommendedUsersReducer = (state = { users: [] }, action) => {
       };
     case GET_RECOMMENDED_USERS_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const toggleVerifyReducer = (state = {}, action) => {
+  switch (action.type) {
+    case TOGGLE_VERIFY_REQUEST:
+      return { loading: true };
+    case TOGGLE_VERIFY_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case TOGGLE_VERIFY_FAIL:
+      return { loading: false, error: action.payload };
+    case TOGGLE_VERIFY_RESET:
+      return {};
     default:
       return state;
   }
