@@ -136,7 +136,7 @@ export const getProfile = (id) => async (dispatch, getState) => {
 };
 
 export const editProfile =
-  (name, bio, image, cover, password) => async (dispatch, getState) => {
+  (id, name, bio, image, cover, password) => async (dispatch, getState) => {
     try {
       dispatch({
         type: EDIT_PROFILE_REQUEST,
@@ -155,7 +155,7 @@ export const editProfile =
 
       const { data } = await axios.put(
         "/api/users",
-        { name, bio, image, cover, password },
+        { id, name, bio, image, cover, password },
         config
       );
 

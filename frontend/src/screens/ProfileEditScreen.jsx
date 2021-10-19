@@ -46,7 +46,7 @@ const ProfileEditScreen = ({ history }) => {
     e.preventDefault();
 
     // dispatch edit profile action
-    dispatch(editProfile(name, bio, image, cover, password));
+    dispatch(editProfile(user._id, name, bio, image, cover, password));
   };
   return (
     <div className="profileEditScreen">

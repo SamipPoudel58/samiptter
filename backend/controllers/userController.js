@@ -74,12 +74,23 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route PUT /api/users
 // @access Private
 const editUser = asyncHandler(async (req, res) => {
-  const { name, bio, password, image, cover } = req.body;
-  const user = await User.findById(req.user._id);
+  const { id, name, bio, password, image, cover } = req.body;
+  const user = await User.findById(id);
 
   if (!user) {
     res.status(400);
     throw new Error("User Not Found");
+  }
+
+  let adminIsEditing = false;
+
+  if (req.user._id.toString() !== id.toString() && req.user.isAdmin) {
+    adminIsEditing = true;
+  }
+
+  if (req.user._id.toString() !== id.toString() && !req.user.isAdmin) {
+    res.status(401);
+    throw new Error("Not Authorized, user id is different");
   }
 
   user.name = name || user.name;
@@ -91,18 +102,36 @@ const editUser = asyncHandler(async (req, res) => {
   user.cover = cover || user.cover;
 
   const updatedUser = await user.save();
-  res.json({
-    _id: updatedUser._id,
-    email: updatedUser.email,
-    name: updatedUser.name,
-    isAdmin: updatedUser.isAdmin,
-    isVerified: updatedUser.isVerified,
-    image: updatedUser.image,
-    cover: updatedUser.cover,
-    bio: updatedUser.bio,
-    friends: updatedUser.friends,
-    token: generateToken(updatedUser._id),
-  });
+
+  if (adminIsEditing) {
+    const adminUser = await User.findById(req.user._id);
+    console.log(adminUser);
+    res.json({
+      _id: adminUser._id,
+      name: adminUser.name,
+      email: adminUser.email,
+      isAdmin: adminUser.isAdmin,
+      isVerified: adminUser.isVerified,
+      friends: adminUser.friends,
+      bio: adminUser.bio,
+      image: adminUser.image,
+      cover: adminUser.cover,
+      token: generateToken(adminUser._id),
+    });
+  } else {
+    res.json({
+      _id: updatedUser._id,
+      email: updatedUser.email,
+      name: updatedUser.name,
+      isAdmin: updatedUser.isAdmin,
+      isVerified: updatedUser.isVerified,
+      image: updatedUser.image,
+      cover: updatedUser.cover,
+      bio: updatedUser.bio,
+      friends: updatedUser.friends,
+      token: generateToken(updatedUser._id),
+    });
+  }
 });
 
 // @desc Get User Profile

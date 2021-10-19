@@ -186,13 +186,18 @@ const ProfileScreen = ({ history, match }) => {
               {userInfo.isAdmin && (
                 <div className="profileMain__adminPanel mt-2">
                   <h3 className="username-text">Admin Panel</h3>
-                  <div className="mt-1">
+
+                  <div className="profileMain__adminBtns mt-1">
                     <button
                       onClick={() => dispatch(toggleVerify(user._id))}
                       className="primary-btn"
                     >
                       {user.isVerified ? "Unverify User" : "Verify User"}
                     </button>
+
+                    <Link to="/profile-edit" className="primary-btn">
+                      Edit
+                    </Link>
                   </div>
                 </div>
               )}

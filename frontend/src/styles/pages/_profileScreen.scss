@@ -101,6 +101,12 @@
     padding: 2rem;
     border-radius: 2rem;
   }
+
+  &__adminBtns {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 }
 
 .profileTweets {
