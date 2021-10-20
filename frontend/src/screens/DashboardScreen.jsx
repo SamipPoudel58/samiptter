@@ -21,7 +21,7 @@ const DashboardScreen = ({ history }) => {
   } = getDashboardData;
 
   useEffect(() => {
-    if (!userInfo.isAdmin) {
+    if (!userInfo) {
       history.push("/");
     } else {
       dispatch(getDashboard());
