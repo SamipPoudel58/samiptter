@@ -63,7 +63,7 @@ const SideNav = () => {
             <i className={`fas ${darkMode ? "fa-moon" : "fa-sun"} mr-1`}></i>{" "}
             Theme
           </div>
-          {userInfo.isAdmin && (
+          {userInfo && userInfo.isAdmin && (
             <NavLink
               to="/dashboard"
               className="sideNav__navlink"
