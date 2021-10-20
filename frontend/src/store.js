@@ -19,6 +19,7 @@ import {
   userRegisterReducer,
 } from "./reducers/userReducers";
 import { uiThemeReducer } from "./reducers/uiReducer";
+import { getDashboardReducer } from "./reducers/dashboardReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -35,6 +36,7 @@ const reducer = combineReducers({
   editProfile: editProfileReducer,
   uiTheme: uiThemeReducer,
   toggleVerify: toggleVerifyReducer,
+  getDashboard: getDashboardReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

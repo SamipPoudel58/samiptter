@@ -9,6 +9,7 @@
 @import "components/sideNav";
 @import "components/profileInfo";
 @import "components/followRecommendation";
+@import "components/card";
 @import "components/tweetComposer";
 @import "components/tweet";
 @import "components/topBar";
@@ -17,6 +18,7 @@
 @import "components/switch";
 
 @import "pages/authScreen";
+@import "pages/dashboardScreen";
 @import "pages/homeScreen";
 @import "pages/tweetScreen";
 @import "pages/profileScreen";

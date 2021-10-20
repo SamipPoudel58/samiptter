@@ -59,10 +59,21 @@ const SideNav = () => {
               <i className="fas fa-user mr-1"></i> Profile
             </li>
           </NavLink>
-          <div className="sideNav__themeToggle" onClick={toggleHandler}>
+          <div className="sideNav__themeToggle mb-1" onClick={toggleHandler}>
             <i className={`fas ${darkMode ? "fa-moon" : "fa-sun"} mr-1`}></i>{" "}
             Theme
           </div>
+          {userInfo.isAdmin && (
+            <NavLink
+              to="/dashboard"
+              className="sideNav__navlink"
+              activeClassName="sideNav__navlink-active"
+            >
+              <li>
+                <i className="fas fa-chart-line mr-1"></i> Dashboard
+              </li>
+            </NavLink>
+          )}
         </ul>
         <div
           onClick={() => setPopUp((prevValue) => !prevValue)}

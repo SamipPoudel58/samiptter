@@ -8,6 +8,7 @@ import TweetScreen from "./screens/TweetScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
+import DashboardScreen from "./screens/DashboardScreen";
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -17,6 +18,7 @@ function App() {
     <Router>
       <main className={`${darkMode ? "dark" : ""}`}>
         <div className="mainContainer">
+          <Route path="/dashboard" component={DashboardScreen} />
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
           <Route path="/profile-edit" component={ProfileEditScreen} exact />

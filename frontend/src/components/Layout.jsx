@@ -88,6 +88,14 @@ const Layout = ({ children }) => {
             >
               <li>Profile</li>
             </NavLink>
+            <NavLink
+              exact
+              to="/dashboard"
+              className="sideNav__navlink mb-1"
+              activeClassName="sideNav__navlink-active"
+            >
+              <li>Dashboard</li>
+            </NavLink>
 
             <div className="sideNav__themeToggle" onClick={toggleHandler}>
               Theme

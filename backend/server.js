@@ -3,6 +3,7 @@ const path = require("path");
 const cors = require("cors");
 const userRoute = require("./routes/userRoute");
 const tweetRoute = require("./routes/tweetRoute");
+const dashboardRoute = require("./routes/dashboardRoute");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const { errorHandler, notFound } = require("./middleware/errorMiddleware");
@@ -20,6 +21,7 @@ app.use(cors());
 
 app.use("/api/users", userRoute);
 app.use("/api/tweets", tweetRoute);
+app.use("/api/dashboard", dashboardRoute);
 
 const rootdir = path.resolve();
 // serving the frontend
