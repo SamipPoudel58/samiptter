@@ -10,6 +10,7 @@ import Head from "../components/Head";
 import Layout from "../components/Layout";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import { listUsers } from "../actions/userActions";
+import { LIST_USERS_RESET } from "../constants/userConstants";
 
 const SearchScreen = ({ history }) => {
   const [keyword, setKeyword] = useState("");
@@ -33,6 +34,7 @@ const SearchScreen = ({ history }) => {
     }
     return () => {
       dispatch({ type: TWEET_LIST_RESET });
+      dispatch({ type: LIST_USERS_RESET });
       setKeyword("");
       setSubmitted(false);
       setFinalKeyword("");
@@ -109,7 +111,7 @@ const SearchScreen = ({ history }) => {
                 </p>
               )}
 
-              {activeTab === "Users" && (
+              {activeTab === "Users" && users && users.length > 0 && (
                 <div className="searchScreen__userList shadow">
                   {users.map((user) => (
                     <div key={user._id} className="mb-2">
