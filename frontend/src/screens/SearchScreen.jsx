@@ -99,22 +99,28 @@ const SearchScreen = ({ history }) => {
                 </div>
               </div>
 
-              {tweets.length > 0 && (
+              {(tweets.length > 0 || users.length > 0) && (
                 <p className="searchScreen__info">
                   Search Results for <span>{`" ${finalKeyword} "`}</span>
                 </p>
               )}
 
-              {tweets.length === 0 && submitted && (
+              {activeTab === "Posts" && tweets.length === 0 && submitted && (
                 <p className="searchScreen__info">
-                  No Results for <span>{`" ${finalKeyword} "`}</span>
+                  No Posts for <span>{`" ${finalKeyword} "`}</span>
+                </p>
+              )}
+
+              {activeTab === "Users" && users.length === 0 && submitted && (
+                <p className="searchScreen__info">
+                  No Users for <span>{`" ${finalKeyword} "`}</span>
                 </p>
               )}
 
               {activeTab === "Users" && users && users.length > 0 && (
                 <div className="searchScreen__userList shadow">
                   {users.map((user) => (
-                    <div key={user._id} className="mb-2">
+                    <div key={user._id}>
                       <ProfileInfo
                         image={user.image}
                         id={user._id}
@@ -123,7 +129,6 @@ const SearchScreen = ({ history }) => {
                         isVerified={user.isVerified}
                         bio={user.bio}
                       />
-                      {/* <p className="paragraph">{user.bio}</p> */}
                     </div>
                   ))}
                 </div>

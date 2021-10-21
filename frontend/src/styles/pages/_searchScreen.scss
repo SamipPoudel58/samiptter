@@ -59,6 +59,9 @@
     background-color: var(--c-tile);
     padding: 2rem;
     border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
   &__info {
