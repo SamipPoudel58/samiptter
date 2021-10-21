@@ -1,12 +1,16 @@
 .profileInfo {
   display: flex;
   gap: 1rem;
-  align-items: center;
+  align-items: flex-start;
 
   &__name {
     word-break: break-word;
     display: flex;
     align-items: center;
     gap: 0.3rem;
+  }
+
+  &__bio {
+    margin-top: 0.5rem;
   }
 }

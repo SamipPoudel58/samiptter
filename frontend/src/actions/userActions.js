@@ -11,6 +11,9 @@ import {
   GET_RECOMMENDED_USERS_FAIL,
   GET_RECOMMENDED_USERS_REQUEST,
   GET_RECOMMENDED_USERS_SUCCESS,
+  LIST_USERS_FAIL,
+  LIST_USERS_REQUEST,
+  LIST_USERS_SUCCESS,
   TOGGLE_VERIFY_FAIL,
   TOGGLE_VERIFY_REQUEST,
   TOGGLE_VERIFY_SUCCESS,
@@ -101,6 +104,38 @@ export const register = (name, email, password) => async (dispatch) => {
     });
   }
 };
+
+export const listUsers =
+  (keyword = "") =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: LIST_USERS_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/users?keyword=${keyword}`, config);
+      dispatch({
+        type: LIST_USERS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: LIST_USERS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const getProfile = (id) => async (dispatch, getState) => {
   try {

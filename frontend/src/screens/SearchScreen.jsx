@@ -5,14 +5,17 @@ import { ReactComponent as SearchIcon } from "../assets/search.svg";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Tweet from "../components/Tweet";
+import ProfileInfo from "../components/ProfileInfo";
 import Head from "../components/Head";
 import Layout from "../components/Layout";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
+import { listUsers } from "../actions/userActions";
 
 const SearchScreen = ({ history }) => {
   const [keyword, setKeyword] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [finalKeyword, setFinalKeyword] = useState("");
+  const [activeTab, setActiveTab] = useState("Posts");
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -20,6 +23,9 @@ const SearchScreen = ({ history }) => {
 
   const tweetList = useSelector((state) => state.tweetList);
   let { loading, error, tweets } = tweetList;
+
+  const userList = useSelector((state) => state.userList);
+  let { users } = userList;
 
   useEffect(() => {
     if (!userInfo) {
@@ -38,7 +44,10 @@ const SearchScreen = ({ history }) => {
     if (keyword !== "") {
       setFinalKeyword(keyword);
       setSubmitted(true);
+
       dispatch(listTweets(keyword));
+
+      dispatch(listUsers(keyword));
     }
   };
   return (
@@ -69,6 +78,25 @@ const SearchScreen = ({ history }) => {
             <Message variant="danger">{error}</Message>
           ) : (
             <>
+              <div className="searchScreen__type border-b">
+                <div
+                  onClick={() => setActiveTab("Posts")}
+                  className={`searchScreen__option ${
+                    activeTab === "Posts" && "searchScreen__option-active"
+                  }`}
+                >
+                  Posts
+                </div>
+                <div
+                  onClick={() => setActiveTab("Users")}
+                  className={`searchScreen__option ${
+                    activeTab === "Users" && "searchScreen__option-active"
+                  }`}
+                >
+                  Users
+                </div>
+              </div>
+
               {tweets.length > 0 && (
                 <p className="searchScreen__info">
                   Search Results for <span>{`" ${finalKeyword} "`}</span>
@@ -81,11 +109,30 @@ const SearchScreen = ({ history }) => {
                 </p>
               )}
 
-              {tweets.map((tweet) => (
-                <div key={tweet._id} className="mb-2">
-                  <Tweet userInfo={userInfo} tweet={tweet} />
+              {activeTab === "Users" && (
+                <div className="searchScreen__userList shadow">
+                  {users.map((user) => (
+                    <div key={user._id} className="mb-2">
+                      <ProfileInfo
+                        image={user.image}
+                        id={user._id}
+                        name={user.name}
+                        username={user.name}
+                        isVerified={user.isVerified}
+                        bio={user.bio}
+                      />
+                      {/* <p className="paragraph">{user.bio}</p> */}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
+
+              {activeTab === "Posts" &&
+                tweets.map((tweet) => (
+                  <div key={tweet._id} className="mb-2">
+                    <Tweet userInfo={userInfo} tweet={tweet} />
+                  </div>
+                ))}
             </>
           )}
         </section>

@@ -23,6 +23,10 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  LIST_USERS_FAIL,
+  LIST_USERS_REQUEST,
+  LIST_USERS_SUCCESS,
+  LIST_USERS_RESET,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -48,6 +52,26 @@ export const userRegisterReducer = (state = {}, action) => {
       return { loading: false, userInfo: action.payload };
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userListReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case LIST_USERS_REQUEST:
+      return { loading: true, users: [] };
+    case LIST_USERS_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload,
+      };
+    case LIST_USERS_FAIL:
+      return { loading: false, error: action.payload };
+    case LIST_USERS_RESET:
+      return {
+        users: [],
+      };
     default:
       return state;
   }

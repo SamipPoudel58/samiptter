@@ -7,6 +7,7 @@ const ProfileInfo = ({
   id,
   name,
   username,
+  bio,
   isAdmin,
   isVerified,
   link = true,
@@ -38,6 +39,7 @@ const ProfileInfo = ({
             ? "@" + username.toLowerCase().replace(" ", "")
             : "Logged In"}
         </p>
+        {bio && <p className="profileInfo__bio paragraph">{bio}</p>}
       </div>
     </div>
   );

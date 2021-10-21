@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 const io = require("../socket");
 
 // @desc Get all tweets
-// @route DELETE /api/tweets
+// @route GET /api/tweets
 // @access Private
 const getAllTweets = asyncHandler(async (req, res) => {
   const keyword = req.query.keyword

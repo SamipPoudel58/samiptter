@@ -15,6 +15,7 @@ import {
   getProfileReducer,
   getRecommendedUsersReducer,
   toggleVerifyReducer,
+  userListReducer,
   userLoginReducer,
   userRegisterReducer,
 } from "./reducers/userReducers";
@@ -27,6 +28,7 @@ const reducer = combineReducers({
   addFriend: addFriendReducer,
   getRecommendedUsers: getRecommendedUsersReducer,
   tweetList: tweetListReducer,
+  userList: userListReducer,
   tweetDetails: tweetDetailsReducer,
   tweetCreate: tweetCreateReducer,
   tweetDelete: tweetDeleteReducer,

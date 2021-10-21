@@ -70,6 +70,26 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get users list
+// @route GET /api/users
+// @access Private
+const getUsersList = asyncHandler(async (req, res) => {
+  console.log(req.query.keyword);
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i", // case insensitive
+        },
+      }
+    : {};
+  let users = await User.find({ ...keyword })
+    .select("-password -email")
+    .sort({ createdAt: -1 });
+
+  res.json(users);
+});
+
 // @desc Edit user profile details
 // @route PUT /api/users
 // @access Private
@@ -277,4 +297,5 @@ module.exports = {
   getRecommendedUser,
   editUser,
   verifyUser,
+  getUsersList,
 };
