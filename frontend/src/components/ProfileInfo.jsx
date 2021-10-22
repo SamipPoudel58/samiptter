@@ -15,11 +15,21 @@ const ProfileInfo = ({
   return (
     <div className="profileInfo">
       <div className="profileInfo__imageHolder">
-        <img
-          className="profileInfo__image profile-image"
-          src={image || "/images/1.jpg"}
-          alt={`${username}'s profile`}
-        />
+        {link ? (
+          <Link to={`/profile/${id}`}>
+            <img
+              className="profileInfo__image profile-image"
+              src={image || "/images/1.jpg"}
+              alt={`${username}'s profile`}
+            />
+          </Link>
+        ) : (
+          <img
+            className="profileInfo__image profile-image"
+            src={image || "/images/1.jpg"}
+            alt={`${username}'s profile`}
+          />
+        )}
       </div>
       <div className="profileInfo__details">
         {link ? (
