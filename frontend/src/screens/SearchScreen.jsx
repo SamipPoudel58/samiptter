@@ -99,23 +99,20 @@ const SearchScreen = ({ history }) => {
                 </div>
               </div>
 
-              {(tweets.length > 0 || users.length > 0) && (
+              {((tweets.length > 0 && activeTab === "Posts") ||
+                (users.length > 0 && activeTab === "Users")) && (
                 <p className="searchScreen__info">
                   Search Results for <span>{`" ${finalKeyword} "`}</span>
                 </p>
               )}
 
-              {activeTab === "Posts" && tweets.length === 0 && submitted && (
-                <p className="searchScreen__info">
-                  No Posts for <span>{`" ${finalKeyword} "`}</span>
-                </p>
-              )}
-
-              {activeTab === "Users" && users.length === 0 && submitted && (
-                <p className="searchScreen__info">
-                  No Users for <span>{`" ${finalKeyword} "`}</span>
-                </p>
-              )}
+              {((tweets.length === 0 && activeTab === "Posts") ||
+                (users.length === 0 && activeTab === "Users")) &&
+                submitted && (
+                  <p className="searchScreen__info">
+                    No Results for <span>{`" ${finalKeyword} "`}</span>
+                  </p>
+                )}
 
               {activeTab === "Users" && users && users.length > 0 && (
                 <div className="searchScreen__userList shadow">
