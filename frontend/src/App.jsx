@@ -9,6 +9,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
 import DashboardScreen from "./screens/DashboardScreen";
+import PageNotFound from "./screens/404-page";
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -26,6 +27,7 @@ function App() {
           <Route path="/profile/:id?" component={ProfileScreen} />
           <Route path="/search" component={SearchScreen} />
           <Route path="/" component={HomeScreen} exact />
+          <Route component={PageNotFound} />
         </div>
       </main>
     </Router>

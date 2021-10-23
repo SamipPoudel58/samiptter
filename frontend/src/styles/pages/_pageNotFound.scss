@@ -1,0 +1,19 @@
+.pageNotFound {
+  height: 100vh;
+  background-color: var(--c-tile);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & > h1 {
+    font-size: 10rem;
+    font-family: 900;
+    color: var(--c-primary);
+  }
+
+  & > p {
+    font-size: 1.6rem;
+    color: var(--c-gray-dark);
+  }
+}
