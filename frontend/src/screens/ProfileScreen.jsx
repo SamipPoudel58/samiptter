@@ -74,7 +74,7 @@ const ProfileScreen = ({ history, match }) => {
   };
   return (
     <div className="profileScreen">
-      <Head title={`${user.name ? user.name : "Profile"}`} />
+      <Head title={`${user && user.name ? user.name : "Profile"}`} />
       <Layout>
         <Toaster
           toastOptions={
@@ -93,34 +93,35 @@ const ProfileScreen = ({ history, match }) => {
                 }
           }
         />
-        {preview && (
-          <>
-            <div
-              onClick={() => setPreview(false)}
-              className="tweet__backDrop tweet__backDrop-dark"
-            ></div>
-            <i
-              onClick={() => setPreview(false)}
-              className="fas fa-times profileMain__previewClose"
-            ></i>
-            <img
-              className={`profileMain__popupImage ${
-                preview === "cover"
-                  ? "profileMain__popupImage-cover"
-                  : "profileMain__popupImage-profile"
-              }`}
-              src={preview === "cover" ? user.cover : user.image}
-              alt="user profile"
-            />
-          </>
-        )}
+
         <section className="newsFeed">
           {loading ? (
             <Loader />
           ) : error ? (
-            <Message variant="danger">{error}</Message>
+            <Message variant="danger">{"Profile Not Found :("}</Message>
           ) : (
             <>
+              {preview && (
+                <>
+                  <div
+                    onClick={() => setPreview(false)}
+                    className="tweet__backDrop tweet__backDrop-dark"
+                  ></div>
+                  <i
+                    onClick={() => setPreview(false)}
+                    className="fas fa-times profileMain__previewClose"
+                  ></i>
+                  <img
+                    className={`profileMain__popupImage ${
+                      preview === "cover"
+                        ? "profileMain__popupImage-cover"
+                        : "profileMain__popupImage-profile"
+                    }`}
+                    src={preview === "cover" ? user.cover : user.image}
+                    alt="user profile"
+                  />
+                </>
+              )}
               <TopBar title={user.name} />
               <div className="profileMain mt-2">
                 <div className="profileMain__cover">

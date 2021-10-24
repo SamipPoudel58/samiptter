@@ -49,13 +49,17 @@ const TweetScreen = ({ match, history }) => {
 
   return (
     <div className="tweetScreen">
-      <Head title={`Post by ${tweet.user.name ? tweet.user.name : "user"}`} />
+      <Head
+        title={`Post by ${
+          tweet && tweet.user && tweet.user.name ? tweet.user.name : "user"
+        }`}
+      />
       <Layout>
         <section className="mainTweet newsFeed">
           {loading ? (
             <Loader />
           ) : error ? (
-            <Message variant="danger">{error}</Message>
+            <Message variant="danger">Post not found :(</Message>
           ) : (
             <>
               <TopBar title="Post" />
