@@ -13,12 +13,7 @@ const DashboardScreen = ({ history }) => {
   const { userInfo } = userLogin;
 
   const getDashboardData = useSelector((state) => state.getDashboard);
-  let {
-    success: successDashboard,
-    userCount,
-    tweetCount,
-    latestUsers,
-  } = getDashboardData;
+  let { userCount, tweetCount, latestUsers } = getDashboardData;
 
   useEffect(() => {
     if (!userInfo) {

@@ -10,6 +10,7 @@ import SearchScreen from "./screens/SearchScreen";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import PageNotFound from "./screens/404-page";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -20,7 +21,7 @@ function App() {
       <main className={`${darkMode ? "dark" : ""}`}>
         <div className="mainContainer">
           <Switch>
-            <Route exact path="/dashboard" component={DashboardScreen} />
+            <AdminRoute exact path="/dashboard" component={DashboardScreen} />
             <Route exact path="/login" component={LoginScreen} />
             <Route exact path="/register" component={RegisterScreen} />
             <Route exact path="/profile-edit" component={ProfileEditScreen} />
