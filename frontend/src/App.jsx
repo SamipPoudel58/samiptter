@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
@@ -19,15 +19,17 @@ function App() {
     <Router>
       <main className={`${darkMode ? "dark" : ""}`}>
         <div className="mainContainer">
-          <Route path="/dashboard" component={DashboardScreen} />
-          <Route path="/login" component={LoginScreen} />
-          <Route path="/register" component={RegisterScreen} />
-          <Route path="/profile-edit" component={ProfileEditScreen} exact />
-          <Route path="/tweets/:id" component={TweetScreen} />
-          <Route path="/profile/:id?" component={ProfileScreen} />
-          <Route path="/search" component={SearchScreen} />
-          <Route path="/" component={HomeScreen} exact />
-          <Route component={PageNotFound} />
+          <Switch>
+            <Route exact path="/dashboard" component={DashboardScreen} />
+            <Route exact path="/login" component={LoginScreen} />
+            <Route exact path="/register" component={RegisterScreen} />
+            <Route exact path="/profile-edit" component={ProfileEditScreen} />
+            <Route path="/tweets/:id" component={TweetScreen} />
+            <Route path="/profile/:id?" component={ProfileScreen} />
+            <Route exact path="/search" component={SearchScreen} />
+            <Route exact path="/" component={HomeScreen} />
+            <Route path="*" component={PageNotFound} />
+          </Switch>
         </div>
       </main>
     </Router>
