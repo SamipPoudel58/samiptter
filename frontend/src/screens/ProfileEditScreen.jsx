@@ -27,14 +27,10 @@ const ProfileEditScreen = ({ history }) => {
   const { loading, userInfo: newUserInfo, success, error } = editProfileData;
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/login");
-    } else {
-      setName(user.name);
-      setBio(user.bio || "");
-      setImage(user.image);
-      setCover(user.cover);
-    }
+    setName(user.name);
+    setBio(user.bio || "");
+    setImage(user.image);
+    setCover(user.cover);
 
     if (success) {
       dispatch({ type: USER_LOGIN_SUCCESS, payload: newUserInfo });

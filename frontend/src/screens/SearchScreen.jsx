@@ -29,9 +29,6 @@ const SearchScreen = ({ history }) => {
   let { users } = userList;
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/login");
-    }
     return () => {
       dispatch({ type: TWEET_LIST_RESET });
       dispatch({ type: LIST_USERS_RESET });

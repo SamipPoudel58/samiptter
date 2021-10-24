@@ -28,20 +28,12 @@ const TweetScreen = ({ match, history }) => {
   // const reversedComments = [...tweet.comments].reverse();
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/login");
-    } else {
+    dispatch(listTweetDetails(match.params.id));
+
+    if (successComment || successDelete) {
       dispatch(listTweetDetails(match.params.id));
-      if (successComment || successDelete) {
-        dispatch(listTweetDetails(match.params.id));
-      }
-      // const socket = openSocket("/");
-      // socket.on("tweets", (data) => {
-      //   if (data.action === "comment") {
-      //     dispatch(listTweetDetails(match.params.id));
-      //   }
-      // });
     }
+
     return () => {
       dispatch({ type: TWEET_DETAILS_RESET });
     };

@@ -33,25 +33,23 @@ const HomeScreen = ({ history }) => {
   const { darkMode } = uiTheme;
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/login");
-    } else {
-      dispatch(listTweets());
-      if (successDelete) {
-        dispatch(listTweets());
-        toast.success("Post Deleted Successfully.");
-      }
-      if (successTweetCreate) {
-        toast.success("Post Created Successfully.");
-      }
+    dispatch(listTweets());
 
-      const socket = openSocket("/");
-      socket.on("tweets", (data) => {
-        if (data.action === "create") {
-          dispatch(listTweets());
-        }
-      });
+    if (successDelete) {
+      dispatch(listTweets());
+      toast.success("Post Deleted Successfully.");
     }
+    if (successTweetCreate) {
+      toast.success("Post Created Successfully.");
+    }
+
+    const socket = openSocket("/");
+    socket.on("tweets", (data) => {
+      if (data.action === "create") {
+        dispatch(listTweets());
+      }
+    });
+
     return () => {
       dispatch({ type: TWEET_LIST_RESET });
       dispatch({ type: DELETE_TWEET_RESET });

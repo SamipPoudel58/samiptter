@@ -11,6 +11,7 @@ import ProfileEditScreen from "./screens/ProfileEditScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import PageNotFound from "./screens/404-page";
 import AdminRoute from "./components/AdminRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -21,14 +22,18 @@ function App() {
       <main className={`${darkMode ? "dark" : ""}`}>
         <div className="mainContainer">
           <Switch>
-            <AdminRoute exact path="/dashboard" component={DashboardScreen} />
             <Route exact path="/login" component={LoginScreen} />
             <Route exact path="/register" component={RegisterScreen} />
-            <Route exact path="/profile-edit" component={ProfileEditScreen} />
-            <Route path="/tweets/:id" component={TweetScreen} />
-            <Route path="/profile/:id?" component={ProfileScreen} />
-            <Route exact path="/search" component={SearchScreen} />
-            <Route exact path="/" component={HomeScreen} />
+            <AdminRoute exact path="/dashboard" component={DashboardScreen} />
+            <ProtectedRoute
+              exact
+              path="/profile-edit"
+              component={ProfileEditScreen}
+            />
+            <ProtectedRoute path="/tweets/:id" component={TweetScreen} />
+            <ProtectedRoute path="/profile/:id?" component={ProfileScreen} />
+            <ProtectedRoute exact path="/search" component={SearchScreen} />
+            <ProtectedRoute exact path="/" component={HomeScreen} />
             <Route path="*" component={PageNotFound} />
           </Switch>
         </div>

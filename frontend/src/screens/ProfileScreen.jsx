@@ -43,11 +43,7 @@ const ProfileScreen = ({ history, match }) => {
   const { darkMode } = uiTheme;
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/login");
-    } else {
-      dispatch(getProfile(match.params.id || userInfo._id));
-    }
+    dispatch(getProfile(match.params.id || userInfo._id));
 
     if (editProfileSuccess) {
       toast.success("Profile Edited Successfully");
