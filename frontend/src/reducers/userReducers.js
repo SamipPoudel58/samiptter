@@ -27,6 +27,8 @@ import {
   LIST_USERS_REQUEST,
   LIST_USERS_SUCCESS,
   LIST_USERS_RESET,
+  ADD_FRIEND_RESET,
+  GET_PROFILE_RESET,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -92,6 +94,8 @@ export const getProfileReducer = (
       };
     case GET_PROFILE_FAIL:
       return { loading: false, error: action.payload };
+    case GET_PROFILE_RESET:
+      return { tweets: [], user: { friends: [] } };
     default:
       return state;
   }
@@ -122,6 +126,8 @@ export const addFriendReducer = (state = {}, action) => {
       };
     case ADD_FRIEND_FAIL:
       return { loading: false, error: action.payload };
+    case ADD_FRIEND_RESET:
+      return {};
     default:
       return state;
   }

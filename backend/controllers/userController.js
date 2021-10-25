@@ -48,6 +48,9 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    image: `https://robohash.org/${email}/set_set${Math.floor(
+      Math.random() * 2 + 1
+    )}?size=400x400`,
     friends: [],
   });
 
@@ -224,15 +227,18 @@ const addFriend = asyncHandler(async (req, res) => {
   const userExist = user.friends.find(
     (f) => f.user.toString() === id.toString()
   );
+  let action = "";
   if (!userExist) {
     user.friends.push({ user: id });
+    action = "added";
   } else {
     user.friends = user.friends.filter(
       (f) => f.user.toString() !== userExist.user.toString()
     );
+    action = "removed";
   }
   await user.save();
-  res.json("User added to friendlist");
+  res.json("User " + action);
 });
 
 // @desc Get recommended user

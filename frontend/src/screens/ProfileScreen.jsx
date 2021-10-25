@@ -16,7 +16,9 @@ import { getUsername } from "../utils/getUsername";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import {
+  ADD_FRIEND_RESET,
   EDIT_PROFILE_RESET,
+  GET_PROFILE_RESET,
   TOGGLE_VERIFY_RESET,
 } from "../constants/userConstants";
 import { ReactComponent as Verified } from "../assets/verified.svg";
@@ -31,7 +33,7 @@ const ProfileScreen = ({ history, match }) => {
   let { loading, error, tweets, user } = userProfile;
 
   const addFriend = useSelector((state) => state.addFriend);
-  let { error: followError } = addFriend;
+  let { error: followError, success: followSuccess } = addFriend;
 
   const editProfileData = useSelector((state) => state.editProfile);
   const { success: editProfileSuccess } = editProfileData;
@@ -54,6 +56,13 @@ const ProfileScreen = ({ history, match }) => {
       toast.success("Verification Changed Successfully");
       dispatch({ type: TOGGLE_VERIFY_RESET });
     }
+    if (followSuccess) {
+      dispatch({ type: ADD_FRIEND_RESET });
+    }
+
+    return () => {
+      dispatch({ type: GET_PROFILE_RESET });
+    };
   }, [
     history,
     userInfo,
@@ -61,12 +70,13 @@ const ProfileScreen = ({ history, match }) => {
     match.params.id,
     editProfileSuccess,
     toggleVerifySuccess,
+    followSuccess,
   ]);
 
   const followHandler = (e) => {
     e.preventDefault();
     dispatch(addFriendAction(user._id));
-    dispatch(getProfile(match.params.id || userInfo._id));
+    // dispatch(getProfile(match.params.id || userInfo._id));
   };
   return (
     <div className="profileScreen">
@@ -136,23 +146,27 @@ const ProfileScreen = ({ history, match }) => {
                     />
                   </div>
 
-                  {match.params.id && !user.isFriend && (
+                  {match.params.id && (
                     <button
                       onClick={followHandler}
-                      className="profileMain__followBtn primary-btn"
+                      className={`profileMain__followBtn ${
+                        user && user.isFriend
+                          ? "primary-btn-alt"
+                          : "primary-btn"
+                      }`}
                     >
-                      Follow
+                      {user && user.isFriend ? "Unfollow" : "Follow"}
                     </button>
                   )}
 
-                  {match.params.id && user.isFriend && (
+                  {/* {match.params.id && user.isFriend && (
                     <button
                       onClick={followHandler}
                       className="profileMain__followBtn primary-btn-alt"
                     >
                       Unfollow
                     </button>
-                  )}
+                  )} */}
 
                   {history.location.pathname === "/profile" && (
                     <Link
@@ -180,6 +194,8 @@ const ProfileScreen = ({ history, match }) => {
                   )}
                 </div>
               </div>
+
+              {/* Admin Panel */}
               {userInfo.isAdmin && (
                 <div className="profileMain__adminPanel mt-2">
                   <h3 className="username-text">Admin Panel</h3>
