@@ -1,0 +1,64 @@
+.profilePicHolder {
+  position: relative;
+  height: 4.5rem;
+  width: 4.5rem;
+  background-color: var(--c-background);
+  border-radius: 50%;
+  overflow: hidden;
+
+  &__main,
+  &__background {
+    display: block;
+    object-fit: cover;
+  }
+
+  &__background {
+    height: 4.5rem;
+    width: 4.5rem;
+    position: absolute;
+    transform: scale(3);
+    filter: blur(4px);
+    opacity: 0.25;
+  }
+
+  &__main {
+    position: relative;
+    display: block;
+    height: 4.5rem;
+    width: 4.5rem;
+  }
+}
+
+.profilePicHolder-lg {
+  position: relative;
+  height: 13rem;
+  width: 13rem;
+  background-color: white;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid var(--c-tile);
+  margin-top: -6.5rem;
+  cursor: pointer;
+
+  &__main,
+  &__background {
+    display: block;
+    object-fit: cover;
+  }
+
+  &__background {
+    height: 13rem;
+    width: 13rem;
+    position: absolute;
+    transform: scale(3);
+    filter: blur(4px);
+    opacity: 0.25;
+  }
+
+  &__main {
+    position: relative;
+    display: block;
+    height: 13rem;
+    width: 13rem;
+  }
+}

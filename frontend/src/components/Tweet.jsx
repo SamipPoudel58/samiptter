@@ -5,6 +5,7 @@ import { deleteTweet, likeTweet } from "../actions/tweetActions";
 import { getUsername } from "../utils/getUsername";
 import { getTimeFromNow } from "../utils/getTimeFromNow";
 import { ReactComponent as Verified } from "../assets/verified.svg";
+import ProfilePicHolder from "./ProfilePicHolder";
 
 const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -65,11 +66,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
               : `/profile/${tweet.user._id}`
           }
         >
-          <img
-            className="profile-image"
-            src={tweet.user.image}
-            alt={"profile picture of" + tweet.user.name}
-          />
+          <ProfilePicHolder src={tweet.user.image} />
         </Link>
       </div>
       <div className="tweet__details">

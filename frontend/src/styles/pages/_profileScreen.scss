@@ -18,8 +18,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     & > img {
+      cursor: pointer;
       display: block;
       height: 13rem;
       width: 13rem;

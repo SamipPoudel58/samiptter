@@ -22,6 +22,7 @@ import {
   TOGGLE_VERIFY_RESET,
 } from "../constants/userConstants";
 import { ReactComponent as Verified } from "../assets/verified.svg";
+import ProfilePicHolder from "../components/ProfilePicHolder";
 
 const ProfileScreen = ({ history, match }) => {
   const [preview, setPreview] = useState(false);
@@ -139,11 +140,14 @@ const ProfileScreen = ({ history, match }) => {
                 </div>
                 <div className="profileMain__details shadow">
                   <div className="profileMain__profilePic">
-                    <img
+                    {/* <img
                       onClick={() => setPreview("image")}
                       src={user.image}
                       alt={`${user.name}'s profile`}
-                    />
+                    /> */}
+                    <div onClick={() => setPreview("image")}>
+                      <ProfilePicHolder src={user.image} large={true} />
+                    </div>
                   </div>
 
                   {match.params.id && (

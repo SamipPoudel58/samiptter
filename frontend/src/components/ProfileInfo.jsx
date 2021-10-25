@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Verified } from "../assets/verified.svg";
+import ProfilePicHolder from "./ProfilePicHolder";
 
 const ProfileInfo = ({
   image,
@@ -17,18 +18,10 @@ const ProfileInfo = ({
       <div className="profileInfo__imageHolder">
         {link ? (
           <Link to={`/profile/${id}`}>
-            <img
-              className="profileInfo__image profile-image"
-              src={image || "/images/1.jpg"}
-              alt={`${username}'s profile`}
-            />
+            <ProfilePicHolder src={image || "/images/1.jpg"} />
           </Link>
         ) : (
-          <img
-            className="profileInfo__image profile-image"
-            src={image || "/images/1.jpg"}
-            alt={`${username}'s profile`}
-          />
+          <ProfilePicHolder src={image || "/images/1.jpg"} />
         )}
       </div>
       <div className="profileInfo__details">
