@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createComment, createTweet } from "../actions/tweetActions";
+import ProfilePicHolder from "./ProfilePicHolder";
 
 const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
-  
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setText("")
+    setText("");
     if (buttonText === "Comment") {
       return dispatch(createComment(tweet._id, { commentContent: text }));
     }
@@ -23,13 +24,7 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
   return (
     <div className="tweetComposer shadow">
       <div className="tweetComposer__leftCol">
-        {userInfo && (
-          <img
-            className="profile-image"
-            src={userInfo.image}
-            alt={userInfo.name}
-          />
-        )}
+        {userInfo && <ProfilePicHolder src={userInfo.image} />}
       </div>
       <div className="tweetComposer__rightCol">
         <form className="tweetComposer__form" onSubmit={submitHandler}>
