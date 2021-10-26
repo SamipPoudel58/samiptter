@@ -18,12 +18,10 @@ import toast, { Toaster } from "react-hot-toast";
 import {
   ADD_FRIEND_RESET,
   EDIT_PROFILE_RESET,
-  GET_PROFILE_RESET,
   TOGGLE_VERIFY_RESET,
 } from "../constants/userConstants";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 import ProfilePicHolder from "../components/ProfilePicHolder";
-import Notice from "../components/Notice";
 
 const ProfileScreen = ({ history, match }) => {
   const [preview, setPreview] = useState(false);
