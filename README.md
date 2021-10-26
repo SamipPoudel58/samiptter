@@ -4,7 +4,11 @@
 
   <h2 align="center">Samiptter | The Ultimate Social Media Site</h2>
 
-  <p align="center">The ultimate social media site of your dreams | Let your social life take off!</p>
+  <p align="center">
+    <img alt="Build status" src="https://github.com/SamipPoudel58/samiptter/actions/workflows/node.js.yml/badge.svg" />
+    <img alt="GitHub" src="https://img.shields.io/github/license/SamipPoudel58/samiptter" />
+    
+  </p>
 
   <p align="center">
     <a href="https://samiptter.herokuapp.com/">View Demo</a>
