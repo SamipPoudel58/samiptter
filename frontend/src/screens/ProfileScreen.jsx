@@ -23,6 +23,7 @@ import {
 } from "../constants/userConstants";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 import ProfilePicHolder from "../components/ProfilePicHolder";
+import Notice from "../components/Notice";
 
 const ProfileScreen = ({ history, match }) => {
   const [preview, setPreview] = useState(false);
@@ -60,10 +61,6 @@ const ProfileScreen = ({ history, match }) => {
     if (followSuccess) {
       dispatch({ type: ADD_FRIEND_RESET });
     }
-
-    return () => {
-      dispatch({ type: GET_PROFILE_RESET });
-    };
   }, [
     history,
     userInfo,
@@ -130,6 +127,7 @@ const ProfileScreen = ({ history, match }) => {
                 </>
               )}
               <TopBar title={user.name} />
+              {/* {userInfo.isGuest && <Notice />} */}
               <div className="profileMain mt-2">
                 <div className="profileMain__cover">
                   <img
@@ -140,11 +138,6 @@ const ProfileScreen = ({ history, match }) => {
                 </div>
                 <div className="profileMain__details shadow">
                   <div className="profileMain__profilePic">
-                    {/* <img
-                      onClick={() => setPreview("image")}
-                      src={user.image}
-                      alt={`${user.name}'s profile`}
-                    /> */}
                     <div onClick={() => setPreview("image")}>
                       <ProfilePicHolder src={user.image} large={true} />
                     </div>
@@ -163,23 +156,15 @@ const ProfileScreen = ({ history, match }) => {
                     </button>
                   )}
 
-                  {/* {match.params.id && user.isFriend && (
-                    <button
-                      onClick={followHandler}
-                      className="profileMain__followBtn primary-btn-alt"
-                    >
-                      Unfollow
-                    </button>
-                  )} */}
-
-                  {history.location.pathname === "/profile" && (
-                    <Link
-                      to="/profile-edit"
-                      className="profileMain__followBtn primary-btn-alt"
-                    >
-                      Edit
-                    </Link>
-                  )}
+                  {history.location.pathname === "/profile" &&
+                    !userInfo.isGuest && (
+                      <Link
+                        to="/profile-edit"
+                        className="profileMain__followBtn primary-btn-alt"
+                      >
+                        Edit
+                      </Link>
+                    )}
                   <h3 className="profileMain__userName heading-md text-centered mt-1">
                     {user.name}{" "}
                     {user.isVerified && (

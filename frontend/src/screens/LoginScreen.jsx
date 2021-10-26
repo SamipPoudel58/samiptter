@@ -28,6 +28,11 @@ const LoginScreen = ({ location, history }) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
+
+  const guestLoginHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password, true));
+  };
   return (
     <section className="authScreen">
       <Head title="Sign In" />
@@ -61,12 +66,21 @@ const LoginScreen = ({ location, history }) => {
             <button className="form__submitBtn mt-3" type="submit">
               Sign In
             </button>
+
             <p className="mt-2 form__question">
-              Do not have an account ?{" "}
+              Don't have an account ?{" "}
               <Link className="minor-link" to="/register">
                 Sign Up
               </Link>
             </p>
+            <div className="separator">OR</div>
+
+            <button
+              onClick={guestLoginHandler}
+              className="form__submitBtn form__submitBtn-guest"
+            >
+              Continue as a Guest
+            </button>
           </form>
         </div>
       </div>

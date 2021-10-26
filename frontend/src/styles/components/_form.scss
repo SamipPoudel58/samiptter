@@ -36,6 +36,13 @@
     border-radius: 5px;
     cursor: pointer;
 
+    &-guest {
+      background-color: transparent;
+      border: 1px solid var(--c-gray-md);
+      color: var(--c-gray-md);
+      font-weight: 400;
+    }
+
     &:hover {
       filter: brightness(90%);
     }

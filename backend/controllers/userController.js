@@ -2,13 +2,18 @@ const User = require("../models/userModel");
 const Tweet = require("../models/tweetModel");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken.js");
-const { update } = require("../models/userModel");
+require("dotenv").config();
 
 // @desc Auth user and get token
 // @route POST /api/users/login
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  let { email, password, guest } = req.body;
+
+  if (guest) {
+    email = process.env.GUEST_EMAIL;
+    password = process.env.GUEST_PASSWORD;
+  }
 
   const user = await User.findOne({ email: email });
 
@@ -24,6 +29,7 @@ const loginUser = asyncHandler(async (req, res) => {
       image: user.image,
       cover: user.cover,
       token: generateToken(user._id),
+      isGuest: !!guest,
     });
   } else {
     res.status(401);
@@ -98,6 +104,7 @@ const getUsersList = asyncHandler(async (req, res) => {
 // @access Private
 const editUser = asyncHandler(async (req, res) => {
   const { id, name, bio, password, image, cover } = req.body;
+  console.log(id);
   const user = await User.findById(id);
 
   if (!user) {

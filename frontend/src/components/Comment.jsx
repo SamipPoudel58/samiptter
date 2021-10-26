@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { likeComment, deleteComment } from "../actions/tweetActions";
 import { getTimeFromNow } from "../utils/getTimeFromNow";
 import { ReactComponent as Verified } from "../assets/verified.svg";
+import ProfilePicHolder from "./ProfilePicHolder";
 
 const Comment = ({ tweet, userInfo, mainTweetId }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -33,11 +34,7 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
     <article className="comment border-t">
       <div className="tweet">
         <div className="tweet__profilePic">
-          <img
-            className="profile-image"
-            src={tweet.user.image}
-            alt={"profile picture of" + tweet.user.name}
-          />
+          <ProfilePicHolder src={tweet.user.image} />
         </div>
         <div className="tweet__details">
           <section className="tweet__info">
