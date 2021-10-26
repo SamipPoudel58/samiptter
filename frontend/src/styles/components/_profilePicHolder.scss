@@ -33,7 +33,7 @@
   position: relative;
   height: 13rem;
   width: 13rem;
-  background-color: white;
+  background-color: var(--c-background);
   border-radius: 50%;
   overflow: hidden;
   border: 5px solid var(--c-tile);
@@ -57,6 +57,7 @@
 
   &__main {
     position: relative;
+    transform: translate(-5px, -5px);
     display: block;
     height: 13rem;
     width: 13rem;
