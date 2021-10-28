@@ -59,10 +59,13 @@ const ProfileEditScreen = ({ history }) => {
           ) : (
             <>
               <TopBar title="Edit Your Profile" />
-              <form onSubmit={submitHandler}>
+              <form onSubmit={submitHandler} autoComplete="off">
                 <div className="form__group mt-2">
-                  <label className="form__label mb-1">Name</label>
+                  <label htmlFor="name" className="form__label mb-1">
+                    Name
+                  </label>
                   <input
+                    name="name"
                     className="form__input form__input-alt"
                     type="text"
                     value={name}
@@ -70,8 +73,11 @@ const ProfileEditScreen = ({ history }) => {
                   />
                 </div>
                 <div className="form__group mt-2">
-                  <label className="form__label mb-1">Bio</label>
+                  <label htmlFor="bio" className="form__label mb-1">
+                    Bio
+                  </label>
                   <input
+                    name="bio"
                     className="form__input form__input-alt"
                     type="text"
                     value={bio}
@@ -79,8 +85,11 @@ const ProfileEditScreen = ({ history }) => {
                   />
                 </div>
                 <div className="form__group mt-2">
-                  <label className="form__label mb-1">Profile Picture</label>
+                  <label htmlFor="profile picture" className="form__label mb-1">
+                    Profile Picture
+                  </label>
                   <input
+                    name="profile picture"
                     className="form__input form__input-alt"
                     type="text"
                     value={image}
@@ -88,8 +97,11 @@ const ProfileEditScreen = ({ history }) => {
                   />
                 </div>
                 <div className="form__group mt-2">
-                  <label className="form__label mb-1">Cover Picture</label>
+                  <label htmlFor="cover picture" className="form__label mb-1">
+                    Cover Picture
+                  </label>
                   <input
+                    name="cover picture"
                     className="form__input form__input-alt"
                     type="text"
                     value={cover}
@@ -97,10 +109,13 @@ const ProfileEditScreen = ({ history }) => {
                   />
                 </div>
                 <div className="form__group mt-2">
-                  <label className="form__label mb-1">Change Password</label>
+                  <label htmlFor="password" className="form__label mb-1">
+                    Change Password
+                  </label>
                   <input
+                    name="password"
                     className="form__input form__input-alt"
-                    type="password"
+                    type="text"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
