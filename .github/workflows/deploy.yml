@@ -13,12 +13,11 @@ jobs:
         with:
           node-version: 14
 
-      - run: npm install --prefix frontend
+      - run: npm install --prefix
       - run: npm run test:client
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API}}
           heroku_app_name: "samiptter"
           heroku_email: "sawmeep58@gmail.com"
-          appdir: "backend"
           procfile: "web: node backend/server.js"
