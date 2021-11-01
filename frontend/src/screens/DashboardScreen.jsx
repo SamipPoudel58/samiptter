@@ -48,6 +48,7 @@ const DashboardScreen = ({ history }) => {
                     id={user._id}
                     name={user.name}
                     username={user.name}
+                    email={user.email}
                     isVerified={user.isVerified}
                   />
                 </div>

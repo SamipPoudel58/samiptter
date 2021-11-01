@@ -9,6 +9,7 @@ const ProfileInfo = ({
   name,
   username,
   bio,
+  email,
   isAdmin,
   isVerified,
   link = true,
@@ -38,7 +39,9 @@ const ProfileInfo = ({
           </p>
         )}
         <p className="profileInfo__more subtitle-text">
-          {username?.length > 0
+          {email
+            ? email
+            : username?.length > 0
             ? "@" + username.toLowerCase().replace(" ", "")
             : "Logged In"}
         </p>
