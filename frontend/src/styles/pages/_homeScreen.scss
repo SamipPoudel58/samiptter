@@ -1,5 +1,5 @@
 .homeScreen {
-  max-height: 100vh;
+  // max-height: 100vh;
   position: relative;
 
   &__samiptterLogo {
@@ -51,7 +51,8 @@
 .rightNav {
   height: 100%;
   padding: 0 4rem 0 4rem;
-
+  position: fixed;
+  max-width: 38rem;
   &__wrapper {
     position: absolute;
     top: 0;
@@ -63,6 +64,10 @@
 
     @media only screen and (max-width: 1100px) {
       display: none;
+    }
+
+    @media only screen and (max-width: 1400px) {
+      position: fixed;
     }
   }
 
@@ -117,20 +122,20 @@
   margin: 0 38rem 0 25rem;
   background-color: var(--c-background);
   padding: 3rem 2rem;
-  height: 100vh;
-  overflow: scroll;
+  min-height: 100vh;
+  // overflow: scroll;
 
   @media only screen and (max-width: 1100px) {
     margin: 0 0 0 23rem;
   }
 
   @media only screen and (max-width: 800px) {
-    overflow-x: hidden;
+    // overflow-x: hidden;
     margin: 0;
     padding-top: 2rem;
   }
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }

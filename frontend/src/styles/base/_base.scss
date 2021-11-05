@@ -49,11 +49,12 @@ main.dark {
 
 *::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
   background-color: #f5f5f5;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--c-primary);
+  background-color: #818cf8;
 }
 
 a,
@@ -71,11 +72,13 @@ html {
 
 body {
   background-color: var(--c-body);
+  // overflow: auto;
 }
 
 main {
   background-color: var(--c-body);
-  // max-height: 100vh;
+  // overflow: overlay;
+  // height: max-content;
 }
 
 .mainContainer {
