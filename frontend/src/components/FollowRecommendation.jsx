@@ -17,7 +17,10 @@ const FollowRecommendation = () => {
   } = getRecommendedUsers;
 
   useEffect(() => {
-    dispatch(recommendUsers());
+    if (usersRecommended.length === 0) {
+      dispatch(recommendUsers());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
   return (
     <section className="followRecommendation">

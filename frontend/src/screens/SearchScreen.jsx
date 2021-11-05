@@ -29,14 +29,15 @@ const SearchScreen = ({ history }) => {
   let { users } = userList;
 
   useEffect(() => {
+    dispatch({ type: TWEET_LIST_RESET });
     return () => {
-      dispatch({ type: TWEET_LIST_RESET });
+      dispatch(listTweets());
       dispatch({ type: LIST_USERS_RESET });
       setKeyword("");
       setSubmitted(false);
       setFinalKeyword("");
     };
-  }, [history, userInfo, dispatch]);
+  }, [userInfo, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();

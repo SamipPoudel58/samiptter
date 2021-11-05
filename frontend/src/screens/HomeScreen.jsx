@@ -5,7 +5,6 @@ import { listTweets } from "../actions/tweetActions";
 import {
   CREATE_TWEET_RESET,
   DELETE_TWEET_RESET,
-  TWEET_LIST_RESET,
 } from "../constants/tweetConstants";
 import Layout from "../components/Layout";
 import Message from "../components/Message";
@@ -33,7 +32,9 @@ const HomeScreen = ({ history }) => {
   const { darkMode } = uiTheme;
 
   useEffect(() => {
-    dispatch(listTweets());
+    if (tweets.length === 0) {
+      dispatch(listTweets());
+    }
 
     if (successDelete) {
       dispatch(listTweets());
@@ -51,11 +52,12 @@ const HomeScreen = ({ history }) => {
     });
 
     return () => {
-      dispatch({ type: TWEET_LIST_RESET });
+      // dispatch({ type: TWEET_LIST_RESET });
       dispatch({ type: DELETE_TWEET_RESET });
       dispatch({ type: CREATE_TWEET_RESET });
     };
-  }, [history, userInfo, dispatch, successDelete, successTweetCreate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo, dispatch, successDelete, successTweetCreate]);
 
   return (
     <div className="homeScreen">
