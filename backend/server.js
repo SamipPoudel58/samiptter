@@ -4,6 +4,7 @@ const cors = require("cors");
 const userRoute = require("./routes/userRoute");
 const tweetRoute = require("./routes/tweetRoute");
 const dashboardRoute = require("./routes/dashboardRoute");
+const uploadRoute = require("./routes/uploadRoute");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const { errorHandler, notFound } = require("./middleware/errorMiddleware");
@@ -22,8 +23,10 @@ app.use(cors());
 app.use("/api/users", userRoute);
 app.use("/api/tweets", tweetRoute);
 app.use("/api/dashboard", dashboardRoute);
+app.use("/api/upload", uploadRoute);
 
 const rootdir = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 // serving the frontend
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(rootdir, "/frontend/build")));

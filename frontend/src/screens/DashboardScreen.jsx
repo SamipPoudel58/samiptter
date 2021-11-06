@@ -24,7 +24,7 @@ const DashboardScreen = ({ history }) => {
   }, [dispatch, history, userInfo]);
   return (
     <div className="dashboardScreen">
-      <Head title="Home" />
+      <Head title="Dashboard" />
       <Layout>
         <section className="newsFeed">
           <h1 className="heading-lg">Hello {userInfo.name.split(" ")[0]}!</h1>

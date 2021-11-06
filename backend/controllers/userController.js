@@ -83,7 +83,6 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route GET /api/users
 // @access Private
 const getUsersList = asyncHandler(async (req, res) => {
-  console.log(req.query.keyword);
   const keyword = req.query.keyword
     ? {
         name: {
@@ -104,7 +103,7 @@ const getUsersList = asyncHandler(async (req, res) => {
 // @access Private
 const editUser = asyncHandler(async (req, res) => {
   const { id, name, bio, password, image, cover } = req.body;
-  console.log(id);
+
   const user = await User.findById(id);
 
   if (!user) {
@@ -135,7 +134,7 @@ const editUser = asyncHandler(async (req, res) => {
 
   if (adminIsEditing) {
     const adminUser = await User.findById(req.user._id);
-    console.log(adminUser);
+
     res.json({
       _id: adminUser._id,
       name: adminUser.name,

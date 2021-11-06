@@ -74,10 +74,10 @@ const getTweetById = asyncHandler(async (req, res) => {
 // @route POST /api/tweets
 // @access Private
 const createTweet = asyncHandler(async (req, res) => {
-  console.log(req.user);
-  const { tweetContent } = req.body;
+  const { tweetContent, images } = req.body;
   const tweet = new Tweet({
     tweetContent,
+    images,
     user: req.user._id,
     likes: [],
     comments: [],
@@ -96,7 +96,6 @@ const likeTweet = asyncHandler(async (req, res) => {
   const tweet = await Tweet.findById(id);
 
   let task = "";
-  // console.log(req.user);
   if (!tweet) {
     res.status(404);
     throw new Error("Tweet not found");
@@ -162,7 +161,6 @@ const createComment = asyncHandler(async (req, res) => {
   const { commentContent } = req.body;
   const { id } = req.params;
   const tweet = await Tweet.findById(id);
-  console.log(id, req.body);
 
   if (!tweet) {
     res.status(404);
@@ -178,7 +176,7 @@ const createComment = asyncHandler(async (req, res) => {
   });
   tweet.numComments = tweet.comments.length;
   const createdTweet = await tweet.save();
-  // console.log(createdTweet);
+
   io.getIO().emit("tweets", { action: "comment", tweet: createdTweet });
   res.status(201).json("Comment Created");
 });

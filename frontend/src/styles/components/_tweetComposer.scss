@@ -27,4 +27,51 @@
       outline: none;
     }
   }
+
+  &__actions {
+    padding-left: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  &__uploadBtnHolder {
+    margin-right: auto;
+  }
+  &__uploadBtn {
+    & > svg {
+      display: block;
+      stroke: var(--c-primary);
+      height: 3rem;
+      cursor: pointer;
+
+      &:hover {
+        stroke: var(--c-secondary);
+      }
+    }
+  }
+
+  &__imageHolder {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  &__uploadedImage {
+    display: block;
+    width: 48%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 1rem;
+
+    &-full {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      border-radius: 1rem;
+    }
+  }
 }

@@ -6,6 +6,7 @@ const commentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+
     likes: [],
     numLikes: {
       type: Number,
@@ -50,7 +51,19 @@ const tweetSchema = mongoose.Schema(
     },
     tweetContent: {
       type: String,
-      required: true,
+    },
+    images: {
+      type: [
+        {
+          secure_url: {
+            type: String,
+          },
+          public_id: {
+            type: String,
+          },
+        },
+      ],
+      default: [],
     },
     comments: [commentSchema],
     numComments: {
