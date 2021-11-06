@@ -41,7 +41,7 @@
   }
 
   &__popupImage {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -57,19 +57,25 @@
     }
 
     &-cover {
-      width: 100%;
-      max-height: 80vh;
+      max-height: 100%;
+      max-width: 100%;
+      // width: 100%;
+      // max-height: 80vh;
     }
   }
 
   &__previewClose {
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     top: 3rem;
     left: 3rem;
     color: white;
-    font-size: 3rem;
     z-index: 11;
+
+    & > svg {
+      fill: white;
+      height: 3rem;
+    }
   }
 
   &__userName {
