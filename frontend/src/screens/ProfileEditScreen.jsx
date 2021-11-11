@@ -215,8 +215,7 @@ const ProfileEditScreen = ({ history }) => {
                   />
                 </div>
                 <div className="separator m-2">
-                  Don't want to upload images manually? Paste image links
-                  instead!
+                  Or, paste image links instead!
                 </div>
                 <div className="form__group">
                   <label htmlFor="profile picture" className="form__label mb-1">
