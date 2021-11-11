@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -7,6 +8,7 @@ import Head from "../components/Head";
 import Layout from "../components/Layout";
 import TopBar from "../components/TopBar";
 import { USER_LOGIN_SUCCESS } from "../constants/userConstants";
+import toast from "react-hot-toast";
 
 const ProfileEditScreen = ({ history }) => {
   const [name, setName] = useState("");
@@ -14,6 +16,8 @@ const ProfileEditScreen = ({ history }) => {
   const [image, setImage] = useState("");
   const [cover, setCover] = useState("");
   const [password, setPassword] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
 
   const dispatch = useDispatch();
 
@@ -32,14 +36,50 @@ const ProfileEditScreen = ({ history }) => {
     }
     setName(user.name);
     setBio(user.bio);
-    setImage(user.image);
-    setCover(user.cover);
+    setImage(user.image || "/images/profile.jpg");
+    setCover(user.cover || "/images/cover.jpg");
 
     if (success) {
       dispatch({ type: USER_LOGIN_SUCCESS, payload: newUserInfo });
       history.push("/profile");
     }
   }, [history, userInfo, success, dispatch, newUserInfo, user]);
+
+  const coverUploadHandler = async (e, imageType) => {
+    const files = e.target.files;
+    const formData = new FormData();
+
+    if (files.length > 1) {
+      return toast.error("Cannot upload more than 1 photo.");
+    }
+    for (const file of files) {
+      formData.append("image", file);
+    }
+
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      const { data } = await axios.post(`/api/upload`, formData, config);
+
+      if (imageType === "profile") {
+        setImage(data[0].secure_url);
+      } else {
+        setCover(data[0].secure_url);
+      }
+
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploadError(error);
+      setUploading(false);
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -59,7 +99,84 @@ const ProfileEditScreen = ({ history }) => {
           ) : (
             <>
               <TopBar title="Edit Your Profile" />
+              {uploading && (
+                <div>
+                  <Loader />
+                  <h3 className="heading-sm text-centered mb-2">Uploading</h3>
+                </div>
+              )}
+              {uploadError && <Message variant="danger">{error}</Message>}
               <form onSubmit={submitHandler} autoComplete="off">
+                <div className="profileEditScreen__pictures">
+                  <div className="profileEditScreen__cover">
+                    <div className="profileEditScreen__profileEdit">
+                      <label htmlFor="cover-file">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                      </label>
+                      <input
+                        type="file"
+                        id="cover-file"
+                        placeholder="Upload Image"
+                        onChange={(e) => coverUploadHandler(e, "cover")}
+                        hidden
+                      />
+                    </div>
+                    <img src={cover} alt="cover" />
+                  </div>
+                  <div className="profileEditScreen__profile">
+                    <div className="profileEditScreen__profileEdit">
+                      <label htmlFor="profile-file">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                      </label>
+                      <input
+                        type="file"
+                        id="profile-file"
+                        placeholder="Upload Image"
+                        onChange={(e) => coverUploadHandler(e, "profile")}
+                        hidden
+                      />
+                    </div>
+                    <img src={image} alt="profile" />
+                  </div>
+                </div>
                 <div className="form__group mt-2">
                   <label htmlFor="name" className="form__label mb-1">
                     Name
@@ -84,7 +201,24 @@ const ProfileEditScreen = ({ history }) => {
                     onChange={(e) => setBio(e.target.value)}
                   />
                 </div>
+
                 <div className="form__group mt-2">
+                  <label htmlFor="password" className="form__label mb-1">
+                    Change Password
+                  </label>
+                  <input
+                    name="password"
+                    className="form__input form__input-alt"
+                    type="text"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="separator m-2">
+                  Don't want to upload images manually? Paste image links
+                  instead!
+                </div>
+                <div className="form__group">
                   <label htmlFor="profile picture" className="form__label mb-1">
                     Profile Picture
                   </label>
@@ -106,18 +240,6 @@ const ProfileEditScreen = ({ history }) => {
                     type="text"
                     value={cover}
                     onChange={(e) => setCover(e.target.value)}
-                  />
-                </div>
-                <div className="form__group mt-2">
-                  <label htmlFor="password" className="form__label mb-1">
-                    Change Password
-                  </label>
-                  <input
-                    name="password"
-                    className="form__input form__input-alt"
-                    type="text"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 

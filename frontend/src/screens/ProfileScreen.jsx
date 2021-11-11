@@ -180,7 +180,10 @@ const ProfileScreen = ({ history, match }) => {
                   <h3 className="profileMain__userName heading-md text-centered mt-1">
                     {user.name}{" "}
                     {user.isVerified && (
-                      <Verified className="verified-badge verified-badge-lg" />
+                      <Verified
+                        title="Verfied User"
+                        className="verified-badge verified-badge-lg"
+                      />
                     )}
                   </h3>
                   <p className="text-centered subtitle-text">

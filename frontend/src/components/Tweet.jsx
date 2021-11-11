@@ -80,7 +80,9 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
             className="tweet__username username-text"
           >
             {tweet.user.name}
-            {tweet.user.isVerified && <Verified className="verified-badge" />}
+            {tweet.user.isVerified && (
+              <Verified title="Verifed User" className="verified-badge" />
+            )}
           </Link>
 
           <p className="subtitle-text">

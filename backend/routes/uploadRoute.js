@@ -7,8 +7,7 @@ const router = express.Router();
 router.post("/", upload.array("image"), async (req, res) => {
   try {
     // Upload image to cloudinary
-    const upldr = async (path) =>
-      await cloudinary.uploader.upload(path, { folder: "samiptter" });
+    const upldr = async (path) => await cloudinary.uploader.upload(path);
     const urls = [];
     const files = req.files;
 
