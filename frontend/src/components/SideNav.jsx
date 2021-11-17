@@ -5,6 +5,7 @@ import { logout } from "../actions/userActions";
 import ProfileInfo from "./ProfileInfo";
 import FullLogo from "./FullLogo";
 import { changeTheme } from "../actions/uiActions";
+import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 
 const SideNav = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const SideNav = () => {
   const logOutHandler = () => {
     dispatch(logout());
     history.push("/login");
+    dispatch({ type: TWEET_LIST_RESET });
   };
 
   const toggleHandler = () => {
