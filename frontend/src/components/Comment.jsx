@@ -61,6 +61,8 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
 
           <section className="tweet__content">{tweet.tweetContent}</section>
 
+          {tweet.tweetContent && <div className="pt-2"></div>}
+
           <section className="tweet__actions">
             <div className="tweet__like" onClick={likeHandler}>
               <i
