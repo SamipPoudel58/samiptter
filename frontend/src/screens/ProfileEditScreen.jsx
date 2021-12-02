@@ -45,46 +45,46 @@ const ProfileEditScreen = ({ history }) => {
     }
   }, [history, userInfo, success, dispatch, newUserInfo, user]);
 
-  const coverUploadHandler = async (e, imageType) => {
-    const files = e.target.files;
-    const formData = new FormData();
-
-    if (files.length > 1) {
-      return toast.error("Cannot upload more than 1 photo.");
-    }
-    for (const file of files) {
-      formData.append("image", file);
-    }
-
+  const uploadImage = async (img, imageType) => {
     setUploading(true);
-
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       };
 
-      const { data } = await axios.post(`/api/upload`, formData, config);
-
+      const { data } = await axios.post(`/api/upload`, { data: [img] }, config);
       if (imageType === "profile") {
         setImage(data[0].secure_url);
       } else {
         setCover(data[0].secure_url);
       }
-
       setUploading(false);
-    } catch (error) {
+    } catch (err) {
       console.error(error);
       setUploadError(error);
       setUploading(false);
     }
   };
 
+  const imageUploadHandler = async (e, imageType) => {
+    const files = e.target.files;
+
+    if (files.length > 1) {
+      return toast.error("Cannot upload more than 1 photo.");
+    }
+    for (const file of files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        uploadImage(reader.result, imageType);
+      };
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-
-    // dispatch edit profile action
     dispatch(editProfile(user._id, name, bio, image, cover, password));
   };
   return (
@@ -136,7 +136,7 @@ const ProfileEditScreen = ({ history }) => {
                         type="file"
                         id="cover-file"
                         placeholder="Upload Image"
-                        onChange={(e) => coverUploadHandler(e, "cover")}
+                        onChange={(e) => imageUploadHandler(e, "cover")}
                         hidden
                       />
                     </div>
@@ -170,7 +170,7 @@ const ProfileEditScreen = ({ history }) => {
                         type="file"
                         id="profile-file"
                         placeholder="Upload Image"
-                        onChange={(e) => coverUploadHandler(e, "profile")}
+                        onChange={(e) => imageUploadHandler(e, "profile")}
                         hidden
                       />
                     </div>

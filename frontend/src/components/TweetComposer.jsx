@@ -5,7 +5,7 @@ import { createComment, createTweet } from "../actions/tweetActions";
 import Loader from "./Loader";
 import Message from "./Message";
 import ProfilePicHolder from "./ProfilePicHolder";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 
 const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
   const [text, setText] = useState("");
@@ -17,54 +17,59 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const uploadImages = async (imgs) => {
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(`/api/upload`, { data: imgs }, config);
+
+      dispatch(createTweet({ tweetContent: text, images: data }));
+
+      setUploading(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const uploadFileHandler = (e) => {
+    const files = e.target.files;
+
+    for (const file of files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImages((prevValue) => [...prevValue, reader.result]);
+      };
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    setText("");
     if (buttonText === "Comment") {
       return dispatch(createComment(tweet._id, { commentContent: text }));
     }
     if (text === "" && images.length === 0) {
       return;
     }
-    dispatch(createTweet({ tweetContent: text, images: images }));
+    if (images.length > 0) {
+      uploadImages(images);
+    } else {
+      dispatch(createTweet({ tweetContent: text, images: [] }));
+    }
+
     setImages([]);
     setError("");
+    setText("");
     if (setBackDrop) {
       setBackDrop(false);
     }
   };
 
-  const uploadFileHandler = async (e) => {
-    const files = e.target.files;
-    const formData = new FormData();
-
-    if (files.length > 4) {
-      return toast.error("Cannot upload more than 4 photos.");
-    }
-    for (const file of files) {
-      formData.append("image", file);
-    }
-
-    setUploading(true);
-
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-
-      const { data } = await axios.post(`/api/upload`, formData, config);
-
-      setImages(data);
-
-      setUploading(false);
-    } catch (error) {
-      console.error(error);
-      setError(error);
-      setUploading(false);
-    }
-  };
   return (
     <div className="tweetComposer shadow">
       <div className="tweetComposer__leftCol">
@@ -90,14 +95,14 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
           ) : (
             <div className="tweetComposer__imageHolder pl-1">
               {images.length > 0 &&
-                images.map((image) => (
+                images.map((image, index) => (
                   <img
                     className={
                       "tweetComposer__uploadedImage" +
                       (images.length === 1 ? "-full" : "")
                     }
-                    key={image.public_id}
-                    src={image.secure_url}
+                    key={index}
+                    src={image.secure_url || image}
                     alt="user upload"
                   />
                 ))}
