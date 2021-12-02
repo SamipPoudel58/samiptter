@@ -77,13 +77,12 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
       </div>
       <div className="tweetComposer__rightCol">
         <form className="tweetComposer__form" onSubmit={submitHandler}>
-          <input
+          <textarea
             placeholder={
               buttonText === "Comment"
                 ? "Write a comment..."
                 : "What's happening?"
             }
-            type="text"
             className="tweetComposer__input"
             value={text}
             onChange={(e) => setText(e.target.value)}

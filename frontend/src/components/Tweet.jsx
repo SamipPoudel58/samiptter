@@ -102,11 +102,13 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
 
         {major ? (
           <>
-            <section className="tweet__content">{tweet.tweetContent}</section>
-            <div className="tweetComposer__imageHolder mb-2">
-              {tweet.images &&
-                tweet.images.length > 0 &&
-                tweet.images.map((image) => (
+            {tweet?.tweetContent && (
+              <pre className="tweet__content">{tweet.tweetContent}</pre>
+            )}
+            {tweet?.tweetContent && <div className="pt-2"></div>}
+            {tweet.images && tweet.images.length > 0 && (
+              <div className="tweetComposer__imageHolder mb-2">
+                {tweet.images.map((image) => (
                   <img
                     className={
                       "tweetComposer__uploadedImage" +
@@ -117,11 +119,16 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
                     alt="user upload"
                   />
                 ))}
-            </div>
+              </div>
+            )}
           </>
         ) : (
           <Link to={`/tweets/${tweet._id}`}>
-            <section className="tweet__content">{tweet.tweetContent}</section>
+            {tweet?.tweetContent && (
+              <pre className="tweet__content">{tweet.tweetContent}</pre>
+            )}
+
+            {tweet?.tweetContent && <div className="pt-2"></div>}
 
             {tweet?.images.length > 0 && (
               <div className="tweetComposer__imageHolder mb-2">

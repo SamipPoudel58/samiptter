@@ -27,11 +27,21 @@
   }
 
   &__content {
+    resize: none;
+    width: 100%;
+    overflow: hidden;
+    outline: none;
+    border: none;
+    display: block;
+    height: max-content;
     font-family: "Open Sans";
     font-size: 1.4rem;
     line-height: 2rem;
     color: var(--c-black);
-    padding-bottom: 2rem;
+
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    // margin-bottom: 2rem;
   }
 
   &__actions {
