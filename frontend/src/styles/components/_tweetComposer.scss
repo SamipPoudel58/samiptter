@@ -81,9 +81,11 @@
     width: 48%;
     aspect-ratio: 16/9;
     object-fit: cover;
+    cursor: pointer;
     border-radius: 1rem;
 
     &-full {
+      cursor: pointer;
       display: block;
       width: 100%;
       aspect-ratio: 16/9;
