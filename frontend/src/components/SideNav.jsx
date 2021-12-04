@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
@@ -6,11 +6,18 @@ import ProfileInfo from "./ProfileInfo";
 import FullLogo from "./FullLogo";
 import { changeTheme } from "../actions/uiActions";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
+import useClickOutside from "../hooks/useClickOutside";
 
 const SideNav = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [popUp, setPopUp] = useState(false);
+
+  const popupRef = useRef();
+
+  useClickOutside(popupRef, () => {
+    if (popUp) setPopUp(false);
+  });
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -82,6 +89,7 @@ const SideNav = () => {
           className="sideNav__profileInfo"
         >
           <div
+            ref={popupRef}
             className={`sideNav__popup ${popUp && "sideNav__popup-visible"}`}
           >
             <p

@@ -92,9 +92,10 @@
     transform: translateY(-100%);
     width: 100%;
     background-color: var(--c-background);
-    border-radius: 2rem;
+    border-radius: 1rem;
     overflow: hidden;
     display: none;
+    border: 2px solid var(--c-primary);
 
     &-visible {
       display: block;

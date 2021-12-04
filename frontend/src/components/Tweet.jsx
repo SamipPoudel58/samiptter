@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteTweet, likeTweet } from "../actions/tweetActions";
@@ -7,11 +7,18 @@ import { getTimeFromNow } from "../utils/getTimeFromNow";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 import ProfilePicHolder from "./ProfilePicHolder";
 import { previewImage } from "../actions/uiActions";
+import useClickOutside from "../hooks/useClickOutside";
 
 const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
   const [popup, setPopup] = useState(false);
   const [numLikes, setNumLikes] = useState(tweet.numLikes);
+
+  const popupRef = useRef();
+
+  useClickOutside(popupRef, () => {
+    if (popup) setPopup(false);
+  });
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -45,18 +52,11 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
       }`}
     >
       {popup && (
-        <>
-          <div
-            onClick={() => setPopup(false)}
-            className="tweet__backDrop"
-          ></div>
-
-          <div className="tweet__popup">
-            <p onClick={tweetDeleteHandler} className="tweet__popOption">
-              <i className="fas fa-trash-alt mr-1"></i>Delete
-            </p>
-          </div>
-        </>
+        <div ref={popupRef} className="tweet__popup">
+          <p onClick={tweetDeleteHandler} className="tweet__popOption">
+            <i className="fas fa-trash-alt mr-1"></i>Delete
+          </p>
+        </div>
       )}
 
       <div className="tweet__profilePic">
@@ -93,6 +93,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           <span className="subtitle-text">
             {getTimeFromNow(tweet.createdAt)}
           </span>
+
           {(tweet.user._id === userInfo._id || userInfo.isAdmin) && (
             <i
               onClick={() => setPopup(true)}
