@@ -23,8 +23,6 @@ const Layout = ({ children }) => {
   const preview = useSelector((state) => state.preview);
   const { previewSrc, previewType } = preview;
 
-  console.log(previewSrc);
-
   const logOutHandler = () => {
     dispatch(logout());
     history.push("/login");
