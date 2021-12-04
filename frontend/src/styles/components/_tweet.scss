@@ -18,7 +18,7 @@
   }
 
   &__info {
-    padding: 0.5rem 0 1rem;
+    padding: 0.5rem 0 0.5rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -38,7 +38,7 @@
     border: none;
     display: block;
     height: max-content;
-    font-family: "Open Sans";
+    font-family: "Inter";
     font-size: 1.4rem;
     line-height: 2rem;
     color: var(--c-black);
