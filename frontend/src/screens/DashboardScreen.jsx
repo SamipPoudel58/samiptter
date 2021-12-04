@@ -42,7 +42,7 @@ const DashboardScreen = ({ history }) => {
             <h3 className="heading-sm">Recently Joined</h3>
             <div className="dashboard__recentUsersList mt-2">
               {latestUsers?.map((user) => (
-                <div className="mb-1">
+                <div className="mb-1" key={user._id}>
                   <ProfileInfo
                     image={user.image}
                     id={user._id}
