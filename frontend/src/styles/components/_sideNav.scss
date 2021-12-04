@@ -34,6 +34,7 @@
   }
 
   &__navlink {
+    user-select: none;
     padding: 2rem;
     border-radius: 1rem;
     font-weight: 500;
@@ -58,6 +59,7 @@
     color: var(--c-gray-md);
     cursor: pointer;
     transition: color 0.3s;
+    user-select: none;
 
     &:hover,
     &-active {

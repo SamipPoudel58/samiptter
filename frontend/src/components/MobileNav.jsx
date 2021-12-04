@@ -103,11 +103,11 @@ const MobileNav = () => {
               ></i>{" "}
             </div>
 
-            <li onClick={logOutHandler} className="sideNav__navlink mb-2">
+            <li onClick={logOutHandler} className="sideNav__navlink">
               Log Out
             </li>
           </ul>
-          <div className="ml-1">
+          <div className="p-2">
             {userInfo && (
               <Link to="/profile">
                 <ProfileInfo

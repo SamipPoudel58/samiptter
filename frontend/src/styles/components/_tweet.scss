@@ -18,7 +18,7 @@
   }
 
   &__info {
-    padding: 0.5rem 0 0.5rem;
+    padding: 0 0 0.5rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -103,7 +103,8 @@
 
   &__popup {
     position: absolute;
-    background-color: var(--c-background);
+    background-color: var(--c-tile);
+    border: 2px solid var(--c-gray-md);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     top: 2rem;

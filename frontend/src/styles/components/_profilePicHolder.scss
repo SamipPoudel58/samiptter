@@ -7,8 +7,8 @@
   overflow: hidden;
 
   @media only screen and (max-width: 400px) {
-    height: 3rem;
-    width: 3rem;
+    height: 4rem;
+    width: 4rem;
   }
 
   &__main,
@@ -26,8 +26,8 @@
     opacity: 0.25;
 
     @media only screen and (max-width: 400px) {
-      height: 3rem;
-      width: 3rem;
+      height: 4rem;
+      width: 4rem;
     }
   }
 
@@ -37,8 +37,8 @@
     height: 4.5rem;
     width: 4.5rem;
     @media only screen and (max-width: 400px) {
-      height: 3rem;
-      width: 3rem;
+      height: 4rem;
+      width: 4rem;
     }
   }
 }
