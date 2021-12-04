@@ -55,7 +55,7 @@ const TweetScreen = ({ match, history }) => {
           ) : (
             <>
               <TopBar title="Post" />
-              <div className="mt-2">
+              <div className="tweetsMargin">
                 <Tweet
                   userInfo={userInfo}
                   tweet={tweet}
@@ -63,11 +63,11 @@ const TweetScreen = ({ match, history }) => {
                   major={true}
                 />
               </div>
-              <div className="mt-2 mb-2">
+              <div className="tweetsMargin">
                 <TweetComposer tweet={tweet} buttonText="Comment" />
               </div>
 
-              <div className="commentSection shadow">
+              <div className="commentSection shadow tweetsMargin">
                 <div className="commentSection__header">
                   <div className="commentSection__icon">
                     <i className="far fa-comment-alt"></i>

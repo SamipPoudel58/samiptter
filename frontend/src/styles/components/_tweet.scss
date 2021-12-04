@@ -5,6 +5,10 @@
   gap: 1rem;
   position: relative;
 
+  @media only screen and (max-width: 400px) {
+    padding: 1.5rem;
+  }
+
   &-major {
     border: 2px solid var(--c-primary);
   }

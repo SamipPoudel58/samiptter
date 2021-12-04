@@ -6,6 +6,11 @@
   border-radius: 50%;
   overflow: hidden;
 
+  @media only screen and (max-width: 400px) {
+    height: 3rem;
+    width: 3rem;
+  }
+
   &__main,
   &__background {
     display: block;
@@ -19,6 +24,11 @@
     transform: scale(3);
     filter: blur(4px);
     opacity: 0.25;
+
+    @media only screen and (max-width: 400px) {
+      height: 3rem;
+      width: 3rem;
+    }
   }
 
   &__main {
@@ -26,6 +36,10 @@
     display: block;
     height: 4.5rem;
     width: 4.5rem;
+    @media only screen and (max-width: 400px) {
+      height: 3rem;
+      width: 3rem;
+    }
   }
 }
 

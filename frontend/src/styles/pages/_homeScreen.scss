@@ -3,7 +3,14 @@
   position: relative;
 
   &__samiptterLogo {
-    height: 5rem;
+    height: 3rem;
+  }
+
+  &__tweetsMargin {
+    margin-top: 2rem;
+    @media only screen and (max-width: 400px) {
+      margin-top: 1rem;
+    }
   }
 
   &__logoHolder {
@@ -38,12 +45,15 @@
     & > i {
       position: absolute;
       top: 50%;
-      left: 3rem;
+      left: 2rem;
       transform: translateY(-50%);
     }
 
     @media only screen and (max-width: 800px) {
       display: block;
+    }
+    @media only screen and (max-width: 400px) {
+      padding: 2rem 1rem;
     }
   }
 }
@@ -133,6 +143,11 @@
     // overflow-x: hidden;
     margin: 0;
     padding-top: 2rem;
+  }
+  @media only screen and (max-width: 400px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
   }
 
   // &::-webkit-scrollbar {

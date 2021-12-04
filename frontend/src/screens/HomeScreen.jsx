@@ -89,7 +89,7 @@ const HomeScreen = ({ history }) => {
           ) : (
             userInfo &&
             tweets.map((tweet) => (
-              <div className="mt-2" key={tweet._id}>
+              <div className="tweetsMargin" key={tweet._id}>
                 <Tweet userInfo={userInfo} tweet={tweet} key={tweet._id} />
               </div>
             ))
