@@ -19,7 +19,7 @@ import {
   userLoginReducer,
   userRegisterReducer,
 } from "./reducers/userReducers";
-import { uiThemeReducer } from "./reducers/uiReducer";
+import { previewReducer, uiThemeReducer } from "./reducers/uiReducer";
 import { getDashboardReducer } from "./reducers/dashboardReducers";
 
 const reducer = combineReducers({
@@ -37,6 +37,7 @@ const reducer = combineReducers({
   userProfile: getProfileReducer,
   editProfile: editProfileReducer,
   uiTheme: uiThemeReducer,
+  preview: previewReducer,
   toggleVerify: toggleVerifyReducer,
   getDashboard: getDashboardReducer,
 });

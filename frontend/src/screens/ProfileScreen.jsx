@@ -22,9 +22,9 @@ import {
 } from "../constants/userConstants";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 import ProfilePicHolder from "../components/ProfilePicHolder";
+import { previewImage } from "../actions/uiActions";
 
 const ProfileScreen = ({ history, match }) => {
-  const [preview, setPreview] = useState(false);
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -103,54 +103,23 @@ const ProfileScreen = ({ history, match }) => {
             <Message variant="danger">{"Profile Not Found :("}</Message>
           ) : (
             <>
-              {preview && (
-                <>
-                  <div
-                    onClick={() => setPreview(false)}
-                    className="tweet__backDrop tweet__backDrop-dark"
-                  ></div>
-                  <span
-                    onClick={() => setPreview(false)}
-                    className="profileMain__previewClose"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-
-                  <img
-                    className={`profileMain__popupImage ${
-                      preview === "cover"
-                        ? "profileMain__popupImage-cover"
-                        : "profileMain__popupImage-profile"
-                    }`}
-                    src={preview === "cover" ? user.cover : user.image}
-                    alt="user profile"
-                  />
-                </>
-              )}
               <TopBar title={user.name} />
               {/* {userInfo.isGuest && <Notice />} */}
               <div className="profileMain mt-2">
                 <div className="profileMain__cover">
                   <img
-                    onClick={() => setPreview("cover")}
+                    onClick={() => dispatch(previewImage(user.cover, "cover"))}
                     src={user.cover}
                     alt={`${user.name}'s cover`}
                   />
                 </div>
                 <div className="profileMain__details shadow">
                   <div className="profileMain__profilePic">
-                    <div onClick={() => setPreview("image")}>
+                    <div
+                      onClick={() =>
+                        dispatch(previewImage(user.image, "profile"))
+                      }
+                    >
                       <ProfilePicHolder src={user.image} large={true} />
                     </div>
                   </div>

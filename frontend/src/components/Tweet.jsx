@@ -6,12 +6,12 @@ import { getUsername } from "../utils/getUsername";
 import { getTimeFromNow } from "../utils/getTimeFromNow";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 import ProfilePicHolder from "./ProfilePicHolder";
+import { previewImage } from "../actions/uiActions";
 
 const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
   const [popup, setPopup] = useState(false);
   const [numLikes, setNumLikes] = useState(tweet.numLikes);
-  const [preview, setPreview] = useState("");
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -44,37 +44,6 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
         major && "tweet-major"
       }`}
     >
-      {preview && (
-        <>
-          <div
-            onClick={() => setPreview(false)}
-            className="tweet__backDrop tweet__backDrop-dark"
-          ></div>
-          <span
-            onClick={() => setPreview(false)}
-            className="profileMain__previewClose"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
-
-          <img
-            className="profileMain__popupImage profileMain__popupImage-cover"
-            src={preview}
-            alt="preview"
-          />
-        </>
-      )}
       {popup && (
         <>
           <div
@@ -146,7 +115,9 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
                       "tweetComposer__uploadedImage" +
                       (tweet.images.length === 1 ? "-full" : "")
                     }
-                    onClick={() => setPreview(image.secure_url)}
+                    onClick={() =>
+                      dispatch(previewImage(image.secure_url, "cover"))
+                    }
                     key={image.public_id}
                     src={image.secure_url}
                     alt="user upload"
@@ -173,7 +144,9 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
                       (tweet.images.length === 1 ? "-full" : "")
                     }
                     key={image.public_id}
-                    onClick={() => setPreview(image.secure_url)}
+                    onClick={() =>
+                      dispatch(previewImage(image.secure_url, "cover"))
+                    }
                     src={image.secure_url}
                     alt="user-upload"
                   />

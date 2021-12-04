@@ -6,6 +6,7 @@ import ProfileInfo from "../components/ProfileInfo";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
 import { changeTheme } from "../actions/uiActions";
+import PreviewImage from "./PreviewImage";
 
 const Layout = ({ children }) => {
   const [navVisible, setNavVisible] = useState(false);
@@ -19,6 +20,11 @@ const Layout = ({ children }) => {
   const uiTheme = useSelector((state) => state.uiTheme);
   const { darkMode } = uiTheme;
 
+  const preview = useSelector((state) => state.preview);
+  const { previewSrc, previewType } = preview;
+
+  console.log(previewSrc);
+
   const logOutHandler = () => {
     dispatch(logout());
     history.push("/login");
@@ -30,7 +36,9 @@ const Layout = ({ children }) => {
 
   return (
     <>
+      {previewSrc && <PreviewImage src={previewSrc} type={previewType} />}
       <SideNav />
+
       <section className="homeScreen__topNav">
         <i onClick={() => setNavVisible(true)} className="fas fa-bars"></i>
         <div className="homeScreen__logoHolder">
