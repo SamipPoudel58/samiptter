@@ -37,7 +37,7 @@ const TweetScreen = ({ match, history }) => {
     return () => {
       dispatch({ type: TWEET_DETAILS_RESET });
     };
-  }, [dispatch, match, history, userInfo, successComment, successDelete]);
+  }, [dispatch, match.params.id, userInfo, successComment, successDelete]);
 
   return (
     <div className="tweetScreen">

@@ -54,7 +54,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    image: `https://robohash.org/${email}/set_set${Math.floor(
+    image: `https://robohash.org/${name}/set_set${Math.floor(
       Math.random() * 2 + 1
     )}?size=400x400`,
     friends: [],
