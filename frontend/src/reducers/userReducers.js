@@ -29,6 +29,10 @@ import {
   LIST_USERS_RESET,
   ADD_FRIEND_RESET,
   GET_PROFILE_RESET,
+  GET_NOTIFICATIONS_REQUEST,
+  GET_NOTIFICATIONS_SUCCESS,
+  GET_NOTIFICATIONS_FAIL,
+  GET_NOTIFICATIONS_RESET,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -96,6 +100,27 @@ export const getProfileReducer = (
       return { loading: false, error: action.payload };
     case GET_PROFILE_RESET:
       return { tweets: [], user: { friends: [] } };
+    default:
+      return state;
+  }
+};
+
+export const getNotificationsReducer = (
+  state = { notifications: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_NOTIFICATIONS_REQUEST:
+      return { loading: true, notifications: [] };
+    case GET_NOTIFICATIONS_SUCCESS:
+      return {
+        loading: false,
+        notifications: action.payload,
+      };
+    case GET_NOTIFICATIONS_FAIL:
+      return { loading: false, error: action.payload };
+    case GET_NOTIFICATIONS_RESET:
+      return { notifications: [] };
     default:
       return state;
   }

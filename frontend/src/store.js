@@ -12,6 +12,7 @@ import {
 import {
   addFriendReducer,
   editProfileReducer,
+  getNotificationsReducer,
   getProfileReducer,
   getRecommendedUsersReducer,
   toggleVerifyReducer,
@@ -40,6 +41,7 @@ const reducer = combineReducers({
   preview: previewReducer,
   toggleVerify: toggleVerifyReducer,
   getDashboard: getDashboardReducer,
+  getNotif: getNotificationsReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

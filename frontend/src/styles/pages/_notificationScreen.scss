@@ -1,0 +1,49 @@
+.notificationScreen {
+  &__notifications {
+    padding: 2rem 2rem 1rem;
+    border-radius: 2rem;
+    background-color: var(--c-tile);
+  }
+
+  &__notification {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    // border-bottom: 2px solid var(--c-background);
+  }
+
+  &__icon {
+    position: relative;
+  }
+
+  &__iconHolder {
+    background-color: var(--c-background);
+    padding: 5px;
+    border-radius: 50%;
+    position: absolute;
+    right: -8px;
+    bottom: -8px;
+    & > svg {
+      height: 1.5rem;
+      fill: var(--c-secondary);
+    }
+    & > svg.like {
+      height: 1.5rem;
+      fill: var(--c-pink);
+    }
+  }
+
+  &__info {
+    font-size: 1.4rem;
+    color: var(--c-black);
+
+    & > span {
+      font-weight: bold;
+    }
+  }
+  &__time {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--c-gray-md);
+  }
+}

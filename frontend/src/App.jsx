@@ -12,6 +12,7 @@ import DashboardScreen from "./screens/DashboardScreen";
 import PageNotFound from "./screens/404-page";
 import AdminRoute from "./components/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotificationScreen from "./screens/NotificationScreen";
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -32,6 +33,11 @@ function App() {
             />
             <ProtectedRoute path="/tweets/:id" component={TweetScreen} />
             <ProtectedRoute path="/profile/:id?" component={ProfileScreen} />
+            <ProtectedRoute
+              exact
+              path="/notifications"
+              component={NotificationScreen}
+            />
             <ProtectedRoute exact path="/search" component={SearchScreen} />
             <ProtectedRoute exact path="/" component={HomeScreen} />
             <Route path="*" component={PageNotFound} />

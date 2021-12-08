@@ -1,6 +1,7 @@
 const Tweet = require("../models/tweetModel");
 const asyncHandler = require("express-async-handler");
 const io = require("../socket");
+const Notification = require("../models/notificationModel");
 
 // @desc Get all tweets
 // @route GET /api/tweets
@@ -115,9 +116,23 @@ const likeTweet = asyncHandler(async (req, res) => {
     tweet.likes.push({ user: req.user._id });
     tweet.numLikes = tweet.likes.length;
     task = "Liked";
+
+    if (tweet.user.toString() !== req.user._id.toString()) {
+      const notification = new Notification({
+        receiver: tweet.user,
+        sender: req.user._id,
+        read: false,
+        action: "like",
+        message: "liked your post.",
+        link: `/tweets/${tweet._id}`,
+      });
+
+      await notification.save();
+    }
   }
 
   await tweet.save();
+
   res.status(201).json({ message: `${task} the post` });
 });
 
@@ -132,7 +147,7 @@ const likeComment = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Tweet not found");
   }
-  tweet.comments.forEach((com) => {
+  tweet.comments.forEach(async (com) => {
     if (com._id.toString() === comId.toString()) {
       const alreadyLiked = com.likes.find(
         (r) => r.user.toString() === req.user._id.toString()
@@ -147,10 +162,24 @@ const likeComment = asyncHandler(async (req, res) => {
         com.likes.push({ user: req.user._id });
         com.numLikes = com.likes.length;
         task = "Liked";
+
+        if (com.user.toString() !== req.user._id.toString()) {
+          const notification = new Notification({
+            receiver: com.user,
+            sender: req.user._id,
+            read: false,
+            action: "like",
+            message: "liked your comment.",
+            link: `/tweets/${tweet._id}`,
+          });
+
+          await notification.save();
+        }
       }
     }
   });
   await tweet.save();
+
   res.status(201).json({ message: `${task} the comment` });
 });
 
@@ -176,6 +205,19 @@ const createComment = asyncHandler(async (req, res) => {
   });
   tweet.numComments = tweet.comments.length;
   const createdTweet = await tweet.save();
+
+  if (tweet.user.toString() !== req.user._id.toString()) {
+    const notification = new Notification({
+      receiver: tweet.user,
+      sender: req.user._id,
+      read: false,
+      action: "comment",
+      message: "commented on your post.",
+      link: `/tweets/${tweet._id}`,
+    });
+
+    await notification.save();
+  }
 
   io.getIO().emit("tweets", { action: "comment", tweet: createdTweet });
   res.status(201).json("Comment Created");

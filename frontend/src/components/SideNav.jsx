@@ -7,6 +7,7 @@ import FullLogo from "./FullLogo";
 import { changeTheme } from "../actions/uiActions";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import useClickOutside from "../hooks/useClickOutside";
+import { GET_NOTIFICATIONS_RESET } from "../constants/userConstants";
 
 const SideNav = () => {
   const dispatch = useDispatch();
@@ -25,10 +26,14 @@ const SideNav = () => {
   const uiTheme = useSelector((state) => state.uiTheme);
   const { darkMode } = uiTheme;
 
+  const getNotif = useSelector((state) => state.getNotif);
+  const { notifications } = getNotif;
+
   const logOutHandler = () => {
     dispatch(logout());
     history.push("/login");
     dispatch({ type: TWEET_LIST_RESET });
+    dispatch({ type: GET_NOTIFICATIONS_RESET });
   };
 
   const toggleHandler = () => {
@@ -57,6 +62,23 @@ const SideNav = () => {
           >
             <li>
               <i className="fas fa-search mr-1"></i> Search
+            </li>
+          </NavLink>
+          <NavLink
+            to="/notifications"
+            className="sideNav__navlink mb-1"
+            activeClassName="sideNav__navlink-active"
+          >
+            <li>
+              <div className="notification-indicator">
+                <i className="fas fa-bell mr-1"></i>
+                {notifications.length > 0 && (
+                  <div className="notification-badge">
+                    {notifications.length}
+                  </div>
+                )}
+              </div>{" "}
+              Notifications
             </li>
           </NavLink>
           <NavLink

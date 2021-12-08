@@ -71,6 +71,15 @@
   object-fit: cover;
   border-radius: 50%;
   background-color: var(--c-gray-md);
+
+  &-sm {
+    display: block;
+    height: 3.5rem;
+    width: 3.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: var(--c-gray-md);
+  }
 }
 
 .minor-link,
@@ -172,4 +181,25 @@
   @media only screen and (max-width: 400px) {
     margin-top: 1.5rem;
   }
+}
+
+.notification-indicator {
+  display: inline-block;
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -8px;
+  right: 0;
+  background-color: var(--c-pink);
+  line-height: 1;
+  height: 1.7rem;
+  width: 1.7rem;
+  font-size: 1.2rem;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const Tweet = require("../models/tweetModel");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken.js");
+const Notification = require("../models/notificationModel");
 require("dotenv").config();
 
 // @desc Auth user and get token
@@ -244,6 +245,18 @@ const addFriend = asyncHandler(async (req, res) => {
     action = "removed";
   }
   await user.save();
+
+  const notification = new Notification({
+    receiver: id,
+    sender: req.user._id,
+    read: false,
+    action: "follow",
+    message: "followed you.",
+    link: `/profile/${req.user._id}`,
+  });
+
+  await notification.save();
+
   res.json("User " + action);
 });
 
@@ -295,10 +308,42 @@ const verifyUser = asyncHandler(async (req, res) => {
   } else {
     user.isVerified = true;
     msg = "Verified";
+
+    const notification = new Notification({
+      receiver: user,
+      sender: req.user._id,
+      read: false,
+      action: "verified",
+      message: "verified you. Congrats!",
+      link: `/profile`,
+    });
+
+    await notification.save();
   }
 
   await user.save();
+
   res.json({ message: `User is now ${msg}` });
+});
+
+// @desc Get notifications of a user
+// @route Get /api/user/notifications
+// @access Private
+const getNotifications = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User Not Found");
+  }
+
+  const notifications = await Notification.find({
+    receiver: req.user._id,
+  })
+    .populate("sender", "id name image isAdmin isVerified")
+    .sort({ createdAt: -1 });
+
+  res.json(notifications);
 });
 
 module.exports = {
@@ -310,4 +355,5 @@ module.exports = {
   editUser,
   verifyUser,
   getUsersList,
+  getNotifications,
 };

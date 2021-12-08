@@ -9,6 +9,7 @@ const {
   editUser,
   verifyUser,
   getUsersList,
+  getNotifications,
 } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -18,6 +19,7 @@ router
   .post(registerUser)
   .put(protect, editUser);
 router.post("/login", loginUser);
+router.route("/notifications").get(protect, getNotifications);
 router.route("/friends/:id").get(protect, addFriend);
 router.route("/recommended").get(protect, getRecommendedUser);
 router.route("/:id").get(protect, getUserProfile);

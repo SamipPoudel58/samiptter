@@ -5,6 +5,9 @@ import {
   EDIT_PROFILE_FAIL,
   EDIT_PROFILE_REQUEST,
   EDIT_PROFILE_SUCCESS,
+  GET_NOTIFICATIONS_FAIL,
+  GET_NOTIFICATIONS_REQUEST,
+  GET_NOTIFICATIONS_SUCCESS,
   GET_PROFILE_FAIL,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -164,6 +167,39 @@ export const getProfile = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getNotifications = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_NOTIFICATIONS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/users/notifications", config);
+
+    dispatch({
+      type: GET_NOTIFICATIONS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_NOTIFICATIONS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

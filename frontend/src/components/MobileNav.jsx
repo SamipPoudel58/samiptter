@@ -77,6 +77,14 @@ const MobileNav = () => {
             </NavLink>
             <NavLink
               exact
+              to="/notifications"
+              className="sideNav__navlink mb-1"
+              activeClassName="sideNav__navlink-active"
+            >
+              <li>Notifications</li>
+            </NavLink>
+            <NavLink
+              exact
               to="/profile"
               className="sideNav__navlink mb-1"
               activeClassName="sideNav__navlink-active"
