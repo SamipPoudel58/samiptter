@@ -337,6 +337,8 @@ const getNotifications = asyncHandler(async (req, res) => {
     throw new Error("User Not Found");
   }
 
+  await Notification.updateMany({ receiver: req.user._id }, { read: true });
+
   const notifications = await Notification.find({
     receiver: req.user._id,
   })
@@ -344,6 +346,25 @@ const getNotifications = asyncHandler(async (req, res) => {
     .sort({ createdAt: -1 });
 
   res.json(notifications);
+});
+
+// @desc Get UNREAD notifications of a user
+// @route Get /api/user/unreadnotifications
+// @access Private
+const getUnreadNotifications = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User Not Found");
+  }
+
+  const count = await Notification.countDocuments({
+    receiver: req.user._id,
+    read: false,
+  });
+
+  res.json({ count });
 });
 
 module.exports = {
@@ -356,4 +377,5 @@ module.exports = {
   verifyUser,
   getUsersList,
   getNotifications,
+  getUnreadNotifications,
 };

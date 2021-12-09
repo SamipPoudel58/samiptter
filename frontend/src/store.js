@@ -15,6 +15,7 @@ import {
   getNotificationsReducer,
   getProfileReducer,
   getRecommendedUsersReducer,
+  getUnreadNotificationsReducer,
   toggleVerifyReducer,
   userListReducer,
   userLoginReducer,
@@ -42,6 +43,7 @@ const reducer = combineReducers({
   toggleVerify: toggleVerifyReducer,
   getDashboard: getDashboardReducer,
   getNotif: getNotificationsReducer,
+  getUnreadNotif: getUnreadNotificationsReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

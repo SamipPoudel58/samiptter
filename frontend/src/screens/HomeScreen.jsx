@@ -32,9 +32,10 @@ const HomeScreen = ({ history }) => {
   const { darkMode } = uiTheme;
 
   useEffect(() => {
-    if (tweets.length === 0) {
-      dispatch(listTweets());
-    }
+    // if (tweets.length === 0) {
+    //   dispatch(listTweets());
+    // }
+    dispatch(listTweets());
 
     if (successDelete) {
       dispatch(listTweets());
@@ -82,6 +83,7 @@ const HomeScreen = ({ history }) => {
         />
         <section className="newsFeed">
           <TweetComposer buttonText="Post" />
+          {tweets.length === 0 && <Loader />}
           {loading ? (
             <Loader />
           ) : error ? (

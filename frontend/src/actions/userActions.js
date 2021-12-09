@@ -14,6 +14,9 @@ import {
   GET_RECOMMENDED_USERS_FAIL,
   GET_RECOMMENDED_USERS_REQUEST,
   GET_RECOMMENDED_USERS_SUCCESS,
+  GET_UNREAD_NOTIF_REQUEST,
+  GET_UNREAD_NOTIF_SUCCESS,
+  GET_UNREAD_NOTIF_FAIL,
   LIST_USERS_FAIL,
   LIST_USERS_REQUEST,
   LIST_USERS_SUCCESS,
@@ -200,6 +203,39 @@ export const getNotifications = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_NOTIFICATIONS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getUnreadNotifications = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_UNREAD_NOTIF_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/users/unreadnotifications", config);
+
+    dispatch({
+      type: GET_UNREAD_NOTIF_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_UNREAD_NOTIF_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -34,6 +34,24 @@
     }
   }
 
+  &__navlink {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__notification {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    background-color: var(--c-pink);
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__nav.visible {
     transform: translateX(0);
   }

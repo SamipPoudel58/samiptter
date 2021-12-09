@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileInfo from "./ProfileInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useHistory } from "react-router-dom";
@@ -15,6 +15,9 @@ const MobileNav = () => {
 
   const uiTheme = useSelector((state) => state.uiTheme);
   const { darkMode } = uiTheme;
+
+  const getUnreadNotif = useSelector((state) => state.getUnreadNotif);
+  const { newNotifications } = getUnreadNotif;
 
   const logOutHandler = () => {
     dispatch(logout());
@@ -78,10 +81,15 @@ const MobileNav = () => {
             <NavLink
               exact
               to="/notifications"
-              className="sideNav__navlink mb-1"
+              className="sideNav__navlink mb-1 mobileNav__navlink"
               activeClassName="sideNav__navlink-active"
             >
               <li>Notifications</li>
+              {newNotifications !== 0 && (
+                <div className="mobileNav__notification">
+                  {newNotifications}
+                </div>
+              )}
             </NavLink>
             <NavLink
               exact

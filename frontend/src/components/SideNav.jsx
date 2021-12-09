@@ -1,13 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
-import { logout } from "../actions/userActions";
+import { getUnreadNotifications, logout } from "../actions/userActions";
 import ProfileInfo from "./ProfileInfo";
 import FullLogo from "./FullLogo";
 import { changeTheme } from "../actions/uiActions";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import useClickOutside from "../hooks/useClickOutside";
-import { GET_NOTIFICATIONS_RESET } from "../constants/userConstants";
+import {
+  GET_NOTIFICATIONS_RESET,
+  GET_UNREAD_NOTIF_RESET,
+} from "../constants/userConstants";
 
 const SideNav = () => {
   const dispatch = useDispatch();
@@ -26,14 +29,22 @@ const SideNav = () => {
   const uiTheme = useSelector((state) => state.uiTheme);
   const { darkMode } = uiTheme;
 
-  const getNotif = useSelector((state) => state.getNotif);
-  const { notifications } = getNotif;
+  // const getNotif = useSelector((state) => state.getNotif);
+  // const { notifications } = getNotif;
+
+  const getUnreadNotif = useSelector((state) => state.getUnreadNotif);
+  const { newNotifications } = getUnreadNotif;
+
+  useEffect(() => {
+    dispatch(getUnreadNotifications());
+  }, [dispatch]);
 
   const logOutHandler = () => {
     dispatch(logout());
     history.push("/login");
     dispatch({ type: TWEET_LIST_RESET });
     dispatch({ type: GET_NOTIFICATIONS_RESET });
+    dispatch({ type: GET_UNREAD_NOTIF_RESET });
   };
 
   const toggleHandler = () => {
@@ -72,10 +83,8 @@ const SideNav = () => {
             <li>
               <div className="notification-indicator">
                 <i className="fas fa-bell mr-1"></i>
-                {notifications.length > 0 && (
-                  <div className="notification-badge">
-                    {notifications.length}
-                  </div>
+                {newNotifications !== 0 && (
+                  <div className="notification-badge">{newNotifications}</div>
                 )}
               </div>{" "}
               Notifications

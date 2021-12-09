@@ -34,10 +34,10 @@ const ProfileEditScreen = ({ history }) => {
     if (userInfo.isGuest) {
       history.push("/");
     }
-    setName(user.name);
-    setBio(user.bio);
-    setImage(user.image || "/images/profile.jpg");
-    setCover(user.cover || "/images/cover.jpg");
+    setName(user.name || userInfo.name);
+    setBio(user.bio || userInfo.bio);
+    setImage(user.image || userInfo.image);
+    setCover(user.cover || userInfo.cover);
 
     if (success) {
       dispatch({ type: USER_LOGIN_SUCCESS, payload: newUserInfo });

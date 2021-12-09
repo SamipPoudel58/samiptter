@@ -26,7 +26,7 @@ import {
 export const tweetListReducer = (state = { tweets: [] }, action) => {
   switch (action.type) {
     case TWEET_LIST_REQUEST:
-      return { loading: true, tweets: [] };
+      return { ...state, loading: false };
     case TWEET_LIST_SUCCESS:
       return {
         loading: false,

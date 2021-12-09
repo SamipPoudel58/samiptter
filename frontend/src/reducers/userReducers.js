@@ -33,6 +33,10 @@ import {
   GET_NOTIFICATIONS_SUCCESS,
   GET_NOTIFICATIONS_FAIL,
   GET_NOTIFICATIONS_RESET,
+  GET_UNREAD_NOTIF_REQUEST,
+  GET_UNREAD_NOTIF_SUCCESS,
+  GET_UNREAD_NOTIF_FAIL,
+  GET_UNREAD_NOTIF_RESET,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -121,6 +125,27 @@ export const getNotificationsReducer = (
       return { loading: false, error: action.payload };
     case GET_NOTIFICATIONS_RESET:
       return { notifications: [] };
+    default:
+      return state;
+  }
+};
+
+export const getUnreadNotificationsReducer = (
+  state = { newNotifications: 0 },
+  action
+) => {
+  switch (action.type) {
+    case GET_UNREAD_NOTIF_REQUEST:
+      return { loading: true, newNotifications: 0 };
+    case GET_UNREAD_NOTIF_SUCCESS:
+      return {
+        loading: false,
+        newNotifications: action.payload.count,
+      };
+    case GET_UNREAD_NOTIF_FAIL:
+      return { loading: false, error: action.payload };
+    case GET_UNREAD_NOTIF_RESET:
+      return { newNotifications: 0 };
     default:
       return state;
   }
