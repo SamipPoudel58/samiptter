@@ -43,11 +43,24 @@
     font-size: 1.6rem;
     color: var(--c-gray-md);
     transition: color 0.3s;
+    li {
+      display: flex;
+      align-items: center;
+    }
 
-    &:hover,
-    &-active {
+    svg {
+      height: 1.8rem;
+      margin-right: 1rem;
+    }
+
+    &:hover {
       color: var(--c-secondary);
       background-color: var(--c-background);
+    }
+
+    &-active {
+      color: var(--c-secondary);
+      font-weight: bold;
     }
   }
 
@@ -60,6 +73,8 @@
     cursor: pointer;
     transition: color 0.3s;
     user-select: none;
+    display: flex;
+    align-items: center;
 
     &:hover,
     &-active {
@@ -67,8 +82,10 @@
       background-color: var(--c-background);
     }
 
-    & > i {
-      transition: all 0.3s;
+    & > svg {
+      height: 1.8rem;
+      margin-right: 1rem;
+      // transition: all 0.3s;
     }
   }
 
