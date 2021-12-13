@@ -1,14 +1,20 @@
 .notificationScreen {
   &__notifications {
-    padding: 2rem 2rem 1rem;
-    border-radius: 2rem;
+    padding: 1rem;
+    border-radius: 1rem;
     background-color: var(--c-tile);
   }
 
   &__notification {
     display: flex;
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    // margin-bottom: 1.5rem;
+    padding: 1rem 1rem;
+    border-radius: 0.5rem;
+
+    &:hover {
+      background-color: var(--c-background);
+    }
     // border-bottom: 2px solid var(--c-background);
   }
 
@@ -17,19 +23,22 @@
   }
 
   &__iconHolder {
-    background-color: var(--c-background);
-    padding: 5px;
+    background-color: var(--c-lightblue);
+    padding: 3px;
     border-radius: 50%;
     position: absolute;
-    right: -8px;
-    bottom: -8px;
-    & > svg {
-      height: 1.5rem;
-      fill: var(--c-secondary);
+    right: -2px;
+    bottom: -3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-like {
+      background-color: var(--c-pink);
     }
-    & > svg.like {
-      height: 1.5rem;
-      fill: var(--c-pink);
+    svg {
+      height: 1.4rem;
+      fill: white;
     }
   }
 

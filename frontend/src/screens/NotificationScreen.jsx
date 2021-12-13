@@ -41,7 +41,9 @@ const NotificationScreen = () => {
                   <Link to={notification.link} key={notification._id}>
                     <div className="notificationScreen__notification">
                       <div className="notificationScreen__icon">
-                        <div className="notificationScreen__iconHolder">
+                        <div
+                          className={`notificationScreen__iconHolder notificationScreen__iconHolder-${notification.action}`}
+                        >
                           {notification.action === "like" ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -72,14 +74,11 @@ const NotificationScreen = () => {
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                              fill="#000000"
                             >
-                              <path
-                                fillRule="evenodd"
-                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                clipRule="evenodd"
-                              />
+                              <path d="M0 0h24v24H0z" fill="none" />
+                              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                             </svg>
                           )}
                         </div>
