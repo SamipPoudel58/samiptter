@@ -123,18 +123,18 @@ const editUser = asyncHandler(async (req, res) => {
     throw new Error("Name should be 20 characters maximum.");
   }
 
-  const usernameExists = await User.findOne({ username: username });
-
-  if (usernameExists) {
-    res.status(401);
-    throw new Error("Username already exists!");
-  }
-
   const user = await User.findById(id);
 
   if (!user) {
     res.status(400);
     throw new Error("User Not Found");
+  }
+
+  const usernameExists = await User.findOne({ username: username });
+
+  if (usernameExists && usernameExists._id.toString() !== user._id.toString()) {
+    res.status(401);
+    throw new Error("Username already exists!");
   }
 
   let adminIsEditing = false;
