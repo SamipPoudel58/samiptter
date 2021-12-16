@@ -109,8 +109,9 @@ const getUsersList = asyncHandler(async (req, res) => {
 // @route PUT /api/users
 // @access Private
 const editUser = asyncHandler(async (req, res) => {
-  const { id, name, username, bio, password, image, cover } = req.body;
-  console.log(id);
+  let { id, name, username, bio, password, image, cover } = req.body;
+
+  username = username.toLowerCase().replace(/\s+/g, "");
 
   if (username.length > 15) {
     res.status(401);
@@ -120,6 +121,13 @@ const editUser = asyncHandler(async (req, res) => {
   if (name.length > 20) {
     res.status(401);
     throw new Error("Name should be 20 characters maximum.");
+  }
+
+  const usernameExists = await User.findOne({ username: username });
+
+  if (usernameExists) {
+    res.status(401);
+    throw new Error("Username already exists!");
   }
 
   const user = await User.findById(id);
@@ -141,7 +149,7 @@ const editUser = asyncHandler(async (req, res) => {
   }
 
   user.name = name || user.name;
-  user.username = username.toLowerCase().replace(/\s+/g, "") || user.username;
+  user.username = username || user.username;
   if (password) {
     user.password = password;
   }
