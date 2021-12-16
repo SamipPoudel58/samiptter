@@ -120,7 +120,7 @@ const SearchScreen = ({ history }) => {
                         image={user.image}
                         id={user._id}
                         name={user.name}
-                        username={user.name}
+                        username={user.username}
                         isVerified={user.isVerified}
                         bio={user.bio}
                       />

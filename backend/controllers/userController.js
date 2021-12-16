@@ -23,6 +23,7 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      username: user.username,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
       friends: user.friends,
@@ -51,7 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  const user = await User.create({
+  const createdUser = await User.create({
     name,
     email,
     password,
@@ -61,11 +62,16 @@ const registerUser = asyncHandler(async (req, res) => {
     friends: [],
   });
 
+  createdUser.username = createdUser._id.toString();
+
+  const user = await createdUser.save();
+
   if (user) {
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      username: user.username,
       friends: user.friends,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
@@ -103,7 +109,18 @@ const getUsersList = asyncHandler(async (req, res) => {
 // @route PUT /api/users
 // @access Private
 const editUser = asyncHandler(async (req, res) => {
-  const { id, name, bio, password, image, cover } = req.body;
+  const { id, name, username, bio, password, image, cover } = req.body;
+  console.log(id);
+
+  if (username.length > 15) {
+    res.status(401);
+    throw new Error("Username should be 15 characters maximum.");
+  }
+
+  if (name.length > 20) {
+    res.status(401);
+    throw new Error("Name should be 20 characters maximum.");
+  }
 
   const user = await User.findById(id);
 
@@ -124,6 +141,7 @@ const editUser = asyncHandler(async (req, res) => {
   }
 
   user.name = name || user.name;
+  user.username = username.toLowerCase().replace(/\s+/g, "") || user.username;
   if (password) {
     user.password = password;
   }
@@ -140,6 +158,7 @@ const editUser = asyncHandler(async (req, res) => {
       _id: adminUser._id,
       name: adminUser.name,
       email: adminUser.email,
+      username: adminUser.username,
       isAdmin: adminUser.isAdmin,
       isVerified: adminUser.isVerified,
       friends: adminUser.friends,
@@ -152,6 +171,7 @@ const editUser = asyncHandler(async (req, res) => {
     res.json({
       _id: updatedUser._id,
       email: updatedUser.email,
+      username: updatedUser.username,
       name: updatedUser.name,
       isAdmin: updatedUser.isAdmin,
       isVerified: updatedUser.isVerified,
@@ -188,6 +208,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
+    username: user.username,
     friends: user.friends,
     isAdmin: user.isAdmin,
     isVerified: user.isVerified,
@@ -197,7 +218,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     isFriend,
   };
   const tweets = await Tweet.find({ user: id })
-    .populate("user", "id name image isAdmin isVerified")
+    .populate("user", "id name username image isAdmin isVerified")
     .sort({ createdAt: -1 });
 
   const tweetsLikedByUser = await Tweet.find(
@@ -267,6 +288,7 @@ const getRecommendedUser = asyncHandler(async (req, res) => {
   const userSize = 3;
   let currentUser = await User.findById(req.user._id);
   let friendArray = currentUser.friends.map((f) => f.user);
+  // TODO: Limit unnecessary data sent
   let users = await User.find({
     _id: { $nin: [...friendArray, req.user._id] },
   }).limit(userSize);

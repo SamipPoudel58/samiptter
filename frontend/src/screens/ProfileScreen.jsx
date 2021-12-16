@@ -156,7 +156,7 @@ const ProfileScreen = ({ history, match }) => {
                     )}
                   </h3>
                   <p className="text-centered subtitle-text">
-                    {user.name && getUsername(user.name)}
+                    {user.username && getUsername(user.username)}
                   </p>
                   <p className="paragraph text-centered mt-1">{user.bio}</p>
                   <p className="profileMain__stats mt-1">

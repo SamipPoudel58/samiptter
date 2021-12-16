@@ -7,11 +7,15 @@ import { editProfile } from "../actions/userActions";
 import Head from "../components/Head";
 import Layout from "../components/Layout";
 import TopBar from "../components/TopBar";
-import { USER_LOGIN_SUCCESS } from "../constants/userConstants";
+import {
+  EDIT_PROFILE_RESET,
+  USER_LOGIN_SUCCESS,
+} from "../constants/userConstants";
 import toast from "react-hot-toast";
 
 const ProfileEditScreen = ({ history }) => {
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
   const [image, setImage] = useState("");
   const [cover, setCover] = useState("");
@@ -35,6 +39,7 @@ const ProfileEditScreen = ({ history }) => {
       history.push("/");
     }
     setName(user.name || userInfo.name);
+    setUsername(user.username || userInfo.username);
     setBio(user.bio || userInfo.bio);
     setImage(user.image || userInfo.image);
     setCover(user.cover || userInfo.cover);
@@ -43,6 +48,10 @@ const ProfileEditScreen = ({ history }) => {
       dispatch({ type: USER_LOGIN_SUCCESS, payload: newUserInfo });
       history.push("/profile");
     }
+
+    return () => {
+      dispatch({ type: EDIT_PROFILE_RESET });
+    };
   }, [history, userInfo, success, dispatch, newUserInfo, user]);
 
   const uploadImage = async (img, imageType) => {
@@ -85,7 +94,17 @@ const ProfileEditScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(editProfile(user._id, name, bio, image, cover, password));
+    dispatch(
+      editProfile(
+        user._id || userInfo._id,
+        name,
+        username,
+        bio,
+        image,
+        cover,
+        password
+      )
+    );
   };
   return (
     <div className="profileEditScreen">
@@ -94,11 +113,10 @@ const ProfileEditScreen = ({ history }) => {
         <section className="middle-section">
           {loading ? (
             <Loader />
-          ) : error ? (
-            <Message variant="danger">{error}</Message>
           ) : (
             <>
               <TopBar title="Edit Your Profile" />
+              {error && <Message variant="danger">{error}</Message>}
               {uploading && (
                 <div>
                   <Loader />
@@ -187,6 +205,18 @@ const ProfileEditScreen = ({ history }) => {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="form__group mt-2">
+                  <label htmlFor="username" className="form__label mb-1">
+                    Username
+                  </label>
+                  <input
+                    name="username"
+                    className="form__input form__input-alt"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>
                 <div className="form__group mt-2">

@@ -7,6 +7,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    username: {
+      type: String,
+      unique: true,
+    },
     bio: {
       type: String,
       default: "I am a user of Samiptter",

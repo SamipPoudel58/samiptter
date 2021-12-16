@@ -5,6 +5,7 @@ import { likeComment, deleteComment } from "../actions/tweetActions";
 import { getTimeFromNow } from "../utils/getTimeFromNow";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 import ProfilePicHolder from "./ProfilePicHolder";
+import { getUsername } from "../utils/getUsername";
 
 const Comment = ({ tweet, userInfo, mainTweetId }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -50,8 +51,7 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
               {tweet.user.isVerified && <Verified className="verified-badge" />}
             </Link>
             <p className="subtitle-text">
-              {tweet.user.name &&
-                "@" + tweet.user.name.toLowerCase().replace(" ", "")}
+              {tweet.user.username && getUsername(tweet.user.username)}
             </p>
             <span className="subtitle-text">.</span>
             <span className="subtitle-text">

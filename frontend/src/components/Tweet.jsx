@@ -87,7 +87,8 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           </Link>
 
           <p className="subtitle-text">
-            {tweet.user.name && getUsername(tweet.user.name)}
+            {getUsername(tweet.user.username || "") ||
+              (tweet.user.name && getUsername(tweet.user.name))}
           </p>
           <span className="subtitle-text">.</span>
           <span className="subtitle-text">

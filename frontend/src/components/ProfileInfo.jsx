@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Verified } from "../assets/verified.svg";
+import { getUsername } from "../utils/getUsername";
 import ProfilePicHolder from "./ProfilePicHolder";
 
 const ProfileInfo = ({
@@ -42,7 +43,7 @@ const ProfileInfo = ({
           {email
             ? email
             : username?.length > 0
-            ? "@" + username.toLowerCase().replace(" ", "")
+            ? getUsername(username) || getUsername(name)
             : "Logged In"}
         </p>
         {bio && <p className="profileInfo__bio paragraph">{bio}</p>}

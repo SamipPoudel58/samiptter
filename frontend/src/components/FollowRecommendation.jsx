@@ -40,7 +40,7 @@ const FollowRecommendation = () => {
             <article className="followRecommendation__user mb-1" key={user._id}>
               <ProfileInfo
                 name={user.name}
-                username={user.name}
+                username={user.username}
                 image={user.image}
                 id={user._id}
                 isAdmin={user.isAdmin}

@@ -245,7 +245,8 @@ export const getUnreadNotifications = () => async (dispatch, getState) => {
 };
 
 export const editProfile =
-  (id, name, bio, image, cover, password) => async (dispatch, getState) => {
+  (id, name, username, bio, image, cover, password) =>
+  async (dispatch, getState) => {
     try {
       dispatch({
         type: EDIT_PROFILE_REQUEST,
@@ -264,7 +265,7 @@ export const editProfile =
 
       const { data } = await axios.put(
         "/api/users",
-        { id, name, bio, image, cover, password },
+        { id, name, username, bio, image, cover, password },
         config
       );
 
