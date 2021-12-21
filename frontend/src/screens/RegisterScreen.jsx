@@ -17,7 +17,10 @@ const RegisterScreen = ({ location, history }) => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const { loading, userInfo } = userLogin;
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { error: registerError } = userRegister;
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -31,6 +34,8 @@ const RegisterScreen = ({ location, history }) => {
     e.preventDefault();
     if (password.length < 6) {
       setMessage("Password should be at least 6 characters.");
+    } else if (name.length > 20) {
+      setMessage("Name should be less than 20 characters.");
     } else {
       dispatch(register(name, email, password));
     }
@@ -43,7 +48,7 @@ const RegisterScreen = ({ location, history }) => {
         <FullLogo />
         <div className="authScreen__formContainer">
           <h2 className="heading-md">Create an account</h2>
-          {error && <Message variant="danger">{error}</Message>}
+          {registerError && <Message variant="danger">{registerError}</Message>}
           {message && <Message variant="danger">{message}</Message>}
           {loading && <Loader />}
           <form onSubmit={submitHandler}>

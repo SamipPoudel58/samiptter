@@ -47,7 +47,7 @@ const DashboardScreen = ({ history }) => {
                     image={user.image}
                     id={user._id}
                     name={user.name}
-                    username={user.name}
+                    username={user.username}
                     email={user.email}
                     isVerified={user.isVerified}
                   />

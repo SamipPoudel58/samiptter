@@ -132,7 +132,7 @@ const SideNav = () => {
           </NavLink>
           <NavLink
             exact
-            to="/profile"
+            to={`/profile/${userInfo.username}`}
             className="sideNav__navlink mb-1"
             activeClassName="sideNav__navlink-active"
           >

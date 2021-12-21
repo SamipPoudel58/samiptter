@@ -40,11 +40,7 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
         <div className="tweet__details">
           <section className="tweet__info">
             <Link
-              to={
-                userInfo._id === tweet.user._id
-                  ? "/profile"
-                  : `/profile/${tweet.user._id}`
-              }
+              to={`/profile/${tweet.user.username}`}
               className="tweet__username username-text"
             >
               {tweet.user.name}

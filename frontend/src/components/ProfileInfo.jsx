@@ -19,7 +19,7 @@ const ProfileInfo = ({
     <div className="profileInfo">
       <div className="profileInfo__imageHolder">
         {link ? (
-          <Link to={`/profile/${id}`}>
+          <Link to={`/profile/${username}`}>
             <ProfilePicHolder src={image || "/images/1.jpg"} />
           </Link>
         ) : (
@@ -29,7 +29,7 @@ const ProfileInfo = ({
       <div className="profileInfo__details">
         {link ? (
           <Link
-            to={`/profile/${id}`}
+            to={`/profile/${username}`}
             className="profileInfo__name username-text"
           >
             {name} {isVerified && <Verified className="verified-badge" />}

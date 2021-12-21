@@ -45,7 +45,7 @@ const ProfileScreen = ({ history, match }) => {
   const { darkMode } = uiTheme;
 
   useEffect(() => {
-    dispatch(getProfile(match.params.id || userInfo._id));
+    dispatch(getProfile(match.params.id));
 
     if (editProfileSuccess) {
       toast.success("Profile Edited Successfully");
@@ -124,7 +124,7 @@ const ProfileScreen = ({ history, match }) => {
                     </div>
                   </div>
 
-                  {match.params.id && (
+                  {match.params.id !== userInfo.username && (
                     <button
                       onClick={followHandler}
                       className={`profileMain__followBtn ${
@@ -137,15 +137,14 @@ const ProfileScreen = ({ history, match }) => {
                     </button>
                   )}
 
-                  {history.location.pathname === "/profile" &&
-                    !userInfo.isGuest && (
-                      <Link
-                        to="/profile-edit"
-                        className="profileMain__followBtn primary-btn-alt"
-                      >
-                        Edit
-                      </Link>
-                    )}
+                  {match.params.id === userInfo.username && !userInfo.isGuest && (
+                    <Link
+                      to="/profile-edit"
+                      className="profileMain__followBtn primary-btn-alt"
+                    >
+                      Edit
+                    </Link>
+                  )}
                   <h3 className="profileMain__userName heading-md text-centered mt-1">
                     {user.name}{" "}
                     {user.isVerified && (

@@ -145,7 +145,7 @@ export const listUsers =
     }
   };
 
-export const getProfile = (id) => async (dispatch, getState) => {
+export const getProfile = (username) => async (dispatch, getState) => {
   try {
     dispatch({
       type: GET_PROFILE_REQUEST,
@@ -161,7 +161,7 @@ export const getProfile = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("/api/users/" + id, config);
+    const { data } = await axios.get("/api/users/" + username, config);
 
     dispatch({
       type: GET_PROFILE_SUCCESS,

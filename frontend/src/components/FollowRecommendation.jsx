@@ -46,7 +46,7 @@ const FollowRecommendation = () => {
                 isAdmin={user.isAdmin}
                 isVerified={user.isVerified}
               />
-              <Link to={`/profile/${user._id}`} className="primary-btn">
+              <Link to={`/profile/${user.username}`} className="primary-btn">
                 Follow
               </Link>
             </article>

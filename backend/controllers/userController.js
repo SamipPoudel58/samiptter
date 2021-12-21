@@ -45,6 +45,11 @@ const loginUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
+  if (name.length > 20) {
+    res.status(400);
+    throw new Error("Name should be 20 characters maximum.");
+  }
+
   const userExists = await User.findOne({ email: email });
 
   if (userExists) {
@@ -196,9 +201,9 @@ const editUser = asyncHandler(async (req, res) => {
 // @route GET /api/users/:id
 // @access Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const username = req.params.id;
 
-  const user = await User.findById(id);
+  const user = await User.findOne({ username: username });
 
   if (!user) {
     res.status(404);
@@ -206,7 +211,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
   const friend = await User.find({
     _id: req.user._id,
-    "friends.user": id,
+    "friends.user": user._id,
   });
   let isFriend = false;
   if (friend && friend.length > 0) {
@@ -225,7 +230,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     bio: user.bio,
     isFriend,
   };
-  const tweets = await Tweet.find({ user: id })
+  const tweets = await Tweet.find({ user: user._id })
     .populate("user", "id name username image isAdmin isVerified")
     .sort({ createdAt: -1 });
 
@@ -281,7 +286,7 @@ const addFriend = asyncHandler(async (req, res) => {
     read: false,
     action: "follow",
     message: "followed you.",
-    link: `/profile/${req.user._id}`,
+    link: `/profile/${req.user.username}`,
   });
 
   await notification.save();
@@ -299,7 +304,9 @@ const getRecommendedUser = asyncHandler(async (req, res) => {
   // TODO: Limit unnecessary data sent
   let users = await User.find({
     _id: { $nin: [...friendArray, req.user._id] },
-  }).limit(userSize);
+  })
+    .select("_id name username isVerified image")
+    .limit(userSize);
   if (!users) {
     res.status(404);
     throw new Error("No recommended users found");
@@ -372,7 +379,7 @@ const getNotifications = asyncHandler(async (req, res) => {
   const notifications = await Notification.find({
     receiver: req.user._id,
   })
-    .populate("sender", "id name image isAdmin isVerified")
+    .populate("sender", "id name username image isAdmin isVerified")
     .sort({ createdAt: -1 });
 
   res.json(notifications);

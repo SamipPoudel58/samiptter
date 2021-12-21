@@ -46,7 +46,7 @@ const ProfileEditScreen = ({ history }) => {
 
     if (success) {
       dispatch({ type: USER_LOGIN_SUCCESS, payload: newUserInfo });
-      history.push("/profile");
+      history.push(`/profile/${newUserInfo.username}`);
     }
 
     return () => {
