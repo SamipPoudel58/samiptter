@@ -36,8 +36,12 @@ const SideNav = () => {
   const { newNotifications } = getUnreadNotif;
 
   useEffect(() => {
+    if (!userInfo.username) {
+      dispatch(logout());
+      history.push("/login");
+    }
     dispatch(getUnreadNotifications());
-  }, [dispatch]);
+  }, [dispatch, history]);
 
   const logOutHandler = () => {
     dispatch(logout());
