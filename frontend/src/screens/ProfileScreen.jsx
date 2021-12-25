@@ -10,6 +10,7 @@ import {
   getProfile,
   addFriendAction,
   toggleVerify,
+  recommendUsers,
 } from "../actions/userActions";
 import TopBar from "../components/TopBar";
 import { getUsername } from "../utils/getUsername";
@@ -58,6 +59,7 @@ const ProfileScreen = ({ history, match }) => {
     }
     if (followSuccess) {
       dispatch({ type: ADD_FRIEND_RESET });
+      dispatch(recommendUsers());
     }
   }, [
     history,

@@ -83,7 +83,7 @@ const HomeScreen = ({ history }) => {
         />
         <section className="newsFeed">
           <TweetComposer buttonText="Post" />
-          {tweets.length === 0 && <Loader />}
+          {tweets?.length === 0 && <Loader />}
           {loading ? (
             <Loader />
           ) : error ? (

@@ -37,6 +37,7 @@ import {
   GET_UNREAD_NOTIF_SUCCESS,
   GET_UNREAD_NOTIF_FAIL,
   GET_UNREAD_NOTIF_RESET,
+  GET_RECOMMENDED_USERS_RESET,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -194,6 +195,8 @@ export const getRecommendedUsersReducer = (state = { users: [] }, action) => {
       };
     case GET_RECOMMENDED_USERS_FAIL:
       return { loading: false, error: action.payload };
+    case GET_RECOMMENDED_USERS_RESET:
+      return { users: [] };
     default:
       return state;
   }

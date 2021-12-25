@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import {
   ADD_FRIEND_FAIL,
   ADD_FRIEND_SUCCESS,
@@ -30,6 +31,9 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  GET_NOTIFICATIONS_RESET,
+  GET_UNREAD_NOTIF_RESET,
+  GET_RECOMMENDED_USERS_RESET,
 } from "../constants/userConstants";
 
 export const login =
@@ -72,6 +76,10 @@ export const login =
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: TWEET_LIST_RESET });
+  dispatch({ type: GET_NOTIFICATIONS_RESET });
+  dispatch({ type: GET_UNREAD_NOTIF_RESET });
+  dispatch({ type: GET_RECOMMENDED_USERS_RESET });
 };
 
 export const register = (name, email, password) => async (dispatch) => {

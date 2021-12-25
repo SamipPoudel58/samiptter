@@ -17,7 +17,7 @@ const FollowRecommendation = () => {
   } = getRecommendedUsers;
 
   useEffect(() => {
-    if (usersRecommended.length === 0) {
+    if (usersRecommended?.length === 0) {
       dispatch(recommendUsers());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +36,7 @@ const FollowRecommendation = () => {
         ) : errorRecommended ? (
           <Message variant="danger">{errorRecommended}</Message>
         ) : (
-          usersRecommended.map((user) => (
+          usersRecommended?.map((user) => (
             <article className="followRecommendation__user mb-1" key={user._id}>
               <ProfileInfo
                 name={user.name}

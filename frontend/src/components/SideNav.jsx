@@ -1,16 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import { getUnreadNotifications, logout } from "../actions/userActions";
 import ProfileInfo from "./ProfileInfo";
 import FullLogo from "./FullLogo";
 import { changeTheme } from "../actions/uiActions";
-import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import useClickOutside from "../hooks/useClickOutside";
-import {
-  GET_NOTIFICATIONS_RESET,
-  GET_UNREAD_NOTIF_RESET,
-} from "../constants/userConstants";
 
 const SideNav = () => {
   const dispatch = useDispatch();
@@ -34,26 +29,21 @@ const SideNav = () => {
 
   const getUnreadNotif = useSelector((state) => state.getUnreadNotif);
   const { newNotifications } = getUnreadNotif;
-
-  useEffect(() => {
-    if (!userInfo.username) {
-      dispatch(logout());
-      history.push("/login");
-    }
-    dispatch(getUnreadNotifications());
-  }, [dispatch, history]);
-
-  const logOutHandler = () => {
+  const logOutHandler = useCallback(() => {
     dispatch(logout());
     history.push("/login");
-    dispatch({ type: TWEET_LIST_RESET });
-    dispatch({ type: GET_NOTIFICATIONS_RESET });
-    dispatch({ type: GET_UNREAD_NOTIF_RESET });
-  };
+  }, [dispatch, history]);
 
   const toggleHandler = () => {
     dispatch(changeTheme(!darkMode));
   };
+
+  useEffect(() => {
+    if (!userInfo.username) {
+      logOutHandler();
+    }
+    dispatch(getUnreadNotifications());
+  }, [dispatch, history, logOutHandler, userInfo.username]);
 
   return (
     <section className="sideNav">
