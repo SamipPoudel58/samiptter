@@ -29,7 +29,7 @@
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: var(--c-secondary);
+      opacity: 0.8;
     }
   }
 

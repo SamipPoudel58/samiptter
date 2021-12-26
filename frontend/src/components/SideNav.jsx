@@ -29,6 +29,7 @@ const SideNav = () => {
 
   const getUnreadNotif = useSelector((state) => state.getUnreadNotif);
   const { newNotifications } = getUnreadNotif;
+
   const logOutHandler = useCallback(() => {
     dispatch(logout());
     history.push("/login");
