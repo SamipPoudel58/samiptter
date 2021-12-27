@@ -96,7 +96,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
         {major ? (
           <>
             {tweet?.tweetContent && (
-              <pre className="tweet__content">{tweet.tweetContent}</pre>
+              <p className="tweet__content">{tweet.tweetContent}</p>
             )}
             {tweet?.tweetContent && <div className="pt-2"></div>}
             {tweet.images && tweet.images.length > 0 && (
@@ -122,7 +122,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           <>
             <Link to={`/tweets/${tweet._id}`}>
               {tweet?.tweetContent && (
-                <pre className="tweet__content">{tweet.tweetContent}</pre>
+                <p className="tweet__content">{tweet.tweetContent}</p>
               )}
 
               {tweet?.tweetContent && <div className="pt-2"></div>}

@@ -4,7 +4,7 @@ import {
   GET_DASHBOARD_SUCCESS,
 } from "../constants/dashboardConstants";
 
-export const getDashboardReducer = (state = {}, action) => {
+export const getDashboardReducer = (state = { notifications: [] }, action) => {
   switch (action.type) {
     case GET_DASHBOARD_REQUEST:
       return { loading: true };
@@ -15,6 +15,7 @@ export const getDashboardReducer = (state = {}, action) => {
         userCount: action.payload.userCount,
         tweetCount: action.payload.tweetCount,
         latestUsers: action.payload.latestUsers,
+        notifications: action.payload.notifications,
       };
     case GET_DASHBOARD_FAIL:
       return { loading: false, error: action.payload };
