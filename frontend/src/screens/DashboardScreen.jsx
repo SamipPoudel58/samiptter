@@ -59,7 +59,7 @@ const DashboardScreen = ({ history }) => {
           </div>
 
           <div className="dashboard__recentUsers mt-3">
-            <h3 className="heading-sm">Recent Activity</h3>(
+            <h3 className="heading-sm mb-2">Recent Activity</h3>
             <>
               {!notifications?.length > 0 && (
                 <p className="paragraph mb-1">No Notifications.</p>
@@ -138,7 +138,6 @@ const DashboardScreen = ({ history }) => {
                 </Link>
               ))}
             </>
-            )
           </div>
         </section>
       </Layout>
