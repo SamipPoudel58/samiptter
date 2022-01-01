@@ -46,6 +46,14 @@
     white-space: pre-wrap;
     overflow-wrap: break-word;
     // margin-bottom: 2rem;
+
+    & a {
+      color: var(--c-primary);
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   &__actions {

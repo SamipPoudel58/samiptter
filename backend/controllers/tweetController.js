@@ -2,6 +2,7 @@ const Tweet = require("../models/tweetModel");
 const asyncHandler = require("express-async-handler");
 const io = require("../socket");
 const Notification = require("../models/notificationModel");
+const { purifyXSS } = require("../utils/purifyXSS");
 
 // @desc Get all tweets
 // @route GET /api/tweets
@@ -75,7 +76,10 @@ const getTweetById = asyncHandler(async (req, res) => {
 // @route POST /api/tweets
 // @access Private
 const createTweet = asyncHandler(async (req, res) => {
-  const { tweetContent, images } = req.body;
+  let { tweetContent, images } = req.body;
+
+  tweetContent = purifyXSS(tweetContent);
+
   const tweet = new Tweet({
     tweetContent,
     images,

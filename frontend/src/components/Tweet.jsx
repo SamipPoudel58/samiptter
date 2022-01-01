@@ -8,6 +8,7 @@ import { ReactComponent as Verified } from "../assets/verified.svg";
 import ProfilePicHolder from "./ProfilePicHolder";
 import { previewImage } from "../actions/uiActions";
 import useClickOutside from "../hooks/useClickOutside";
+import { generateLinks } from "../utils/generateLinks";
 
 const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -47,6 +48,11 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
 
   return (
     <article
+      onClick={(e) => {
+        const dontClickElements = ["a", "img", "i"];
+        !dontClickElements.includes(e.target.tagName.toLowerCase()) &&
+          history.push(`/tweets/${tweet._id}`);
+      }}
       className={`tweet ${shadow && "shadow"} ${rounded && "rounded-2"} ${
         major && "tweet-major"
       }`}
@@ -96,7 +102,12 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
         {major ? (
           <>
             {tweet?.tweetContent && (
-              <p className="tweet__content">{tweet.tweetContent}</p>
+              <p
+                className="tweet__content"
+                dangerouslySetInnerHTML={{
+                  __html: generateLinks(tweet.tweetContent),
+                }}
+              ></p>
             )}
             {tweet?.tweetContent && <div className="pt-2"></div>}
             {tweet.images && tweet.images.length > 0 && (
@@ -120,13 +131,19 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           </>
         ) : (
           <>
-            <Link to={`/tweets/${tweet._id}`}>
+            <div>
               {tweet?.tweetContent && (
-                <p className="tweet__content">{tweet.tweetContent}</p>
+                <p
+                  className="tweet__content"
+                  // onClick={e => e.stopPropagation()}
+                  dangerouslySetInnerHTML={{
+                    __html: generateLinks(tweet.tweetContent),
+                  }}
+                ></p>
               )}
 
               {tweet?.tweetContent && <div className="pt-2"></div>}
-            </Link>
+            </div>
             {tweet?.images.length > 0 && (
               <div className="tweetComposer__imageHolder mb-2">
                 {tweet.images.map((image) => (
