@@ -57,7 +57,9 @@ const NotificationScreen = () => {
                                 clipRule="evenodd"
                               />
                             </svg>
-                          ) : notification.action === "comment" ? (
+                          ) : ["comment", "mention"].includes(
+                              notification.action
+                            ) ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-5 w-5"

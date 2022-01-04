@@ -5,12 +5,20 @@
   gap: 1rem;
   position: relative;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   @media only screen and (max-width: 400px) {
     padding: 1.5rem;
   }
 
   &-major {
     border: 2px solid var(--c-primary);
+
+    &:hover {
+      cursor: unset;
+    }
   }
 
   &__details {
@@ -29,6 +37,15 @@
     align-items: center;
     gap: 0.3rem;
   }
+
+  // &__mentionedUser {
+  //   color: var(--c-primary);
+  //   text-decoration: none;
+  //   font-weight: 500;
+  //   &:hover {
+  //     border-bottom: 2px solid var(--c-primary);
+  //   }
+  // }
 
   &__content {
     resize: none;
@@ -50,6 +67,7 @@
     & a {
       color: var(--c-primary);
       text-decoration: none;
+      font-weight: 500;
       &:hover {
         text-decoration: underline;
       }

@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const io = require("../socket");
 const Notification = require("../models/notificationModel");
 const { purifyXSS } = require("../utils/purifyXSS");
+const User = require("../models/userModel");
 
 // @desc Get all tweets
 // @route GET /api/tweets
@@ -89,6 +90,38 @@ const createTweet = asyncHandler(async (req, res) => {
     numComments: 0,
   });
   const createdTweet = await tweet.save();
+
+  const usernames = tweetContent
+    .match(/@[a-z0-9_]*/g)
+    .map(function (x) {
+      return x.replace("@", "");
+    })
+    .filter(function (x) {
+      return !!x;
+    });
+
+  for (let mentionedUser of usernames) {
+    try {
+      const user = await User.findOne({ username: mentionedUser });
+
+      if (!user) {
+        console.log("Mentioned user not found");
+        continue;
+      }
+      const notification = new Notification({
+        receiver: user._id,
+        sender: req.user._id,
+        read: false,
+        action: "mention",
+        message: "mentioned you in a post.",
+        link: `/tweets/${createdTweet._id}`,
+      });
+      await notification.save();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   io.getIO().emit("tweets", { action: "create", tweet: createdTweet });
   res.status(201).json(createdTweet);
 });
@@ -191,7 +224,9 @@ const likeComment = asyncHandler(async (req, res) => {
 // @route POST /api/tweets/:id
 // @access Private
 const createComment = asyncHandler(async (req, res) => {
-  const { commentContent } = req.body;
+  let { commentContent } = req.body;
+
+  commentContent = purifyXSS(commentContent);
   const { id } = req.params;
   const tweet = await Tweet.findById(id);
 
@@ -221,6 +256,37 @@ const createComment = asyncHandler(async (req, res) => {
     });
 
     await notification.save();
+  }
+
+  const usernames = commentContent
+    .match(/@[a-z0-9_]*/g)
+    .map(function (x) {
+      return x.replace("@", "");
+    })
+    .filter(function (x) {
+      return !!x;
+    });
+
+  for (let mentionedUser of usernames) {
+    try {
+      const user = await User.findOne({ username: mentionedUser });
+
+      if (!user || user._id.toString() === tweet.user.toString()) {
+        console.log("Mentioned user not found");
+        continue;
+      }
+      const notification = new Notification({
+        receiver: user._id,
+        sender: req.user._id,
+        read: false,
+        action: "mention",
+        message: "mentioned you in a comment.",
+        link: `/tweets/${tweet._id}`,
+      });
+      await notification.save();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   io.getIO().emit("tweets", { action: "comment", tweet: createdTweet });

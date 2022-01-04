@@ -1,5 +1,13 @@
 export const generateLinks = (input) => {
-  return input.replace(/(https?:\/\/[^\s]+)/g, function (url) {
+  const inputWithMentions = input.replace(/@[a-z0-9_]*/g, function (username) {
+    // return '<span class="tweet__mentionedUser">' + username + "</span>";
+    return `<a class="tweet__mentionedUser" href="/profile/${username.replace(
+      "@",
+      ""
+    )}">${username}</a>`;
+  });
+
+  return inputWithMentions.replace(/(https?:\/\/[^\s]+)/g, function (url) {
     return (
       '<a href="' +
       url +

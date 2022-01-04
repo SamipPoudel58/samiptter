@@ -6,6 +6,7 @@ import { getTimeFromNow } from "../utils/getTimeFromNow";
 import { ReactComponent as Verified } from "../assets/verified.svg";
 import ProfilePicHolder from "./ProfilePicHolder";
 import { getUsername } from "../utils/getUsername";
+import { generateLinks } from "../utils/generateLinks";
 
 const Comment = ({ tweet, userInfo, mainTweetId }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -55,7 +56,12 @@ const Comment = ({ tweet, userInfo, mainTweetId }) => {
             </span>
           </section>
 
-          <section className="tweet__content">{tweet.tweetContent}</section>
+          <p
+            className="tweet__content"
+            dangerouslySetInnerHTML={{
+              __html: generateLinks(tweet.tweetContent),
+            }}
+          ></p>
 
           {tweet.tweetContent && <div className="pt-2"></div>}
 

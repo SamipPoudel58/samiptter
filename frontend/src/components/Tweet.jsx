@@ -49,8 +49,9 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   return (
     <article
       onClick={(e) => {
-        const dontClickElements = ["a", "img", "i"];
-        !dontClickElements.includes(e.target.tagName.toLowerCase()) &&
+        const clickElements = ["tweet", "tweet__content", "tweet__divider"];
+        // console.log(e.target.classList);
+        clickElements.includes(e.target.classList[0]) &&
           history.push(`/tweets/${tweet._id}`);
       }}
       className={`tweet ${shadow && "shadow"} ${rounded && "rounded-2"} ${
@@ -142,7 +143,9 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
                 ></p>
               )}
 
-              {tweet?.tweetContent && <div className="pt-2"></div>}
+              {tweet?.tweetContent && (
+                <div className="tweet__divider pt-2"></div>
+              )}
             </div>
             {tweet?.images.length > 0 && (
               <div className="tweetComposer__imageHolder mb-2">
