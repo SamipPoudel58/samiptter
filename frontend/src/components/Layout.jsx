@@ -1,14 +1,58 @@
 import React from "react";
+// import { useHistory } from "react-router-dom";
 import SideNav from "./SideNav";
 import MobileNav from "./MobileNav";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import FollowRecommendation from "../components/FollowRecommendation";
 
 import PreviewImage from "./PreviewImage";
+import useEventListener from "../hooks/useEventListener";
+import { changeTheme } from "../actions/uiActions";
 
 const Layout = ({ children }) => {
   const preview = useSelector((state) => state.preview);
   const { previewSrc, previewType } = preview;
+
+  const uiTheme = useSelector((state) => state.uiTheme);
+  const { darkMode } = uiTheme;
+
+  // const userLogin = useSelector((state) => state.userLogin);
+  // const { userInfo } = userLogin;
+
+  const dispatch = useDispatch();
+
+  // let history = useHistory();
+
+  useEventListener(
+    "keydown",
+    (e) => {
+      const key = e.key;
+
+      if (["textarea", "input"].includes(e.target.tagName.toLowerCase()))
+        return;
+
+      switch (key) {
+        // case "h":
+        //   history.push("/");
+        //   break;
+        // case "s":
+        //   history.push("/search");
+        //   break;
+        // case "n":
+        //   history.push("/notifications");
+        //   break;
+        // case "p":
+        //   history.push("/profile/" + userInfo.username);
+        //   break;
+        case "d":
+          dispatch(changeTheme(!darkMode));
+          break;
+        default:
+          break;
+      }
+    },
+    window
+  );
 
   return (
     <>
