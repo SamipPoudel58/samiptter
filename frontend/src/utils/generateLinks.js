@@ -1,6 +1,5 @@
 export const generateLinks = (input) => {
   const inputWithMentions = input.replace(/@[a-z0-9_]*/g, function (username) {
-    // return '<span class="tweet__mentionedUser">' + username + "</span>";
     return `<a class="tweet__mentionedUser" href="/profile/${username.replace(
       "@",
       ""

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { TWEET_LIST_RESET } from "../constants/tweetConstants";
 import {
-  ADD_FRIEND_FAIL,
-  ADD_FRIEND_SUCCESS,
+  FOLLOW_FAIL,
+  FOLLOW_SUCCESS,
   EDIT_PROFILE_FAIL,
   EDIT_PROFILE_REQUEST,
   EDIT_PROFILE_SUCCESS,
@@ -294,7 +294,7 @@ export const editProfile =
     }
   };
 
-export const addFriendAction = (id) => async (dispatch, getState) => {
+export const followAction = (id) => async (dispatch, getState) => {
   try {
     const {
       userLogin: { userInfo },
@@ -306,13 +306,13 @@ export const addFriendAction = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.get(`/api/users/friends/${id}`, config);
+    await axios.get(`/api/users/follow/${id}`, config);
     dispatch({
-      type: ADD_FRIEND_SUCCESS,
+      type: FOLLOW_SUCCESS,
     });
   } catch (error) {
     dispatch({
-      type: ADD_FRIEND_FAIL,
+      type: FOLLOW_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

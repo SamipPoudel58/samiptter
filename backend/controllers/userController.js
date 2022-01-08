@@ -3,6 +3,10 @@ const Tweet = require("../models/tweetModel");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken.js");
 const Notification = require("../models/notificationModel");
+const Following = require("../models/followingModel");
+const Follower = require("../models/followerModel");
+
+const ObjectId = require("mongoose").Types.ObjectId;
 require("dotenv").config();
 
 // @desc Auth user and get token
@@ -19,6 +23,9 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: email });
 
   if (user && (await user.matchPassword(password))) {
+    const { followers } = await Follower.findOne({ user: user._id });
+    const { following } = await Following.findOne({ user: user._id });
+
     res.json({
       _id: user._id,
       name: user.name,
@@ -26,7 +33,8 @@ const loginUser = asyncHandler(async (req, res) => {
       username: user.username,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
-      friends: user.friends,
+      followers: followers,
+      following: following,
       bio: user.bio,
       image: user.image,
       cover: user.cover,
@@ -64,12 +72,21 @@ const registerUser = asyncHandler(async (req, res) => {
     image: `https://robohash.org/${name}/set_set${Math.floor(
       Math.random() * 2 + 1
     )}?size=400x400`,
-    friends: [],
   });
 
   createdUser.username = createdUser._id.toString();
 
   const user = await createdUser.save();
+
+  const { following } = await Following.create({
+    user: user._id,
+    following: [],
+  });
+
+  const { followers } = await Follower.create({
+    user: user._id,
+    followers: [],
+  });
 
   if (user) {
     res.status(201).json({
@@ -77,7 +94,8 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       username: user.username,
-      friends: user.friends,
+      followers: followers,
+      following: following,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
       bio: user.bio,
@@ -174,7 +192,6 @@ const editUser = asyncHandler(async (req, res) => {
       username: adminUser.username,
       isAdmin: adminUser.isAdmin,
       isVerified: adminUser.isVerified,
-      friends: adminUser.friends,
       bio: adminUser.bio,
       image: adminUser.image,
       cover: adminUser.cover,
@@ -191,7 +208,6 @@ const editUser = asyncHandler(async (req, res) => {
       image: updatedUser.image,
       cover: updatedUser.cover,
       bio: updatedUser.bio,
-      friends: updatedUser.friends,
       token: generateToken(updatedUser._id),
     });
   }
@@ -209,27 +225,46 @@ const getUserProfile = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
-  const friend = await User.find({
-    _id: req.user._id,
-    "friends.user": user._id,
+
+  let isFollower = false;
+  let isFollowed = false;
+
+  const followerExist = await Follower.findOne({
+    user: req.user._id,
+    "followers.user": user._id,
   });
-  let isFriend = false;
-  if (friend && friend.length > 0) {
-    isFriend = true;
+
+  const followingExist = await Following.findOne({
+    user: req.user._id,
+    "following.user": user._id,
+  });
+
+  if (followerExist) {
+    isFollower = true;
   }
+  if (followingExist) {
+    isFollowed = true;
+  }
+
+  const { followers } = await Follower.findOne({ user: user._id });
+  const { following } = await Following.findOne({ user: user._id });
+
   const userData = {
     _id: user._id,
     name: user.name,
     email: user.email,
     username: user.username,
-    friends: user.friends,
+    followers: followers,
+    following: following,
     isAdmin: user.isAdmin,
     isVerified: user.isVerified,
     image: user.image,
     cover: user.cover,
     bio: user.bio,
-    isFriend,
+    isFollower,
+    isFollowed,
   };
+
   const tweets = await Tweet.find({ user: user._id })
     .populate("user", "id name username image isAdmin isVerified")
     .sort({ createdAt: -1 });
@@ -252,10 +287,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
   res.json({ user: userData, tweets });
 });
 
-// @desc Add friend
-// @route GET /api/users/friends/:id
+// @desc Follow a user
+// @route GET /api/users/follow/:id
 // @access Private
-const addFriend = asyncHandler(async (req, res) => {
+const followUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   let user = await User.findById(req.user._id);
   if (!user) {
@@ -263,22 +298,48 @@ const addFriend = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
   if (id.toString() === req.user._id.toString()) {
-    throw new Error("Cannot add yourself in your friendlist");
+    throw new Error("Cannot follow yourself");
   }
-  const userExist = user.friends.find(
-    (f) => f.user.toString() === id.toString()
-  );
+
+  const followingData = await Following.findOne({ user: user._id });
+
   let action = "";
-  if (!userExist) {
-    user.friends.push({ user: id });
-    action = "added";
+
+  if (!followingData) {
+    res.status(404);
+    throw new Error("User's followingData not found");
   } else {
-    user.friends = user.friends.filter(
-      (f) => f.user.toString() !== userExist.user.toString()
-    );
-    action = "removed";
+    const userExist = await Following.findOne({
+      user: user._id,
+      "following.user": id,
+    });
+
+    if (userExist) {
+      action = "unfollow";
+      //unfollow user
+      // * use $pullAll to check for multiple values
+      await Following.updateOne(
+        { user: user._id },
+        { $pull: { following: { user: ObjectId(id) } } }
+      );
+      await Follower.updateOne(
+        { user: id },
+        { $pull: { followers: { user: ObjectId(user._id) } } }
+      );
+    } else {
+      // follow user
+      action = "follow";
+      await Following.updateOne(
+        { user: user._id },
+        { $push: { following: { user: ObjectId(id) } } }
+      );
+
+      await Follower.updateOne(
+        { user: id },
+        { $push: { followers: { user: ObjectId(user._id) } } }
+      );
+    }
   }
-  await user.save();
 
   const notification = new Notification({
     receiver: id,
@@ -300,7 +361,10 @@ const addFriend = asyncHandler(async (req, res) => {
 const getRecommendedUser = asyncHandler(async (req, res) => {
   const userSize = 3;
   let currentUser = await User.findById(req.user._id);
-  let friendArray = currentUser.friends.map((f) => f.user);
+  let { following: followedUsers } = await Following.findOne({
+    user: currentUser._id,
+  });
+  let friendArray = followedUsers.map((f) => f.user);
   // TODO: Limit unnecessary data sent
   let users = await User.find({
     _id: { $nin: [...friendArray, req.user._id] },
@@ -312,17 +376,6 @@ const getRecommendedUser = asyncHandler(async (req, res) => {
     throw new Error("No recommended users found");
   }
 
-  users = users.map((u) => {
-    let isFriend = false;
-    currentUser.friends.forEach((f) => {
-      if (f.user.toString() === u._id.toString()) {
-        return (isFriend = true);
-      } else {
-        return;
-      }
-    });
-    return { ...u._doc, isFriend };
-  });
   res.json(users);
 });
 
@@ -408,7 +461,7 @@ module.exports = {
   loginUser,
   registerUser,
   getUserProfile,
-  addFriend,
+  followUser,
   getRecommendedUser,
   editUser,
   verifyUser,

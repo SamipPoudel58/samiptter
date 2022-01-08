@@ -4,13 +4,13 @@ const {
   loginUser,
   registerUser,
   getUserProfile,
-  addFriend,
   getRecommendedUser,
   editUser,
   verifyUser,
   getUsersList,
   getNotifications,
   getUnreadNotifications,
+  followUser,
 } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -22,7 +22,8 @@ router
 router.post("/login", loginUser);
 router.route("/notifications").get(protect, getNotifications);
 router.route("/unreadnotifications").get(protect, getUnreadNotifications);
-router.route("/friends/:id").get(protect, addFriend);
+router.route("/follow/:id").get(protect, followUser);
+// router.route("/follow/:id").get(protect, followUser);
 router.route("/recommended").get(protect, getRecommendedUser);
 router.route("/:id").get(protect, getUserProfile);
 router.route("/verify/:id").get(protect, verifyUser);

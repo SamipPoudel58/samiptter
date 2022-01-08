@@ -8,7 +8,7 @@ import Head from "../components/Head";
 
 import {
   getProfile,
-  addFriendAction,
+  followAction,
   toggleVerify,
   recommendUsers,
 } from "../actions/userActions";
@@ -17,7 +17,7 @@ import { getUsername } from "../utils/getUsername";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import {
-  ADD_FRIEND_RESET,
+  FOLLOW_RESET,
   EDIT_PROFILE_RESET,
   TOGGLE_VERIFY_RESET,
 } from "../constants/userConstants";
@@ -33,8 +33,8 @@ const ProfileScreen = ({ history, match }) => {
   const userProfile = useSelector((state) => state.userProfile);
   let { loading, error, tweets, user } = userProfile;
 
-  const addFriend = useSelector((state) => state.addFriend);
-  let { error: followError, success: followSuccess } = addFriend;
+  const followUser = useSelector((state) => state.followUser);
+  let { error: followError, success: followSuccess } = followUser;
 
   const editProfileData = useSelector((state) => state.editProfile);
   const { success: editProfileSuccess } = editProfileData;
@@ -58,7 +58,7 @@ const ProfileScreen = ({ history, match }) => {
       dispatch({ type: TOGGLE_VERIFY_RESET });
     }
     if (followSuccess) {
-      dispatch({ type: ADD_FRIEND_RESET });
+      dispatch({ type: FOLLOW_RESET });
       dispatch(recommendUsers());
     }
   }, [
@@ -73,7 +73,7 @@ const ProfileScreen = ({ history, match }) => {
 
   const followHandler = (e) => {
     e.preventDefault();
-    dispatch(addFriendAction(user._id));
+    dispatch(followAction(user._id));
     // dispatch(getProfile(match.params.id || userInfo._id));
   };
   return (
@@ -130,12 +130,12 @@ const ProfileScreen = ({ history, match }) => {
                     <button
                       onClick={followHandler}
                       className={`profileMain__followBtn ${
-                        user && user.isFriend
+                        user && user.isFollowed
                           ? "primary-btn-alt"
                           : "primary-btn"
                       }`}
                     >
-                      {user && user.isFriend ? "Unfollow" : "Follow"}
+                      {user && user.isFollowed ? "Unfollow" : "Follow"}
                     </button>
                   )}
 
@@ -161,7 +161,12 @@ const ProfileScreen = ({ history, match }) => {
                   </p>
                   <p className="paragraph text-centered mt-1">{user.bio}</p>
                   <p className="profileMain__stats mt-1">
-                    <span>{user.friends.length}</span>Friends
+                    <div>
+                      <span>{user.following?.length}</span>Following
+                    </div>
+                    <div>
+                      <span>{user.followers?.length}</span>Followers
+                    </div>
                   </p>
                   {followError && (
                     <Message variant="danger">{followError}</Message>

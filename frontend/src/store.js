@@ -10,7 +10,7 @@ import {
   tweetListReducer,
 } from "./reducers/tweetReducers";
 import {
-  addFriendReducer,
+  followReducer,
   editProfileReducer,
   getNotificationsReducer,
   getProfileReducer,
@@ -27,7 +27,7 @@ import { getDashboardReducer } from "./reducers/dashboardReducers";
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
-  addFriend: addFriendReducer,
+  followUser: followReducer,
   getRecommendedUsers: getRecommendedUsersReducer,
   tweetList: tweetListReducer,
   userList: userListReducer,

@@ -32,17 +32,6 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "/images/cover.jpg",
     },
-    friends: {
-      type: [
-        {
-          user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-          },
-        },
-      ],
-      default: [],
-    },
     isAdmin: {
       type: Boolean,
       required: true,

@@ -1,7 +1,7 @@
 import {
-  ADD_FRIEND_FAIL,
-  ADD_FRIEND_REQUEST,
-  ADD_FRIEND_SUCCESS,
+  FOLLOW_FAIL,
+  FOLLOW_REQUEST,
+  FOLLOW_SUCCESS,
   EDIT_PROFILE_FAIL,
   EDIT_PROFILE_REQUEST,
   EDIT_PROFILE_RESET,
@@ -27,7 +27,7 @@ import {
   LIST_USERS_REQUEST,
   LIST_USERS_SUCCESS,
   LIST_USERS_RESET,
-  ADD_FRIEND_RESET,
+  FOLLOW_RESET,
   GET_PROFILE_RESET,
   GET_NOTIFICATIONS_REQUEST,
   GET_NOTIFICATIONS_SUCCESS,
@@ -89,7 +89,7 @@ export const userListReducer = (state = { users: [] }, action) => {
 };
 
 export const getProfileReducer = (
-  state = { tweets: [], user: { friends: [] } },
+  state = { tweets: [], user: { followers: [], following: [] } },
   action
 ) => {
   switch (action.type) {
@@ -104,7 +104,7 @@ export const getProfileReducer = (
     case GET_PROFILE_FAIL:
       return { loading: false, error: action.payload };
     case GET_PROFILE_RESET:
-      return { tweets: [], user: { friends: [] } };
+      return { tweets: [], user: { followers: [], following: [] } };
     default:
       return state;
   }
@@ -166,18 +166,18 @@ export const editProfileReducer = (state = {}, action) => {
       return state;
   }
 };
-export const addFriendReducer = (state = {}, action) => {
+export const followReducer = (state = {}, action) => {
   switch (action.type) {
-    case ADD_FRIEND_REQUEST:
+    case FOLLOW_REQUEST:
       return { loading: true };
-    case ADD_FRIEND_SUCCESS:
+    case FOLLOW_SUCCESS:
       return {
         loading: false,
         success: true,
       };
-    case ADD_FRIEND_FAIL:
+    case FOLLOW_FAIL:
       return { loading: false, error: action.payload };
-    case ADD_FRIEND_RESET:
+    case FOLLOW_RESET:
       return {};
     default:
       return state;

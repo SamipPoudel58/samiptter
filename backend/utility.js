@@ -2,6 +2,8 @@ const User = require("./models/userModel");
 const Notification = require("./models/notificationModel");
 // const Tweet = require("./models/tweetModel");
 const connectDB = require("./config/db");
+const Following = require("./models/followingModel");
+const Follower = require("./models/followerModel");
 
 const purgeReadNotifications = async () => {
   try {
@@ -38,6 +40,34 @@ const changePassword = async (email, password) => {
     process.exit(1);
   }
 };
+
+const addFollowerData = async () => {
+  try {
+    await connectDB();
+
+    const users = await User.find({});
+
+    for (let user of users) {
+      await Following.create({
+        user: user._id,
+        following: [],
+      });
+
+      await Follower.create({
+        user: user._id,
+        followers: [],
+      });
+    }
+
+    console.log("Followers added");
+    process.exit();
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+addFollowerData();
 
 // purgeReadNotifications();
 
