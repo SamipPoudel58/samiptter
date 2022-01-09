@@ -67,8 +67,8 @@ const addFollowerData = async () => {
   }
 };
 
-addFollowerData();
+// addFollowerData();
 
 // purgeReadNotifications();
 
-// changePassword("user@gmail.com", "abcd1234");
+changePassword("sumansapkota777@gmail.com", "sumanhancy69");

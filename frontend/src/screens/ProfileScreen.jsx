@@ -147,7 +147,7 @@ const ProfileScreen = ({ history, match }) => {
                       Edit
                     </Link>
                   )}
-                  <h3 className="profileMain__userName heading-md text-centered mt-1">
+                  <h3 className="profileMain__name heading-md text-centered mt-1">
                     {user.name}{" "}
                     {user.isVerified && (
                       <Verified
@@ -156,8 +156,9 @@ const ProfileScreen = ({ history, match }) => {
                       />
                     )}
                   </h3>
-                  <p className="text-centered subtitle-text">
-                    {user.username && getUsername(user.username)}
+                  <p className="profileMain__username text-centered subtitle-text">
+                    <div>{user.username && getUsername(user.username)}</div>
+                    {user.isFollower && <span>Follows you</span>}
                   </p>
                   <p className="paragraph text-centered mt-1">{user.bio}</p>
                   <p className="profileMain__stats mt-1">
