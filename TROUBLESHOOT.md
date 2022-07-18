@@ -8,3 +8,7 @@
       Home
     </NavLink>
     ```
+
+### 2. Github Actions Heroku Deployment error
+
+Regenerate Heroku API key (Dashboard-Home > Account Settings > API Key) and update it in the github project secrets.
