@@ -1,13 +1,13 @@
-const User = require("../models/userModel");
-const Tweet = require("../models/tweetModel");
-const asyncHandler = require("express-async-handler");
-const generateToken = require("../utils/generateToken.js");
-const Notification = require("../models/notificationModel");
-const Following = require("../models/followingModel");
-const Follower = require("../models/followerModel");
+const User = require('../models/userModel');
+const Tweet = require('../models/tweetModel');
+const asyncHandler = require('../utils/asyncHandler');
+const generateToken = require('../utils/generateToken.js');
+const Notification = require('../models/notificationModel');
+const Following = require('../models/followingModel');
+const Follower = require('../models/followerModel');
 
-const ObjectId = require("mongoose").Types.ObjectId;
-require("dotenv").config();
+const ObjectId = require('mongoose').Types.ObjectId;
+require('dotenv').config();
 
 // @desc Auth user and get token
 // @route POST /api/users/login
@@ -43,7 +43,7 @@ const loginUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error("Invalid email or password");
+    throw new Error('Invalid email or password');
   }
 });
 
@@ -55,14 +55,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (name.length > 20) {
     res.status(400);
-    throw new Error("Name should be 20 characters maximum.");
+    throw new Error('Name should be 20 characters maximum.');
   }
 
   const userExists = await User.findOne({ email: email });
 
   if (userExists) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error('User already exists');
   }
 
   const createdUser = await User.create({
@@ -105,7 +105,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid User Data");
+    throw new Error('Invalid User Data');
   }
 });
 
@@ -117,12 +117,12 @@ const getUsersList = asyncHandler(async (req, res) => {
     ? {
         name: {
           $regex: req.query.keyword,
-          $options: "i", // case insensitive
+          $options: 'i', // case insensitive
         },
       }
     : {};
   let users = await User.find({ ...keyword })
-    .select("-password -email")
+    .select('-password -email')
     .sort({ createdAt: -1 });
 
   res.json(users);
@@ -134,30 +134,30 @@ const getUsersList = asyncHandler(async (req, res) => {
 const editUser = asyncHandler(async (req, res) => {
   let { id, name, username, bio, password, image, cover } = req.body;
 
-  username = username.toLowerCase().replace(/\s+/g, "");
+  username = username.toLowerCase().replace(/\s+/g, '');
 
   if (username.length > 15) {
     res.status(401);
-    throw new Error("Username should be 15 characters maximum.");
+    throw new Error('Username should be 15 characters maximum.');
   }
 
   if (name.length > 20) {
     res.status(401);
-    throw new Error("Name should be 20 characters maximum.");
+    throw new Error('Name should be 20 characters maximum.');
   }
 
   const user = await User.findById(id);
 
   if (!user) {
     res.status(400);
-    throw new Error("User Not Found");
+    throw new Error('User Not Found');
   }
 
   const usernameExists = await User.findOne({ username: username });
 
   if (usernameExists && usernameExists._id.toString() !== user._id.toString()) {
     res.status(401);
-    throw new Error("Username already exists!");
+    throw new Error('Username already exists!');
   }
 
   let adminIsEditing = false;
@@ -168,7 +168,7 @@ const editUser = asyncHandler(async (req, res) => {
 
   if (req.user._id.toString() !== id.toString() && !req.user.isAdmin) {
     res.status(401);
-    throw new Error("Not Authorized, user id is different");
+    throw new Error('Not Authorized, user id is different');
   }
 
   user.name = name || user.name;
@@ -223,7 +223,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error('User not found');
   }
 
   let isFollower = false;
@@ -231,12 +231,12 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
   const followerExist = await Follower.findOne({
     user: req.user._id,
-    "followers.user": user._id,
+    'followers.user': user._id,
   });
 
   const followingExist = await Following.findOne({
     user: req.user._id,
-    "following.user": user._id,
+    'following.user': user._id,
   });
 
   if (followerExist) {
@@ -266,14 +266,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
   };
 
   const tweets = await Tweet.find({ user: user._id })
-    .populate("user", "id name username image isAdmin isVerified")
+    .populate('user', 'id name username image isAdmin isVerified')
     .sort({ createdAt: -1 });
 
   const tweetsLikedByUser = await Tweet.find(
     {
-      "likes.user": req.user._id,
+      'likes.user': req.user._id,
     },
-    "_id"
+    '_id'
   );
 
   tweets.forEach((tweet) => {
@@ -295,15 +295,15 @@ const followUser = asyncHandler(async (req, res) => {
   let user = await User.findById(req.user._id);
   if (!user) {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error('User not found');
   }
   if (id.toString() === req.user._id.toString()) {
-    throw new Error("Cannot follow yourself");
+    throw new Error('Cannot follow yourself');
   }
 
   const followingData = await Following.findOne({ user: user._id });
 
-  let action = "";
+  let action = '';
 
   if (!followingData) {
     res.status(404);
@@ -311,11 +311,11 @@ const followUser = asyncHandler(async (req, res) => {
   } else {
     const userExist = await Following.findOne({
       user: user._id,
-      "following.user": id,
+      'following.user': id,
     });
 
     if (userExist) {
-      action = "unfollow";
+      action = 'unfollow';
       //unfollow user
       // * use $pullAll to check for multiple values
       await Following.updateOne(
@@ -328,7 +328,7 @@ const followUser = asyncHandler(async (req, res) => {
       );
     } else {
       // follow user
-      action = "follow";
+      action = 'follow';
       await Following.updateOne(
         { user: user._id },
         { $push: { following: { user: ObjectId(id) } } }
@@ -345,14 +345,14 @@ const followUser = asyncHandler(async (req, res) => {
     receiver: id,
     sender: req.user._id,
     read: false,
-    action: "follow",
-    message: "followed you.",
+    action: 'follow',
+    message: 'followed you.',
     link: `/profile/${req.user.username}`,
   });
 
   await notification.save();
 
-  res.json("User " + action);
+  res.json('User ' + action);
 });
 
 // @desc Get recommended user
@@ -369,11 +369,11 @@ const getRecommendedUser = asyncHandler(async (req, res) => {
   let users = await User.find({
     _id: { $nin: [...friendArray, req.user._id] },
   })
-    .select("_id name username isVerified image")
+    .select('_id name username isVerified image')
     .limit(userSize);
   if (!users) {
     res.status(404);
-    throw new Error("No recommended users found");
+    throw new Error('No recommended users found');
   }
 
   res.json(users);
@@ -389,22 +389,22 @@ const verifyUser = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(400);
-    throw new Error("User Not Found");
+    throw new Error('User Not Found');
   }
-  let msg = "";
+  let msg = '';
   if (user.isVerified) {
     user.isVerified = false;
-    msg = "Unverified";
+    msg = 'Unverified';
   } else {
     user.isVerified = true;
-    msg = "Verified";
+    msg = 'Verified';
 
     const notification = new Notification({
       receiver: user,
       sender: req.user._id,
       read: false,
-      action: "verified",
-      message: "verified you. Congrats!",
+      action: 'verified',
+      message: 'verified you. Congrats!',
       link: `/profile`,
     });
 
@@ -424,7 +424,7 @@ const getNotifications = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(400);
-    throw new Error("User Not Found");
+    throw new Error('User Not Found');
   }
 
   await Notification.updateMany({ receiver: req.user._id }, { read: true });
@@ -432,7 +432,7 @@ const getNotifications = asyncHandler(async (req, res) => {
   const notifications = await Notification.find({
     receiver: req.user._id,
   })
-    .populate("sender", "id name username image isAdmin isVerified")
+    .populate('sender', 'id name username image isAdmin isVerified')
     .sort({ createdAt: -1 });
 
   res.json(notifications);
@@ -446,7 +446,7 @@ const getUnreadNotifications = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(400);
-    throw new Error("User Not Found");
+    throw new Error('User Not Found');
   }
 
   const count = await Notification.countDocuments({

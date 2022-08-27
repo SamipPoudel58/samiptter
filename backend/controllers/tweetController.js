@@ -1,9 +1,9 @@
-const Tweet = require("../models/tweetModel");
-const asyncHandler = require("express-async-handler");
-const io = require("../socket");
-const Notification = require("../models/notificationModel");
-const { purifyXSS } = require("../utils/purifyXSS");
-const User = require("../models/userModel");
+const Tweet = require('../models/tweetModel');
+const asyncHandler = require('../utils/asyncHandler');
+const io = require('../socket');
+const Notification = require('../models/notificationModel');
+const { purifyXSS } = require('../utils/purifyXSS');
+const User = require('../models/userModel');
 
 // @desc Get all tweets
 // @route GET /api/tweets
@@ -13,19 +13,19 @@ const getAllTweets = asyncHandler(async (req, res) => {
     ? {
         tweetContent: {
           $regex: req.query.keyword,
-          $options: "i", // case insensitive
+          $options: 'i', // case insensitive
         },
       }
     : {};
   let tweets = await Tweet.find({ ...keyword })
-    .populate("user", "id name username image isAdmin isVerified")
+    .populate('user', 'id name username image isAdmin isVerified')
     .sort({ createdAt: -1 });
 
   const tweetsLikedByUser = await Tweet.find(
     {
-      "likes.user": req.user._id,
+      'likes.user': req.user._id,
     },
-    "_id"
+    '_id'
   );
 
   tweets.forEach((tweet) => {
@@ -43,14 +43,14 @@ const getAllTweets = asyncHandler(async (req, res) => {
 // @access Private
 const getTweetById = asyncHandler(async (req, res) => {
   let tweet = await Tweet.findById(req.params.id)
-    .populate("user", "id name username image isAdmin isVerified")
-    .populate("comments.user", "id name username image isAdmin isVerified");
+    .populate('user', 'id name username image isAdmin isVerified')
+    .populate('comments.user', 'id name username image isAdmin isVerified');
   if (tweet) {
     const tweetsLikedByUser = await Tweet.find(
       {
-        "likes.user": req.user._id,
+        'likes.user': req.user._id,
       },
-      "_id"
+      '_id'
     );
 
     tweetsLikedByUser.forEach((t) => {
@@ -69,7 +69,7 @@ const getTweetById = asyncHandler(async (req, res) => {
     res.json(tweet);
   } else {
     res.status(404);
-    throw new Error("Tweet not found");
+    throw new Error('Tweet not found');
   }
 });
 
@@ -94,7 +94,7 @@ const createTweet = asyncHandler(async (req, res) => {
   let usernames = tweetContent.match(/@[a-z0-9_]*/g) || [];
   usernames = usernames
     .map(function (x) {
-      return x.replace("@", "");
+      return x.replace('@', '');
     })
     .filter(function (x) {
       return !!x;
@@ -106,15 +106,15 @@ const createTweet = asyncHandler(async (req, res) => {
         const user = await User.findOne({ username: mentionedUser });
 
         if (!user) {
-          console.log("Mentioned user not found");
+          console.log('Mentioned user not found');
           continue;
         }
         const notification = new Notification({
           receiver: user._id,
           sender: req.user._id,
           read: false,
-          action: "mention",
-          message: "mentioned you in a post.",
+          action: 'mention',
+          message: 'mentioned you in a post.',
           link: `/tweets/${createdTweet._id}`,
         });
         await notification.save();
@@ -124,7 +124,7 @@ const createTweet = asyncHandler(async (req, res) => {
     }
   }
 
-  io.getIO().emit("tweets", { action: "create", tweet: createdTweet });
+  io.getIO().emit('tweets', { action: 'create', tweet: createdTweet });
   res.status(201).json(createdTweet);
 });
 
@@ -135,10 +135,10 @@ const likeTweet = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const tweet = await Tweet.findById(id);
 
-  let task = "";
+  let task = '';
   if (!tweet) {
     res.status(404);
-    throw new Error("Tweet not found");
+    throw new Error('Tweet not found');
   }
 
   const alreadyLiked = tweet.likes.find(
@@ -150,19 +150,19 @@ const likeTweet = asyncHandler(async (req, res) => {
       (r) => r.user.toString() !== req.user._id.toString()
     );
     tweet.numLikes = tweet.likes.length;
-    task = "Unliked";
+    task = 'Unliked';
   } else {
     tweet.likes.push({ user: req.user._id });
     tweet.numLikes = tweet.likes.length;
-    task = "Liked";
+    task = 'Liked';
 
     if (tweet.user.toString() !== req.user._id.toString()) {
       const notification = new Notification({
         receiver: tweet.user,
         sender: req.user._id,
         read: false,
-        action: "like",
-        message: "liked your post.",
+        action: 'like',
+        message: 'liked your post.',
         link: `/tweets/${tweet._id}`,
       });
 
@@ -181,10 +181,10 @@ const likeTweet = asyncHandler(async (req, res) => {
 const likeComment = asyncHandler(async (req, res) => {
   const { id, comId } = req.params;
   const tweet = await Tweet.findById(id);
-  let task = "";
+  let task = '';
   if (!tweet) {
     res.status(404);
-    throw new Error("Tweet not found");
+    throw new Error('Tweet not found');
   }
   tweet.comments.forEach(async (com) => {
     if (com._id.toString() === comId.toString()) {
@@ -196,19 +196,19 @@ const likeComment = asyncHandler(async (req, res) => {
           (r) => r.user.toString() !== req.user._id.toString()
         );
         com.numLikes = com.likes.length;
-        task = "Unliked";
+        task = 'Unliked';
       } else {
         com.likes.push({ user: req.user._id });
         com.numLikes = com.likes.length;
-        task = "Liked";
+        task = 'Liked';
 
         if (com.user.toString() !== req.user._id.toString()) {
           const notification = new Notification({
             receiver: com.user,
             sender: req.user._id,
             read: false,
-            action: "like",
-            message: "liked your comment.",
+            action: 'like',
+            message: 'liked your comment.',
             link: `/tweets/${tweet._id}`,
           });
 
@@ -234,7 +234,7 @@ const createComment = asyncHandler(async (req, res) => {
 
   if (!tweet) {
     res.status(404);
-    throw new Error("Tweet not found");
+    throw new Error('Tweet not found');
   }
 
   tweet.comments.push({
@@ -252,8 +252,8 @@ const createComment = asyncHandler(async (req, res) => {
       receiver: tweet.user,
       sender: req.user._id,
       read: false,
-      action: "comment",
-      message: "commented on your post.",
+      action: 'comment',
+      message: 'commented on your post.',
       link: `/tweets/${tweet._id}`,
     });
 
@@ -263,7 +263,7 @@ const createComment = asyncHandler(async (req, res) => {
   let usernames = commentContent.match(/@[a-z0-9_]*/g) || [];
   usernames = usernames
     .map(function (x) {
-      return x.replace("@", "");
+      return x.replace('@', '');
     })
     .filter(function (x) {
       return !!x;
@@ -275,15 +275,15 @@ const createComment = asyncHandler(async (req, res) => {
         const user = await User.findOne({ username: mentionedUser });
 
         if (!user || user._id.toString() === tweet.user.toString()) {
-          console.log("Mentioned user not found");
+          console.log('Mentioned user not found');
           continue;
         }
         const notification = new Notification({
           receiver: user._id,
           sender: req.user._id,
           read: false,
-          action: "mention",
-          message: "mentioned you in a comment.",
+          action: 'mention',
+          message: 'mentioned you in a comment.',
           link: `/tweets/${tweet._id}`,
         });
         await notification.save();
@@ -293,8 +293,8 @@ const createComment = asyncHandler(async (req, res) => {
     }
   }
 
-  io.getIO().emit("tweets", { action: "comment", tweet: createdTweet });
-  res.status(201).json("Comment Created");
+  io.getIO().emit('tweets', { action: 'comment', tweet: createdTweet });
+  res.status(201).json('Comment Created');
 });
 
 // @desc Delete a comment
@@ -306,7 +306,7 @@ const deleteComment = asyncHandler(async (req, res) => {
   // let task = "";
   if (!tweet) {
     res.status(404);
-    throw new Error("Tweet not found");
+    throw new Error('Tweet not found');
   }
 
   tweet.comments = tweet.comments.filter((com) => {
@@ -325,14 +325,14 @@ const deleteTweet = asyncHandler(async (req, res) => {
   const tweet = await Tweet.findById(req.params.id);
   if (!tweet) {
     res.status(404);
-    throw new Error("Tweet not found");
+    throw new Error('Tweet not found');
   }
   if (tweet.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
     res.status(401);
-    throw new Error("UnAuthorized User of the tweet");
+    throw new Error('UnAuthorized User of the tweet');
   }
   await tweet.remove();
-  res.json({ message: "tweet deleted" });
+  res.json({ message: 'tweet deleted' });
 });
 
 module.exports = {

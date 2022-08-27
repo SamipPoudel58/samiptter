@@ -1,7 +1,6 @@
 const User = require('../models/userModel');
 const Tweet = require('../models/tweetModel');
-const asyncHandler = require('express-async-handler');
-const Notification = require('../models/notificationModel');
+const asyncHandler = require('../utils/asyncHandler');
 
 // @desc Get informations for dashboard
 // @route GET /api/dashboard
