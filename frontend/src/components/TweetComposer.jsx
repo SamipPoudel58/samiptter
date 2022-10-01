@@ -1,16 +1,16 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createComment, createTweet } from "../actions/tweetActions";
-import Loader from "./Loader";
-import Message from "./Message";
-import ProfilePicHolder from "./ProfilePicHolder";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createComment, createTweet } from '../actions/tweetActions';
+import Loader from './Loader';
+import Message from './Message';
+import ProfilePicHolder from './ProfilePicHolder';
 // import toast from "react-hot-toast";
 
 const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [images, setImages] = useState([]);
   const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       };
 
@@ -50,10 +50,10 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (buttonText === "Comment") {
+    if (buttonText === 'Comment') {
       return dispatch(createComment(tweet._id, { commentContent: text }));
     }
-    if (text === "" && images.length === 0) {
+    if (text === '' && images.length === 0) {
       return;
     }
     if (images.length > 0) {
@@ -63,8 +63,8 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
     }
 
     setImages([]);
-    setError("");
-    setText("");
+    setError('');
+    setText('');
     if (setBackDrop) {
       setBackDrop(false);
     }
@@ -79,8 +79,8 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
         <form className="tweetComposer__form" onSubmit={submitHandler}>
           <textarea
             placeholder={
-              buttonText === "Comment"
-                ? "Write a comment..."
+              buttonText === 'Comment'
+                ? 'Write a comment...'
                 : "What's happening?"
             }
             className="tweetComposer__input"
@@ -95,20 +95,43 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
             <div className="tweetComposer__imageHolder pl-1">
               {images.length > 0 &&
                 images.map((image, index) => (
-                  <img
+                  <div
                     className={
-                      "tweetComposer__uploadedImage" +
-                      (images.length === 1 ? "-full" : "")
+                      'tweetComposer__composedImageWrap' +
+                      (images.length === 1 ? '-full' : '')
                     }
-                    key={index}
-                    src={image.secure_url || image}
-                    alt="user upload"
-                  />
+                  >
+                    <span
+                      onClick={() => {
+                        setImages((prev) => prev.filter((_, i) => i !== index));
+                      }}
+                      className="tweetComposer__removeImage"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    <img
+                      className="tweetComposer__composedImage"
+                      key={index}
+                      src={image.secure_url || image}
+                      alt="user upload"
+                    />
+                  </div>
                 ))}
             </div>
           )}
           <div className="tweetComposer__actions">
-            {buttonText !== "Comment" && (
+            {buttonText !== 'Comment' && (
               <div className="tweetComposer__uploadBtnHolder">
                 <label
                   className="tweetComposer__uploadBtn"

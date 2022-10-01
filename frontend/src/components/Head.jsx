@@ -13,7 +13,7 @@ const Head = ({ title, ogtitle, description, image, url, typeOfContent }) => {
         content="Samiptter social media twitter clone react node mongodb Samip Poudel open source"
       ></meta>
 
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content={`${title} | Samiptter`} />
       <meta property="og:type" content="website" />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
