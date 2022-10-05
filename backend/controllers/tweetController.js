@@ -128,6 +128,63 @@ const createTweet = asyncHandler(async (req, res) => {
   res.status(201).json(createdTweet);
 });
 
+// @desc Edit a tweet
+// @route PUT /api/tweets
+// @access Private
+const editTweet = asyncHandler(async (req, res) => {
+  let { tweetContent, images } = req.body;
+  const id = req.params.id;
+
+  tweetContent = purifyXSS(tweetContent);
+
+  const tweet = await Tweet.findById(id);
+
+  if (!tweet) return res.status(404).json({ message: 'Tweet not found' });
+
+  if (tweet.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
+    res.status(401);
+    throw new Error('UnAuthorized User of the tweet');
+  }
+
+  tweet.tweetContent = tweetContent;
+  tweet.images = images;
+  const updatedTweet = await tweet.save();
+
+  let usernames = tweetContent.match(/@[a-z0-9_]*/g) || [];
+  usernames = usernames
+    .map(function (x) {
+      return x.replace('@', '');
+    })
+    .filter(function (x) {
+      return !!x;
+    });
+
+  if (usernames.length > 0) {
+    for (let mentionedUser of usernames) {
+      try {
+        const user = await User.findOne({ username: mentionedUser });
+
+        if (!user) {
+          console.log('Mentioned user not found');
+          continue;
+        }
+        const notification = new Notification({
+          receiver: user._id,
+          sender: req.user._id,
+          read: false,
+          action: 'mention',
+          message: 'mentioned you in a post.',
+          link: `/tweets/${updatedTweet._id}`,
+        });
+        await notification.save();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+  res.status(201).json(updatedTweet);
+});
+
 // @desc Like a tweet
 // @route POST /api/tweets/:id/like
 // @access Private
@@ -338,6 +395,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
 module.exports = {
   getAllTweets,
   createTweet,
+  editTweet,
   deleteTweet,
   likeTweet,
   createComment,
