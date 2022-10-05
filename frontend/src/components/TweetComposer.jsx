@@ -1,13 +1,12 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment, createTweet } from '../actions/tweetActions';
+import { createComment, createTweet, editTweet } from '../actions/tweetActions';
 import Loader from './Loader';
 import Message from './Message';
 import ProfilePicHolder from './ProfilePicHolder';
-// import toast from "react-hot-toast";
 
-const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
+const TweetComposer = ({ buttonText, tweet }) => {
   const [text, setText] = useState('');
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -16,6 +15,20 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const tweetEdit = useSelector((state) => state.tweetEdit);
+  const {
+    loading: tweetEditLoading,
+    success: tweetEditSuccess,
+    tweetToEdit,
+  } = tweetEdit;
+
+  useEffect(() => {
+    if (buttonText === 'Edit' && tweetToEdit) {
+      setText(tweetToEdit.tweetContent);
+      setImages(tweetToEdit.images);
+    }
+  }, [tweetToEdit]);
 
   const uploadImages = async (imgs) => {
     setUploading(true);
@@ -52,6 +65,13 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
     e.preventDefault();
     if (buttonText === 'Comment') {
       return dispatch(createComment(tweet._id, { commentContent: text }));
+    } else if (buttonText === 'Edit') {
+      return dispatch(
+        editTweet({
+          id: tweetToEdit._id,
+          tweet: { tweetContent: text, images },
+        })
+      );
     }
     if (text === '' && images.length === 0) {
       return;
@@ -65,9 +85,12 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
     setImages([]);
     setError('');
     setText('');
-    if (setBackDrop) {
-      setBackDrop(false);
-    }
+  };
+
+  const inputPlaceholder = {
+    Post: "What's happening?",
+    Edit: 'Edit your post...',
+    Comment: 'Write a comment...',
   };
 
   return (
@@ -78,11 +101,7 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
       <div className="tweetComposer__rightCol">
         <form className="tweetComposer__form" onSubmit={submitHandler}>
           <textarea
-            placeholder={
-              buttonText === 'Comment'
-                ? 'Write a comment...'
-                : "What's happening?"
-            }
+            placeholder={inputPlaceholder[buttonText] || "What's happening"}
             className="tweetComposer__input"
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -96,6 +115,7 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
               {images.length > 0 &&
                 images.map((image, index) => (
                   <div
+                    key={index}
                     className={
                       'tweetComposer__composedImageWrap' +
                       (images.length === 1 ? '-full' : '')
@@ -135,7 +155,7 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
               <div className="tweetComposer__uploadBtnHolder">
                 <label
                   className="tweetComposer__uploadBtn"
-                  htmlFor="image-file"
+                  htmlFor={'image-file-' + buttonText}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +175,7 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
                 <input
                   multiple
                   type="file"
-                  id="image-file"
+                  id={'image-file-' + buttonText}
                   className="form__input-file"
                   placeholder="Upload Image"
                   onChange={uploadFileHandler}
@@ -163,8 +183,12 @@ const TweetComposer = ({ buttonText, tweet, setBackDrop }) => {
                 />
               </div>
             )}
-            <button className="primary-btn" type="submit">
-              {buttonText}
+            <button
+              disabled={!!tweetEditLoading}
+              className="primary-btn"
+              type="submit"
+            >
+              {tweetEditLoading ? <Loader mini /> : buttonText}
             </button>
           </div>
         </form>

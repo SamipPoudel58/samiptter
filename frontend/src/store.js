@@ -1,14 +1,15 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   commentCreateReducer,
   commentDeleteReducer,
   tweetCreateReducer,
   tweetDeleteReducer,
   tweetDetailsReducer,
+  tweetEditReducer,
   tweetListReducer,
-} from "./reducers/tweetReducers";
+} from './reducers/tweetReducers';
 import {
   followReducer,
   editProfileReducer,
@@ -20,9 +21,9 @@ import {
   userListReducer,
   userLoginReducer,
   userRegisterReducer,
-} from "./reducers/userReducers";
-import { previewReducer, uiThemeReducer } from "./reducers/uiReducer";
-import { getDashboardReducer } from "./reducers/dashboardReducers";
+} from './reducers/userReducers';
+import { previewReducer, uiThemeReducer } from './reducers/uiReducer';
+import { getDashboardReducer } from './reducers/dashboardReducers';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -33,6 +34,7 @@ const reducer = combineReducers({
   userList: userListReducer,
   tweetDetails: tweetDetailsReducer,
   tweetCreate: tweetCreateReducer,
+  tweetEdit: tweetEditReducer,
   tweetDelete: tweetDeleteReducer,
   commentCreate: commentCreateReducer,
   commentDelete: commentDeleteReducer,
@@ -46,12 +48,12 @@ const reducer = combineReducers({
   getUnreadNotif: getUnreadNotificationsReducer,
 });
 
-const userInfoFromStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
+const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
 
-const darkMode = localStorage.getItem("darkModeOn")
-  ? JSON.parse(localStorage.getItem("darkModeOn"))
+const darkMode = localStorage.getItem('darkModeOn')
+  ? JSON.parse(localStorage.getItem('darkModeOn'))
   : false;
 
 const initialState = {

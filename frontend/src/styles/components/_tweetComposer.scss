@@ -146,4 +146,14 @@
       height: 2rem;
     }
   }
+
+  &-edit {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    width: 100%;
+    max-width: 50rem;
+    transform: translate(-50%, -50%);
+    z-index: 11;
+  }
 }

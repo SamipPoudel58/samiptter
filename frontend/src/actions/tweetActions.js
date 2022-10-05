@@ -11,17 +11,21 @@ import {
   DELETE_TWEET_FAIL,
   DELETE_TWEET_REQUEST,
   DELETE_TWEET_SUCCESS,
+  EDIT_TWEET_FAIL,
+  EDIT_TWEET_REQUEST,
+  EDIT_TWEET_SETUP,
+  EDIT_TWEET_SUCCESS,
   TWEET_DETAILS_FAIL,
   TWEET_DETAILS_REQUEST,
   TWEET_DETAILS_SUCCESS,
   TWEET_LIST_FAIL,
   TWEET_LIST_REQUEST,
   TWEET_LIST_SUCCESS,
-} from "../constants/tweetConstants";
-import axios from "axios";
+} from '../constants/tweetConstants';
+import axios from 'axios';
 
 export const listTweets =
-  (keyword = "") =>
+  (keyword = '') =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: TWEET_LIST_REQUEST });
@@ -69,7 +73,7 @@ export const listTweetDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("/api/tweets/" + id, config);
+    const { data } = await axios.get('/api/tweets/' + id, config);
 
     dispatch({
       type: TWEET_DETAILS_SUCCESS,
@@ -98,7 +102,7 @@ export const createTweet = (tweet) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -112,6 +116,47 @@ export const createTweet = (tweet) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: CREATE_TWEET_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const editTweet = (editedTweet) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: EDIT_TWEET_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/tweets/${editedTweet.id}`,
+      editedTweet.tweet,
+      config
+    );
+
+    dispatch({
+      type: EDIT_TWEET_SUCCESS,
+      payload: data,
+    });
+    dispatch({
+      type: EDIT_TWEET_SETUP,
+      payload: null,
+    });
+  } catch (error) {
+    dispatch({
+      type: EDIT_TWEET_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -168,7 +213,7 @@ export const createComment = (id, comment) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };

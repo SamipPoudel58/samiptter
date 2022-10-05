@@ -55,7 +55,7 @@
     border: none;
     display: block;
     height: max-content;
-    font-family: "Inter";
+    font-family: 'Inter';
     font-size: 1.4rem;
     line-height: 2rem;
     color: var(--c-black);
@@ -137,17 +137,27 @@
     right: 2rem;
     border-radius: 1rem;
     z-index: 11;
+    padding: 0.5rem;
   }
 
   &__popOption {
-    padding: 1.5rem 2rem;
+    padding: 1rem 1.5rem;
     font-size: 1.4rem;
+    border-radius: 0.5rem;
     cursor: pointer;
-    color: var(--c-pink);
+    color: var(--c-black);
 
     &:hover {
-      background-color: var(--c-pink);
-      color: var(--c-background);
+      background-color: var(--c-background);
+      color: var(--c-primary);
+    }
+
+    &-delete {
+      // color: var(--c-pink);
+      &:hover {
+        background-color: var(--c-background);
+        color: var(--c-pink);
+      }
     }
   }
 }

@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteTweet, likeTweet } from "../actions/tweetActions";
-import { getUsername } from "../utils/getUsername";
-import { getTimeFromNow } from "../utils/getTimeFromNow";
-import { ReactComponent as Verified } from "../assets/verified.svg";
-import ProfilePicHolder from "./ProfilePicHolder";
-import { previewImage } from "../actions/uiActions";
-import useClickOutside from "../hooks/useClickOutside";
-import { generateLinks } from "../utils/generateLinks";
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deleteTweet, likeTweet } from '../actions/tweetActions';
+import { getUsername } from '../utils/getUsername';
+import { getTimeFromNow } from '../utils/getTimeFromNow';
+import { ReactComponent as Verified } from '../assets/verified.svg';
+import ProfilePicHolder from './ProfilePicHolder';
+import { previewImage } from '../actions/uiActions';
+import useClickOutside from '../hooks/useClickOutside';
+import { generateLinks } from '../utils/generateLinks';
+import { EDIT_TWEET_SETUP } from '../constants/tweetConstants';
 
 const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -41,26 +42,37 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const tweetDeleteHandler = () => {
     setPopup(false);
     dispatch(deleteTweet(tweet._id));
-    if (location.pathname !== "/") {
-      history.push("/");
+    if (location.pathname !== '/') {
+      history.push('/');
     }
+  };
+
+  const tweetEditHandler = () => {
+    setPopup(false);
+    dispatch({ type: EDIT_TWEET_SETUP, payload: tweet });
   };
 
   return (
     <article
       onClick={(e) => {
-        const clickElements = ["tweet", "tweet__content", "tweet__divider"];
+        const clickElements = ['tweet', 'tweet__content', 'tweet__divider'];
         // console.log(e.target.classList);
         clickElements.includes(e.target.classList[0]) &&
           history.push(`/tweets/${tweet._id}`);
       }}
-      className={`tweet ${shadow && "shadow"} ${rounded && "rounded-2"} ${
-        major && "tweet-major"
+      className={`tweet ${shadow && 'shadow'} ${rounded && 'rounded-2'} ${
+        major && 'tweet-major'
       }`}
     >
       {popup && (
         <div ref={popupRef} className="tweet__popup">
-          <p onClick={tweetDeleteHandler} className="tweet__popOption">
+          <p onClick={tweetEditHandler} className="tweet__popOption">
+            <i className="fas fa-pencil-alt mr-1"></i>Edit
+          </p>
+          <p
+            onClick={tweetDeleteHandler}
+            className="tweet__popOption tweet__popOption-delete"
+          >
             <i className="fas fa-trash-alt mr-1"></i>Delete
           </p>
         </div>
@@ -84,7 +96,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           </Link>
 
           <p className="subtitle-text">
-            {getUsername(tweet.user.username || "") ||
+            {getUsername(tweet.user.username || '') ||
               (tweet.user.name && getUsername(tweet.user.name))}
           </p>
           <span className="subtitle-text">.</span>
@@ -116,11 +128,11 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
                 {tweet.images.map((image) => (
                   <img
                     className={
-                      "tweetComposer__uploadedImage" +
-                      (tweet.images.length === 1 ? "-full" : "")
+                      'tweetComposer__uploadedImage' +
+                      (tweet.images.length === 1 ? '-full' : '')
                     }
                     onClick={() =>
-                      dispatch(previewImage(image.secure_url, "cover"))
+                      dispatch(previewImage(image.secure_url, 'cover'))
                     }
                     key={image.public_id}
                     src={image.secure_url}
@@ -152,12 +164,12 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
                 {tweet.images.map((image) => (
                   <img
                     className={
-                      "tweetComposer__uploadedImage" +
-                      (tweet.images.length === 1 ? "-full" : "")
+                      'tweetComposer__uploadedImage' +
+                      (tweet.images.length === 1 ? '-full' : '')
                     }
                     key={image.public_id}
                     onClick={() =>
-                      dispatch(previewImage(image.secure_url, "cover"))
+                      dispatch(previewImage(image.secure_url, 'cover'))
                     }
                     src={image.secure_url}
                     alt="user-upload"
@@ -171,7 +183,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           <div className="tweet__like" onClick={likeHandler}>
             <i
               className={`tweet__actionIcon fs-18 ${
-                like ? "fas fa-heart tweet__actionIcon-liked" : "far fa-heart"
+                like ? 'fas fa-heart tweet__actionIcon-liked' : 'far fa-heart'
               }`}
             ></i>
             <span>{numLikes}</span>

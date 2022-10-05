@@ -6,6 +6,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &-mini {
+    padding: 0;
+  }
 }
 
 .circle {
@@ -15,8 +19,15 @@
   border-top-color: transparent;
   border-radius: 50%;
   position: relative;
-
   animation: spinner 1s linear infinite;
+
+  &-mini {
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 4px solid white;
+    border-top-color: var(--c-primary);
+    opacity: 1;
+  }
 }
 
 @keyframes spinner {

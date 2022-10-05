@@ -21,7 +21,12 @@ import {
   TWEET_LIST_RESET,
   TWEET_LIST_SUCCESS,
   CREATE_TWEET_RESET,
-} from "../constants/tweetConstants";
+  EDIT_TWEET_SETUP,
+  EDIT_TWEET_REQUEST,
+  EDIT_TWEET_SUCCESS,
+  EDIT_TWEET_FAIL,
+  EDIT_TWEET_RESET,
+} from '../constants/tweetConstants';
 
 export const tweetListReducer = (state = { tweets: [] }, action) => {
   switch (action.type) {
@@ -84,6 +89,29 @@ export const tweetCreateReducer = (state = {}, action) => {
     case CREATE_TWEET_FAIL:
       return { loading: false, error: action.payload };
     case CREATE_TWEET_RESET:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
+export const tweetEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case EDIT_TWEET_SETUP:
+      return { ...state, tweetToEdit: action.payload };
+    case EDIT_TWEET_REQUEST:
+      return { ...state, loading: true };
+    case EDIT_TWEET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        tweet: action.payload,
+      };
+    case EDIT_TWEET_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case EDIT_TWEET_RESET:
       return {};
 
     default:

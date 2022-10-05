@@ -1,13 +1,17 @@
-import React from "react";
-// import { useHistory } from "react-router-dom";
-import SideNav from "./SideNav";
-import MobileNav from "./MobileNav";
-import { useSelector, useDispatch } from "react-redux";
-import FollowRecommendation from "../components/FollowRecommendation";
+import React from 'react';
+import SideNav from './SideNav';
+import MobileNav from './MobileNav';
+import { useSelector, useDispatch } from 'react-redux';
+import FollowRecommendation from '../components/FollowRecommendation';
 
-import PreviewImage from "./PreviewImage";
-import useEventListener from "../hooks/useEventListener";
-import { changeTheme } from "../actions/uiActions";
+import PreviewImage from './PreviewImage';
+import useEventListener from '../hooks/useEventListener';
+import { changeTheme } from '../actions/uiActions';
+import TweetComposer from './TweetComposer';
+import { EDIT_TWEET_SETUP } from '../constants/tweetConstants';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 const Layout = ({ children }) => {
   const preview = useSelector((state) => state.preview);
@@ -16,35 +20,32 @@ const Layout = ({ children }) => {
   const uiTheme = useSelector((state) => state.uiTheme);
   const { darkMode } = uiTheme;
 
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const { userInfo } = userLogin;
+  const tweetEdit = useSelector((state) => state.tweetEdit);
+  const {
+    success: successTweetEdit,
+    tweetToEdit,
+    tweet: editedTweet,
+  } = tweetEdit;
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  // let history = useHistory();
+  useEffect(() => {
+    if (successTweetEdit) {
+      history.push(`/tweets/${editedTweet._id}`);
+    }
+  }, [successTweetEdit]);
 
   useEventListener(
-    "keydown",
+    'keydown',
     (e) => {
       const key = e.key;
 
-      if (["textarea", "input"].includes(e.target.tagName.toLowerCase()))
+      if (['textarea', 'input'].includes(e.target.tagName.toLowerCase()))
         return;
 
       switch (key) {
-        // case "h":
-        //   history.push("/");
-        //   break;
-        // case "s":
-        //   history.push("/search");
-        //   break;
-        // case "n":
-        //   history.push("/notifications");
-        //   break;
-        // case "p":
-        //   history.push("/profile/" + userInfo.username);
-        //   break;
-        case "d":
+        case 'd':
           dispatch(changeTheme(!darkMode));
           break;
         default:
@@ -57,6 +58,23 @@ const Layout = ({ children }) => {
   return (
     <>
       {previewSrc && <PreviewImage src={previewSrc} type={previewType} />}
+      <Toaster
+        toastOptions={
+          darkMode
+            ? {
+                style: {
+                  fontSize: '1.6rem',
+                  background: '#333',
+                  color: '#fff',
+                },
+              }
+            : {
+                style: {
+                  fontSize: '1.6rem',
+                },
+              }
+        }
+      />
       <SideNav />
       <MobileNav />
       {children}
@@ -103,6 +121,36 @@ const Layout = ({ children }) => {
           </a>
         </div>
       </section>
+
+      {tweetToEdit && (
+        <>
+          <div
+            onClick={() => dispatch({ type: EDIT_TWEET_SETUP, payload: null })}
+            className="previewImage__backDrop previewImage__backDrop-dark"
+          ></div>
+          <span
+            onClick={() => dispatch({ type: EDIT_TWEET_SETUP, payload: null })}
+            className="previewImage__previewClose"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </span>
+
+          <div className="tweetComposer-edit">
+            <TweetComposer buttonText="Edit" />
+          </div>
+        </>
+      )}
     </>
   );
 };

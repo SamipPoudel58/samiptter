@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-const Loader = () => {
+const Loader = ({ mini = false }) => {
   return (
-    <div className="spinner">
-      <div className="circle"></div>
+    <div className={`spinner ${mini ? 'spinner-mini' : ''}`}>
+      <div className={`circle ${mini ? 'circle-mini' : ''}`}></div>
     </div>
   );
 };
