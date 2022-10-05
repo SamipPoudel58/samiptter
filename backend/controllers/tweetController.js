@@ -141,7 +141,7 @@ const editTweet = asyncHandler(async (req, res) => {
 
   if (!tweet) return res.status(404).json({ message: 'Tweet not found' });
 
-  if (tweet.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
+  if (tweet.user.toString() !== req.user._id.toString()) {
     res.status(401);
     throw new Error('UnAuthorized User of the tweet');
   }
