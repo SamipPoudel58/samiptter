@@ -109,8 +109,14 @@
     display: block;
     margin-left: auto;
     font-size: 1.4rem;
+    padding: 0.5rem;
+    border-radius: 50%;
     cursor: pointer;
     color: var(--c-secondary);
+
+    &:hover {
+      background: rgba(134, 133, 133, 0.1);
+    }
   }
 
   &__backDrop {

@@ -17,11 +17,7 @@ const TweetComposer = ({ buttonText, tweet }) => {
   const { userInfo } = userLogin;
 
   const tweetEdit = useSelector((state) => state.tweetEdit);
-  const {
-    loading: tweetEditLoading,
-    success: tweetEditSuccess,
-    tweetToEdit,
-  } = tweetEdit;
+  const { loading: tweetEditLoading, tweetToEdit } = tweetEdit;
 
   useEffect(() => {
     if (buttonText === 'Edit' && tweetToEdit) {
@@ -39,9 +35,27 @@ const TweetComposer = ({ buttonText, tweet }) => {
         },
       };
 
-      const { data } = await axios.post(`/api/upload`, { data: imgs }, config);
+      // this is for editing tweet to check if image is already uploaded to cloudinary
+      const cloudinaryImages = imgs.filter((img) => img.secure_url);
+      const imagesToUpload = imgs.filter((img) => !img.secure_url);
 
-      dispatch(createTweet({ tweetContent: text, images: data }));
+      const { data } = await axios.post(
+        `/api/upload`,
+        { data: imagesToUpload },
+        config
+      );
+
+      buttonText === 'Edit'
+        ? dispatch(
+            editTweet({
+              id: tweetToEdit._id,
+              tweet: {
+                tweetContent: text,
+                images: [...cloudinaryImages, ...data],
+              },
+            })
+          )
+        : dispatch(createTweet({ tweetContent: text, images: data }));
 
       setUploading(false);
     } catch (err) {
@@ -65,13 +79,6 @@ const TweetComposer = ({ buttonText, tweet }) => {
     e.preventDefault();
     if (buttonText === 'Comment') {
       return dispatch(createComment(tweet._id, { commentContent: text }));
-    } else if (buttonText === 'Edit') {
-      return dispatch(
-        editTweet({
-          id: tweetToEdit._id,
-          tweet: { tweetContent: text, images },
-        })
-      );
     }
     if (text === '' && images.length === 0) {
       return;
@@ -79,7 +86,17 @@ const TweetComposer = ({ buttonText, tweet }) => {
     if (images.length > 0) {
       uploadImages(images);
     } else {
-      dispatch(createTweet({ tweetContent: text, images: [] }));
+      buttonText === 'Edit'
+        ? dispatch(
+            editTweet({
+              id: tweetToEdit._id,
+              tweet: {
+                tweetContent: text,
+                images: [],
+              },
+            })
+          )
+        : dispatch(createTweet({ tweetContent: text, images: [] }));
     }
 
     setImages([]);

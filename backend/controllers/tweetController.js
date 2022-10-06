@@ -86,6 +86,7 @@ const createTweet = asyncHandler(async (req, res) => {
     images,
     user: req.user._id,
     likes: [],
+    isEdited: false,
     comments: [],
     numComments: 0,
   });
@@ -148,6 +149,7 @@ const editTweet = asyncHandler(async (req, res) => {
 
   tweet.tweetContent = tweetContent;
   tweet.images = images;
+  tweet.isEdited = true;
   const updatedTweet = await tweet.save();
 
   let usernames = tweetContent.match(/@[a-z0-9_]*/g) || [];

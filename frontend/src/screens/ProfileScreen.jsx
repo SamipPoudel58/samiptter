@@ -1,29 +1,30 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Tweet from "../components/Tweet";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Layout from "../components/Layout";
-import Head from "../components/Head";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Tweet from '../components/Tweet';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import Layout from '../components/Layout';
+import Head from '../components/Head';
 
 import {
   getProfile,
   followAction,
   toggleVerify,
   recommendUsers,
-} from "../actions/userActions";
-import TopBar from "../components/TopBar";
-import { getUsername } from "../utils/getUsername";
-import { Link } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+} from '../actions/userActions';
+import TopBar from '../components/TopBar';
+import { getUsername } from '../utils/getUsername';
+import { Link } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import {
   FOLLOW_RESET,
   EDIT_PROFILE_RESET,
   TOGGLE_VERIFY_RESET,
-} from "../constants/userConstants";
-import { ReactComponent as Verified } from "../assets/verified.svg";
-import ProfilePicHolder from "../components/ProfilePicHolder";
-import { previewImage } from "../actions/uiActions";
+} from '../constants/userConstants';
+import { ReactComponent as Verified } from '../assets/verified.svg';
+import ProfilePicHolder from '../components/ProfilePicHolder';
+import { previewImage } from '../actions/uiActions';
+import Indicator from '../components/Indicator';
 
 const ProfileScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -49,12 +50,12 @@ const ProfileScreen = ({ history, match }) => {
     dispatch(getProfile(match.params.id));
 
     if (editProfileSuccess) {
-      toast.success("Profile Edited Successfully");
+      toast.success('Profile Edited Successfully');
       dispatch({ type: EDIT_PROFILE_RESET });
     }
 
     if (toggleVerifySuccess) {
-      toast.success("Verification Changed Successfully");
+      toast.success('Verification Changed Successfully');
       dispatch({ type: TOGGLE_VERIFY_RESET });
     }
     if (followSuccess) {
@@ -78,21 +79,21 @@ const ProfileScreen = ({ history, match }) => {
   };
   return (
     <div className="profileScreen">
-      <Head title={`${user && user.name ? user.name : "Profile"}`} />
+      <Head title={`${user && user.name ? user.name : 'Profile'}`} />
       <Layout>
         <Toaster
           toastOptions={
             darkMode
               ? {
                   style: {
-                    fontSize: "1.6rem",
-                    background: "#333",
-                    color: "#fff",
+                    fontSize: '1.6rem',
+                    background: '#333',
+                    color: '#fff',
                   },
                 }
               : {
                   style: {
-                    fontSize: "1.6rem",
+                    fontSize: '1.6rem',
                   },
                 }
           }
@@ -102,7 +103,7 @@ const ProfileScreen = ({ history, match }) => {
           {loading ? (
             <Loader />
           ) : error ? (
-            <Message variant="danger">{"Profile Not Found :("}</Message>
+            <Message variant="danger">{'Profile Not Found :('}</Message>
           ) : (
             <>
               <TopBar title={user.name} />
@@ -110,7 +111,7 @@ const ProfileScreen = ({ history, match }) => {
               <div className="profileMain mt-2">
                 <div className="profileMain__cover">
                   <img
-                    onClick={() => dispatch(previewImage(user.cover, "cover"))}
+                    onClick={() => dispatch(previewImage(user.cover, 'cover'))}
                     src={user.cover}
                     alt={`${user.name}'s cover`}
                   />
@@ -119,7 +120,7 @@ const ProfileScreen = ({ history, match }) => {
                   <div className="profileMain__profilePic">
                     <div
                       onClick={() =>
-                        dispatch(previewImage(user.image, "profile"))
+                        dispatch(previewImage(user.image, 'profile'))
                       }
                     >
                       <ProfilePicHolder src={user.image} large={true} />
@@ -131,11 +132,11 @@ const ProfileScreen = ({ history, match }) => {
                       onClick={followHandler}
                       className={`profileMain__followBtn ${
                         user && user.isFollowed
-                          ? "primary-btn-alt"
-                          : "primary-btn"
+                          ? 'primary-btn-alt'
+                          : 'primary-btn'
                       }`}
                     >
-                      {user && user.isFollowed ? "Unfollow" : "Follow"}
+                      {user && user.isFollowed ? 'Unfollow' : 'Follow'}
                     </button>
                   )}
 
@@ -148,7 +149,7 @@ const ProfileScreen = ({ history, match }) => {
                     </Link>
                   )}
                   <h3 className="profileMain__name heading-md text-centered mt-1">
-                    {user.name}{" "}
+                    {user.name}{' '}
                     {user.isVerified && (
                       <Verified
                         title="Verfied User"
@@ -158,7 +159,7 @@ const ProfileScreen = ({ history, match }) => {
                   </h3>
                   <p className="profileMain__username text-centered subtitle-text">
                     <div>{user.username && getUsername(user.username)}</div>
-                    {user.isFollower && <span>Follows you</span>}
+                    {user.isFollower && <Indicator text="Follows you" />}
                   </p>
                   <p className="paragraph text-centered mt-1">{user.bio}</p>
                   <p className="profileMain__stats mt-1">
@@ -185,7 +186,7 @@ const ProfileScreen = ({ history, match }) => {
                       onClick={() => dispatch(toggleVerify(user._id))}
                       className="primary-btn"
                     >
-                      {user.isVerified ? "Unverify User" : "Verify User"}
+                      {user.isVerified ? 'Unverify User' : 'Verify User'}
                     </button>
 
                     <Link to="/profile-edit" className="primary-btn">
@@ -201,7 +202,7 @@ const ProfileScreen = ({ history, match }) => {
                     <i className="fas fa-newspaper"></i>
                   </div>
                   <h3 className="heading-sm">
-                    {tweets.length === 0 ? "No Posts" : `${user.name}'s Posts`}
+                    {tweets.length === 0 ? 'No Posts' : `${user.name}'s Posts`}
                   </h3>
                 </div>
 

@@ -52,15 +52,6 @@
     justify-content: center;
     align-items: center;
     gap: 0.4rem;
-    & > span {
-      display: block;
-      font-size: 1.2rem;
-      padding: 0.5rem 0.8rem;
-      background-color: rgba(129, 140, 248, 0.2);
-      color: var(--c-primary);
-      font-weight: 500;
-      border-radius: 3px;
-    }
   }
 
   &__followBtn {

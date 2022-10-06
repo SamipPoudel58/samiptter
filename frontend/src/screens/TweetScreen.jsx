@@ -32,10 +32,6 @@ const TweetScreen = ({ match, history }) => {
   const tweetEdit = useSelector((state) => state.tweetEdit);
   const { success: successTweetEdit } = tweetEdit;
 
-  console.log({ successTweetEdit });
-
-  // const reversedComments = [...tweet.comments].reverse();
-
   useEffect(() => {
     dispatch(listTweetDetails(match.params.id));
 

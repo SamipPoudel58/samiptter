@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const commentSchema = mongoose.Schema(
   {
@@ -21,7 +21,7 @@ const commentSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'User',
     },
   },
   {
@@ -34,7 +34,7 @@ const likeSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'User',
     },
   },
   {
@@ -47,7 +47,7 @@ const tweetSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'User',
     },
     tweetContent: {
       type: String,
@@ -82,12 +82,16 @@ const tweetSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    isEdited: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const Tweet = mongoose.model("Tweet", tweetSchema);
+const Tweet = mongoose.model('Tweet', tweetSchema);
 
 module.exports = Tweet;

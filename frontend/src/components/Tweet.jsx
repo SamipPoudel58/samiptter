@@ -10,6 +10,7 @@ import { previewImage } from '../actions/uiActions';
 import useClickOutside from '../hooks/useClickOutside';
 import { generateLinks } from '../utils/generateLinks';
 import { EDIT_TWEET_SETUP } from '../constants/tweetConstants';
+import Indicator from './Indicator';
 
 const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const [like, setLike] = useState(tweet.isLiked);
@@ -55,8 +56,13 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   return (
     <article
       onClick={(e) => {
-        const clickElements = ['tweet', 'tweet__content', 'tweet__divider'];
-        // console.log(e.target.classList);
+        const clickElements = [
+          'tweet',
+          'tweet__content',
+          'tweet__info',
+          'tweet__divider',
+        ];
+        console.log(e.target.classList);
         clickElements.includes(e.target.classList[0]) &&
           history.push(`/tweets/${tweet._id}`);
       }}
@@ -103,6 +109,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           <span className="subtitle-text">
             {getTimeFromNow(tweet.createdAt)}
           </span>
+          {tweet.isEdited && <Indicator text="Edited" />}
 
           {(tweet.user._id === userInfo._id || userInfo.isAdmin) && (
             <i

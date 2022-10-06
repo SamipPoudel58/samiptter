@@ -163,13 +163,13 @@
   color: var(--c-gray-md);
 
   &::before {
-    content: "";
+    content: '';
     height: 1px;
     display: block;
     background-color: var(--c-border);
   }
   &::after {
-    content: "";
+    content: '';
     height: 1px;
     display: block;
     background-color: var(--c-border);
@@ -202,4 +202,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.indicator {
+  display: block;
+  font-size: 1.2rem;
+  padding: 0.5rem 0.8rem;
+  background-color: rgba(129, 140, 248, 0.2);
+  color: var(--c-primary);
+  font-weight: 500;
+  border-radius: 3px;
 }
