@@ -1,0 +1,3 @@
+export const CHANGE_THEME = "CHANGE_THEME";
+export const PREVIEW_IMAGE = "PREVIEW_IMAGE";
+export const CLOSE_PREVIEW = "CLOSE_PREVIEW";

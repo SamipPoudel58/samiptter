@@ -1,0 +1,156 @@
+.homeScreen {
+  // max-height: 100vh;
+  position: relative;
+
+  &__samiptterLogo {
+    height: 3rem;
+  }
+
+  &__tweetsMargin {
+    margin-top: 2rem;
+    @media only screen and (max-width: 400px) {
+      margin-top: 1rem;
+    }
+  }
+
+  &__logoHolder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    &-left {
+      justify-content: flex-start;
+    }
+  }
+
+  &__topNav {
+    display: none;
+    padding: 2rem;
+    background-color: var(--c-tile);
+    border-radius: 0 0 1rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+    color: var(--c-primary);
+    font-size: 2.5rem;
+    position: relative;
+
+    & > .logo-text {
+      color: var(--c-primary);
+    }
+
+    & > i {
+      position: absolute;
+      top: 50%;
+      left: 2rem;
+      transform: translateY(-50%);
+    }
+
+    @media only screen and (max-width: 800px) {
+      display: block;
+    }
+    @media only screen and (max-width: 400px) {
+      padding: 2rem 1rem;
+    }
+  }
+}
+
+.rightNav {
+  height: 100%;
+  padding: 0 4rem 0 4rem;
+  position: fixed;
+  max-width: 38rem;
+  &__wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    padding: 0 0 3rem;
+    width: 38rem;
+    background-color: var(--c-body);
+
+    @media only screen and (max-width: 1100px) {
+      display: none;
+    }
+
+    @media only screen and (max-width: 1400px) {
+      position: fixed;
+    }
+  }
+
+  &__showcase {
+    // background-image: linear-gradient(to right bottom, #07163b, #0d4872);
+    background-image: linear-gradient(to right bottom, #28313b, #485461);
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 2rem;
+    // border: 2px solid black;
+    color: white;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    position: relative;
+    transition: transform 0.3s ease;
+
+    &-creator {
+      background-image: linear-gradient(to right top, #eac886, #fce4b3);
+      color: black;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  &__showcaseIntro {
+    margin-bottom: 2rem;
+  }
+
+  &__showcaseImage {
+    height: 3rem;
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    &-creator {
+      height: 3.5rem;
+      border-radius: 50%;
+    }
+  }
+
+  &__showcaseLink {
+    color: white;
+    font-size: 1rem;
+    &-creator {
+      color: black;
+    }
+  }
+}
+
+.newsFeed {
+  margin: 0 38rem 0 25rem;
+  background-color: var(--c-background);
+  padding: 3rem 2rem;
+  min-height: 100vh;
+  // overflow: scroll;
+
+  @media only screen and (max-width: 1100px) {
+    margin: 0 0 0 23rem;
+  }
+
+  @media only screen and (max-width: 800px) {
+    // overflow-x: hidden;
+    margin: 0;
+    padding-top: 2rem;
+  }
+  @media only screen and (max-width: 400px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
+  }
+
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+}

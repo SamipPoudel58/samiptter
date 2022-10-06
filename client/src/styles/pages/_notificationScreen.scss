@@ -1,0 +1,61 @@
+.notificationScreen {
+  position: relative;
+
+  &__notifications {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--c-tile);
+  }
+
+  &__notification {
+    display: flex;
+    gap: 1.5rem;
+    // margin-bottom: 1.5rem;
+    padding: 1rem 1rem;
+    border-radius: 0.5rem;
+
+    &:hover {
+      background-color: var(--c-background);
+    }
+    // border-bottom: 2px solid var(--c-background);
+  }
+
+  &__icon {
+    position: relative;
+  }
+
+  &__iconHolder {
+    background-color: var(--c-lightblue);
+    padding: 3px;
+    border-radius: 50%;
+    position: absolute;
+    right: -2px;
+    bottom: -3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-like {
+      background-color: var(--c-pink);
+    }
+    svg {
+      height: 1.4rem;
+      fill: white;
+    }
+  }
+
+  &__info {
+    font-size: 1.4rem;
+    color: var(--c-black);
+
+    & > span {
+      font-weight: bold;
+      color: var(--c-secondary);
+    }
+  }
+  &__time {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--c-gray-md);
+  }
+}

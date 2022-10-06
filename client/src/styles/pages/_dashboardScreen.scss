@@ -1,0 +1,32 @@
+.dashboardScreen {
+  position: relative;
+}
+
+.dashboard {
+  &__summaries {
+    display: flex;
+    align-items: center;
+    // gap: 2rem;
+    justify-content: space-between;
+  }
+
+  &__summary {
+    background-color: var(--c-tile);
+    padding: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__summaryIcon {
+    font-size: 3rem;
+    color: var(--c-secondary);
+  }
+
+  &__recentUsers {
+    background-color: var(--c-tile);
+    padding: 2rem;
+    border-radius: 2rem;
+  }
+}

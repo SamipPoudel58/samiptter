@@ -1,0 +1,62 @@
+.mobileNav {
+  display: none;
+  @media only screen and (max-width: 800px) {
+    display: block;
+  }
+  &__themeIcon {
+    font-size: 1.5rem;
+  }
+
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 14;
+  }
+
+  &__nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 70%;
+    background-color: var(--c-body);
+    z-index: 15;
+    padding: 3rem 2rem 0;
+    transition: all 0.3s;
+    transform: translateX(-100%);
+
+    & > .logo-text {
+      padding-left: 2rem;
+    }
+  }
+
+  &__navlink {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__notification {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    background-color: var(--c-pink);
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__nav.visible {
+    transform: translateX(0);
+  }
+
+  &__links {
+    list-style: none;
+  }
+}
