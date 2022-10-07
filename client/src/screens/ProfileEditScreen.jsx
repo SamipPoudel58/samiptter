@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { editProfile } from "../actions/userActions";
-import Head from "../components/Head";
-import Layout from "../components/Layout";
-import TopBar from "../components/TopBar";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { editProfile } from '../actions/userActions';
+import Head from '../components/Head';
+import Layout from '../components/Layout';
+import TopBar from '../components/TopBar';
 import {
   EDIT_PROFILE_RESET,
   USER_LOGIN_SUCCESS,
-} from "../constants/userConstants";
-import toast from "react-hot-toast";
+} from '../constants/userConstants';
+import toast from 'react-hot-toast';
 
 const ProfileEditScreen = ({ history }) => {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
-  const [image, setImage] = useState("");
-  const [cover, setCover] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [bio, setBio] = useState('');
+  const [image, setImage] = useState('');
+  const [cover, setCover] = useState('');
+  const [password, setPassword] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [uploadError, setUploadError] = useState("");
+  const [uploadError, setUploadError] = useState('');
 
   const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ const ProfileEditScreen = ({ history }) => {
 
   useEffect(() => {
     if (userInfo.isGuest) {
-      history.push("/");
+      history.push('/');
     }
     setName(user.name || userInfo.name);
     setUsername(user.username || userInfo.username);
@@ -59,12 +59,12 @@ const ProfileEditScreen = ({ history }) => {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       };
 
       const { data } = await axios.post(`/api/upload`, { data: [img] }, config);
-      if (imageType === "profile") {
+      if (imageType === 'profile') {
         setImage(data[0].secure_url);
       } else {
         setCover(data[0].secure_url);
@@ -81,7 +81,7 @@ const ProfileEditScreen = ({ history }) => {
     const files = e.target.files;
 
     if (files.length > 1) {
-      return toast.error("Cannot upload more than 1 photo.");
+      return toast.error('Cannot upload more than 1 photo.');
     }
     for (const file of files) {
       const reader = new FileReader();
@@ -154,7 +154,7 @@ const ProfileEditScreen = ({ history }) => {
                         type="file"
                         id="cover-file"
                         placeholder="Upload Image"
-                        onChange={(e) => imageUploadHandler(e, "cover")}
+                        onChange={(e) => imageUploadHandler(e, 'cover')}
                         hidden
                       />
                     </div>
@@ -188,7 +188,7 @@ const ProfileEditScreen = ({ history }) => {
                         type="file"
                         id="profile-file"
                         placeholder="Upload Image"
-                        onChange={(e) => imageUploadHandler(e, "profile")}
+                        onChange={(e) => imageUploadHandler(e, 'profile')}
                         hidden
                       />
                     </div>
@@ -238,6 +238,7 @@ const ProfileEditScreen = ({ history }) => {
                   </label>
                   <input
                     name="password"
+                    placeholder="Leave blank to keep the same password"
                     className="form__input form__input-alt"
                     type="text"
                     value={password}
