@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = mongoose.Schema(
   {
@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema(
     },
     bio: {
       type: String,
-      default: "I am a user of Samiptter",
+      default: 'I am a user of Samiptter',
     },
     email: {
       type: String,
@@ -26,11 +26,15 @@ const userSchema = mongoose.Schema(
     },
     image: {
       type: String,
-      default: "/images/profile.jpg",
+      default: '/images/profile.jpg',
     },
     cover: {
       type: String,
-      default: "/images/cover.jpg",
+      default: '/images/cover.jpg',
+    },
+    refreshToken: {
+      type: String,
+      default: '',
     },
     isAdmin: {
       type: Boolean,
@@ -52,14 +56,14 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
