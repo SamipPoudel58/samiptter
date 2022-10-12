@@ -30,6 +30,7 @@ function App() {
     if (userInfo && userInfo.accessToken) {
       dispatch(getUnreadNotifications());
     }
+    // eslint-disable-next-line
   }, [dispatch]);
 
   return (
