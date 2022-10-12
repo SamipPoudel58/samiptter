@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
     if (successTweetEdit) {
       history.push(`/tweets/${editedTweet._id}`);
     }
-  }, [successTweetEdit]);
+  }, [successTweetEdit, editedTweet, history]);
 
   useEventListener(
     'keydown',

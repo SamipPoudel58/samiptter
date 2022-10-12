@@ -24,7 +24,7 @@ const TweetComposer = ({ buttonText, tweet }) => {
       setText(tweetToEdit.tweetContent);
       setImages(tweetToEdit.images);
     }
-  }, [tweetToEdit]);
+  }, [tweetToEdit, buttonText]);
 
   const uploadImages = async (imgs) => {
     setUploading(true);

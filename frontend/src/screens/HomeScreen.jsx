@@ -29,9 +29,6 @@ const HomeScreen = ({ history }) => {
   let { success: successDelete } = tweetDelete;
 
   useEffect(() => {
-    // if (tweets.length === 0) {
-    //   dispatch(listTweets());
-    // }
     dispatch(listTweets());
 
     if (successDelete) {
@@ -55,8 +52,7 @@ const HomeScreen = ({ history }) => {
       dispatch({ type: DELETE_TWEET_RESET });
       dispatch({ type: CREATE_TWEET_RESET });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo, dispatch, successDelete, successTweetCreate]);
+  }, [dispatch, successDelete, successTweetCreate]);
 
   return (
     <div className="homeScreen">

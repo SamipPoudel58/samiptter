@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useHistory } from "react-router-dom";
-import { getUnreadNotifications, logout } from "../actions/userActions";
-import ProfileInfo from "./ProfileInfo";
-import FullLogo from "./FullLogo";
-import { changeTheme } from "../actions/uiActions";
-import useClickOutside from "../hooks/useClickOutside";
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
+import { logout } from '../actions/userActions';
+import ProfileInfo from './ProfileInfo';
+import FullLogo from './FullLogo';
+import { changeTheme } from '../actions/uiActions';
+import useClickOutside from '../hooks/useClickOutside';
 
 const SideNav = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const SideNav = () => {
 
   const logOutHandler = useCallback(() => {
     dispatch(logout());
-    history.push("/login");
+    history.push('/login');
   }, [dispatch, history]);
 
   const toggleHandler = () => {
@@ -43,7 +43,6 @@ const SideNav = () => {
     if (!userInfo.username) {
       logOutHandler();
     }
-    dispatch(getUnreadNotifications());
   }, [dispatch, history, logOutHandler, userInfo.username]);
 
   return (
@@ -99,7 +98,7 @@ const SideNav = () => {
                   strokeWidth={3}
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
-              </svg>{" "}
+              </svg>{' '}
               <span>Search</span>
             </li>
           </NavLink>
@@ -121,7 +120,7 @@ const SideNav = () => {
                 {newNotifications !== 0 && (
                   <div className="notification-badge">{newNotifications}</div>
                 )}
-              </div>{" "}
+              </div>{' '}
               <span>Notification</span>
             </li>
           </NavLink>
@@ -143,7 +142,7 @@ const SideNav = () => {
                   d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                   clipRule="evenodd"
                 />
-              </svg>{" "}
+              </svg>{' '}
               <span>Profile</span>
             </li>
           </NavLink>
@@ -187,7 +186,7 @@ const SideNav = () => {
                   fill="currentColor"
                 >
                   <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>{" "}
+                </svg>{' '}
                 <span>Dashboard</span>
               </li>
             </NavLink>
@@ -199,7 +198,7 @@ const SideNav = () => {
         >
           <div
             ref={popupRef}
-            className={`sideNav__popup ${popUp && "sideNav__popup-visible"}`}
+            className={`sideNav__popup ${popUp && 'sideNav__popup-visible'}`}
           >
             <p
               onClick={logOutHandler}

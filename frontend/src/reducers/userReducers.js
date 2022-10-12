@@ -38,14 +38,23 @@ import {
   GET_UNREAD_NOTIF_FAIL,
   GET_UNREAD_NOTIF_RESET,
   GET_RECOMMENDED_USERS_RESET,
-} from "../constants/userConstants";
+  TOKEN_REFRESH_REQUEST,
+  TOKEN_REFRESH_SUCCESS,
+  TOKEN_REFRESH_FAIL,
+} from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
+    case TOKEN_REFRESH_REQUEST:
+      return { ...state, tokenLoading: true };
     case USER_LOGIN_REQUEST:
       return { loading: true };
+    case TOKEN_REFRESH_SUCCESS:
+      return { ...state, tokenLoading: false, userInfo: action.payload };
     case USER_LOGIN_SUCCESS:
       return { loading: false, userInfo: action.payload };
+    case TOKEN_REFRESH_FAIL:
+      return { tokenLoading: false, tokenError: action.payload, userInfo: '' };
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:

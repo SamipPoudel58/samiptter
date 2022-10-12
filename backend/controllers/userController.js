@@ -1,10 +1,15 @@
 const User = require('../models/userModel');
 const Tweet = require('../models/tweetModel');
 const asyncHandler = require('../utils/asyncHandler');
-const generateToken = require('../utils/generateToken.js');
+const {
+  generateAccessToken,
+  generateRefreshToken,
+  sendRefreshToken,
+} = require('../utils/tokens.js');
 const Notification = require('../models/notificationModel');
 const Following = require('../models/followingModel');
 const Follower = require('../models/followerModel');
+const jwt = require('jsonwebtoken');
 
 const ObjectId = require('mongoose').Types.ObjectId;
 require('dotenv').config();
@@ -26,6 +31,14 @@ const loginUser = asyncHandler(async (req, res) => {
     const { followers } = await Follower.findOne({ user: user._id });
     const { following } = await Following.findOne({ user: user._id });
 
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    sendRefreshToken(res, refreshToken);
+
     res.json({
       _id: user._id,
       name: user.name,
@@ -38,7 +51,7 @@ const loginUser = asyncHandler(async (req, res) => {
       bio: user.bio,
       image: user.image,
       cover: user.cover,
-      token: generateToken(user._id),
+      accessToken: accessToken,
       isGuest: !!guest,
     });
   } else {
@@ -78,17 +91,23 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const user = await createdUser.save();
 
-  const { following } = await Following.create({
-    user: user._id,
-    following: [],
-  });
-
-  const { followers } = await Follower.create({
-    user: user._id,
-    followers: [],
-  });
-
   if (user) {
+    const { following } = await Following.create({
+      user: user._id,
+      following: [],
+    });
+
+    const { followers } = await Follower.create({
+      user: user._id,
+      followers: [],
+    });
+
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+    user.refreshToken = refreshToken;
+    await user.save();
+    sendRefreshToken(res, refreshToken);
+
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -101,12 +120,68 @@ const registerUser = asyncHandler(async (req, res) => {
       bio: user.bio,
       image: user.image,
       cover: user.cover,
-      token: generateToken(user._id),
+      accessToken: accessToken,
     });
   } else {
     res.status(400);
     throw new Error('Invalid User Data');
   }
+});
+
+const logOutUser = asyncHandler(async (req, res) => {
+  res.clearCookie('refreshToken', { path: '/refresh_token' });
+  const user = await User.findById(req.user._id);
+  if (user) {
+    user.refreshToken = '';
+    await user.save();
+    res.status(200).json({ message: 'Logged out' });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// @desc Refresh tokens
+// @route POST /api/users/refresh_token
+// @access Public
+const refreshToken = asyncHandler(async (req, res) => {
+  const token = req.cookies.refreshToken;
+  if (!token) return res.status(404).send({ accessToken: '' });
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+  } catch (err) {
+    return res.status(401).send({ accessToken: '' });
+  }
+  const user = await User.findById(decoded.id);
+  if (!user) return res.status(404).send({ accessToken: '' });
+  if (user.refreshToken !== token) {
+    return res.send({ accessToken: '' });
+  }
+
+  const accessToken = generateAccessToken(user._id);
+  const refreshToken = generateRefreshToken(user._id);
+  user.refreshToken = refreshToken;
+  await user.save();
+
+  const { followers } = await Follower.findOne({ user: user._id });
+  const { following } = await Following.findOne({ user: user._id });
+
+  sendRefreshToken(res, refreshToken);
+  return res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    username: user.username,
+    isAdmin: user.isAdmin,
+    isVerified: user.isVerified,
+    followers: followers,
+    following: following,
+    bio: user.bio,
+    image: user.image,
+    cover: user.cover,
+    accessToken: accessToken,
+  });
 });
 
 // @desc Get users list
@@ -195,7 +270,7 @@ const editUser = asyncHandler(async (req, res) => {
       bio: adminUser.bio,
       image: adminUser.image,
       cover: adminUser.cover,
-      token: generateToken(adminUser._id),
+      accessToken: generateAccessToken(adminUser._id),
     });
   } else {
     res.json({
@@ -208,7 +283,7 @@ const editUser = asyncHandler(async (req, res) => {
       image: updatedUser.image,
       cover: updatedUser.cover,
       bio: updatedUser.bio,
-      token: generateToken(updatedUser._id),
+      accessToken: generateAccessToken(updatedUser._id),
     });
   }
 });
@@ -460,6 +535,8 @@ const getUnreadNotifications = asyncHandler(async (req, res) => {
 module.exports = {
   loginUser,
   registerUser,
+  logOutUser,
+  refreshToken,
   getUserProfile,
   followUser,
   getRecommendedUser,
