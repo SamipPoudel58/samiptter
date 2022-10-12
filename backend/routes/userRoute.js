@@ -12,6 +12,7 @@ const {
   getUnreadNotifications,
   followUser,
   refreshToken,
+  logOutUser,
 } = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -21,6 +22,7 @@ router
   .post(registerUser)
   .put(protect, editUser);
 router.post('/login', loginUser);
+router.post('/logout', protect, logOutUser);
 router.route('/notifications').get(protect, getNotifications);
 router.route('/unreadnotifications').get(protect, getUnreadNotifications);
 router.route('/follow/:id').get(protect, followUser);

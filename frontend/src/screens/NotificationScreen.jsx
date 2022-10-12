@@ -1,25 +1,22 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { getNotifications } from "../actions/userActions";
-import Head from "../components/Head";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
-import Layout from "../components/Layout";
-import { getTimeFromNow } from "../utils/getTimeFromNow";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getNotifications } from '../actions/userActions';
+import Head from '../components/Head';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import Layout from '../components/Layout';
+import { getTimeFromNow } from '../utils/getTimeFromNow';
 
 const NotificationScreen = () => {
   const dispatch = useDispatch();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
   const getNotif = useSelector((state) => state.getNotif);
   const { loading, notifications, error } = getNotif;
 
   useEffect(() => {
     dispatch(getNotifications());
-  }, [dispatch, userInfo]);
+  }, [dispatch]);
   return (
     <div className="notificationScreen">
       <Head title="Notifications" />
@@ -44,7 +41,7 @@ const NotificationScreen = () => {
                         <div
                           className={`notificationScreen__iconHolder notificationScreen__iconHolder-${notification.action}`}
                         >
-                          {notification.action === "like" ? (
+                          {notification.action === 'like' ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-5 w-5 like"
@@ -57,7 +54,7 @@ const NotificationScreen = () => {
                                 clipRule="evenodd"
                               />
                             </svg>
-                          ) : ["comment", "mention"].includes(
+                          ) : ['comment', 'mention'].includes(
                               notification.action
                             ) ? (
                             <svg
@@ -92,7 +89,7 @@ const NotificationScreen = () => {
                       </div>
                       <div>
                         <p className="notificationScreen__info mt-1">
-                          <span>{notification.sender.name}</span>{" "}
+                          <span>{notification.sender.name}</span>{' '}
                           {notification.message}
                         </p>
                         <p className="notificationScreen__time">

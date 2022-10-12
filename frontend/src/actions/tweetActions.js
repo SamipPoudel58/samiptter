@@ -22,7 +22,7 @@ import {
   TWEET_LIST_REQUEST,
   TWEET_LIST_SUCCESS,
 } from '../constants/tweetConstants';
-import axios from 'axios';
+import axiosPrivate from '../api/axiosPrivate';
 
 export const listTweets =
   (keyword = '') =>
@@ -36,11 +36,11 @@ export const listTweets =
 
       const config = {
         headers: {
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
       };
 
-      const { data } = await axios.get(
+      const { data } = await axiosPrivate.get(
         `/api/tweets?keyword=${keyword}`,
         config
       );
@@ -69,11 +69,11 @@ export const listTweetDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.get('/api/tweets/' + id, config);
+    const { data } = await axiosPrivate.get('/api/tweets/' + id, config);
 
     dispatch({
       type: TWEET_DETAILS_SUCCESS,
@@ -103,11 +103,11 @@ export const createTweet = (tweet) => async (dispatch, getState) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.post(`/api/tweets`, tweet, config);
+    const { data } = await axiosPrivate.post(`/api/tweets`, tweet, config);
 
     dispatch({
       type: CREATE_TWEET_SUCCESS,
@@ -136,11 +136,11 @@ export const editTweet = (editedTweet) => async (dispatch, getState) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.put(
+    const { data } = await axiosPrivate.put(
       `/api/tweets/${editedTweet.id}`,
       editedTweet.tweet,
       config
@@ -173,11 +173,11 @@ export const likeTweet = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    await axios.get(`/api/tweets/${id}/like`, config);
+    await axiosPrivate.get(`/api/tweets/${id}/like`, config);
   } catch (error) {
     console.error(error);
   }
@@ -191,11 +191,11 @@ export const likeComment = (id, comId) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    await axios.get(`/api/tweets/${id}/${comId}`, config);
+    await axiosPrivate.get(`/api/tweets/${id}/${comId}`, config);
   } catch (error) {
     console.error(error);
   }
@@ -214,11 +214,11 @@ export const createComment = (id, comment) => async (dispatch, getState) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    await axios.post(`/api/tweets/${id}`, comment, config);
+    await axiosPrivate.post(`/api/tweets/${id}`, comment, config);
 
     dispatch({
       type: CREATE_COMMENT_SUCCESS,
@@ -245,11 +245,11 @@ export const deleteComment = (id, comId) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    await axios.delete(`/api/tweets/${id}/${comId}`, config);
+    await axiosPrivate.delete(`/api/tweets/${id}/${comId}`, config);
     dispatch({
       type: DELETE_COMMENT_SUCCESS,
     });
@@ -275,11 +275,11 @@ export const deleteTweet = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    await axios.delete(`/api/tweets/${id}`, config);
+    await axiosPrivate.delete(`/api/tweets/${id}`, config);
 
     dispatch({
       type: DELETE_TWEET_SUCCESS,

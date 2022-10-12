@@ -128,6 +128,19 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+const logOutUser = asyncHandler(async (req, res) => {
+  res.clearCookie('refreshToken', { path: '/refresh_token' });
+  const user = await User.findById(req.user._id);
+  if (user) {
+    user.refreshToken = '';
+    await user.save();
+    res.status(200).json({ message: 'Logged out' });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 // @desc Refresh tokens
 // @route POST /api/users/refresh_token
 // @access Public
@@ -141,7 +154,6 @@ const refreshToken = asyncHandler(async (req, res) => {
     return res.status(401).send({ accessToken: '' });
   }
   const user = await User.findById(decoded.id);
-  console.log(user);
   if (!user) return res.status(404).send({ accessToken: '' });
   if (user.refreshToken !== token) {
     return res.send({ accessToken: '' });
@@ -149,12 +161,27 @@ const refreshToken = asyncHandler(async (req, res) => {
 
   const accessToken = generateAccessToken(user._id);
   const refreshToken = generateRefreshToken(user._id);
-
   user.refreshToken = refreshToken;
   await user.save();
 
+  const { followers } = await Follower.findOne({ user: user._id });
+  const { following } = await Following.findOne({ user: user._id });
+
   sendRefreshToken(res, refreshToken);
-  return res.json({ accessToken });
+  return res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    username: user.username,
+    isAdmin: user.isAdmin,
+    isVerified: user.isVerified,
+    followers: followers,
+    following: following,
+    bio: user.bio,
+    image: user.image,
+    cover: user.cover,
+    accessToken: accessToken,
+  });
 });
 
 // @desc Get users list
@@ -508,6 +535,7 @@ const getUnreadNotifications = asyncHandler(async (req, res) => {
 module.exports = {
   loginUser,
   registerUser,
+  logOutUser,
   refreshToken,
   getUserProfile,
   followUser,

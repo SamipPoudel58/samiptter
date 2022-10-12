@@ -2,20 +2,20 @@ const jwt = require('jsonwebtoken');
 
 const generateAccessToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '15m',
+    expiresIn: '30m',
   });
 };
 
 const generateRefreshToken = (id) => {
   return jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: '7d',
+    expiresIn: '30d',
   });
 };
 
 const sendRefreshToken = (res, token) => {
   res.cookie('refreshToken', token, {
     httpOnly: true,
-    path: '/refresh_token',
+    path: '/',
   });
 };
 

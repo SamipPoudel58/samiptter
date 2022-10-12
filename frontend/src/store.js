@@ -48,16 +48,11 @@ const reducer = combineReducers({
   getUnreadNotif: getUnreadNotificationsReducer,
 });
 
-const userInfoFromStorage = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
-  : null;
-
 const darkMode = localStorage.getItem('darkModeOn')
   ? JSON.parse(localStorage.getItem('darkModeOn'))
   : false;
 
 const initialState = {
-  userLogin: { userInfo: userInfoFromStorage },
   uiTheme: { darkMode: darkMode },
 };
 

@@ -62,7 +62,6 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
           'tweet__info',
           'tweet__divider',
         ];
-        console.log(e.target.classList);
         clickElements.includes(e.target.classList[0]) &&
           history.push(`/tweets/${tweet._id}`);
       }}

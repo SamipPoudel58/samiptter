@@ -26,7 +26,7 @@ import ProfilePicHolder from '../components/ProfilePicHolder';
 import { previewImage } from '../actions/uiActions';
 import Indicator from '../components/Indicator';
 
-const ProfileScreen = ({ history, match }) => {
+const ProfileScreen = ({ match }) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -63,8 +63,6 @@ const ProfileScreen = ({ history, match }) => {
       dispatch(recommendUsers());
     }
   }, [
-    history,
-    userInfo,
     dispatch,
     match.params.id,
     editProfileSuccess,
@@ -158,18 +156,18 @@ const ProfileScreen = ({ history, match }) => {
                     )}
                   </h3>
                   <p className="profileMain__username text-centered subtitle-text">
-                    <div>{user.username && getUsername(user.username)}</div>
+                    <span>{user.username && getUsername(user.username)}</span>
                     {user.isFollower && <Indicator text="Follows you" />}
                   </p>
                   <p className="paragraph text-centered mt-1">{user.bio}</p>
-                  <p className="profileMain__stats mt-1">
-                    <div>
+                  <div className="profileMain__stats mt-1">
+                    <p>
                       <span>{user.following?.length}</span>Following
-                    </div>
-                    <div>
+                    </p>
+                    <p>
                       <span>{user.followers?.length}</span>Followers
-                    </div>
-                  </p>
+                    </p>
+                  </div>
                   {followError && (
                     <Message variant="danger">{followError}</Message>
                   )}

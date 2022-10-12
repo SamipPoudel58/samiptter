@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Head from "../components/Head";
-import { ReactComponent as Rocket } from "../assets/rocket.svg";
-import { register } from "../actions/userActions";
-import FullLogo from "../components/FullLogo";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import Head from '../components/Head';
+import { ReactComponent as Rocket } from '../assets/rocket.svg';
+import { register } from '../actions/userActions';
+import FullLogo from '../components/FullLogo';
 
 const RegisterScreen = ({ location, history }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
@@ -22,10 +22,10 @@ const RegisterScreen = ({ location, history }) => {
   const userRegister = useSelector((state) => state.userRegister);
   const { error: registerError } = userRegister;
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo?.accessToken) {
       history.push(redirect);
     }
   }, [history, userInfo, redirect]);
@@ -33,9 +33,9 @@ const RegisterScreen = ({ location, history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password.length < 6) {
-      setMessage("Password should be at least 6 characters.");
+      setMessage('Password should be at least 6 characters.');
     } else if (name.length > 20) {
-      setMessage("Name should be less than 20 characters.");
+      setMessage('Name should be less than 20 characters.');
     } else {
       dispatch(register(name, email, password));
     }
@@ -85,7 +85,7 @@ const RegisterScreen = ({ location, history }) => {
               Create Account
             </button>
             <p className="mt-1 form__question">
-              Already have an account ?{" "}
+              Already have an account ?{' '}
               <Link className="minor-link" to="/login">
                 Sign In
               </Link>
