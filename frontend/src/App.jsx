@@ -1,18 +1,18 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useSelector } from "react-redux";
-import LoginScreen from "./screens/LoginScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import HomeScreen from "./screens/HomeScreen";
-import TweetScreen from "./screens/TweetScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import SearchScreen from "./screens/SearchScreen";
-import ProfileEditScreen from "./screens/ProfileEditScreen";
-import DashboardScreen from "./screens/DashboardScreen";
-import PageNotFound from "./screens/404-page";
-import AdminRoute from "./components/AdminRoute";
-import ProtectedRoute from "./components/ProtectedRoute";
-import NotificationScreen from "./screens/NotificationScreen";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import HomeScreen from './screens/HomeScreen';
+import TweetScreen from './screens/TweetScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import SearchScreen from './screens/SearchScreen';
+import ProfileEditScreen from './screens/ProfileEditScreen';
+import DashboardScreen from './screens/DashboardScreen';
+import PageNotFound from './screens/404-page';
+import AdminRoute from './components/AdminRoute';
+import ProtectedRoute from './components/ProtectedRoute';
+import NotificationScreen from './screens/NotificationScreen';
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -20,7 +20,7 @@ function App() {
 
   return (
     <Router>
-      <main className={`${darkMode ? "dark" : ""}`}>
+      <main className={`${darkMode ? 'dark' : ''}`}>
         <div className="mainContainer">
           <Switch>
             <Route exact path="/login" component={LoginScreen} />
