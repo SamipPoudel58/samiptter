@@ -32,9 +32,9 @@ const rootdir = path.resolve();
 
 // serving the frontend
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(rootdir, '/frontend/build')));
+  app.use(express.static(path.join(rootdir, '/frontend/dist')));
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(rootdir, 'frontend', 'build', 'index.html'))
+    res.sendFile(path.resolve(rootdir, 'frontend', 'dist', 'index.html'))
   );
 } else {
   app.get('/', (req, res) => {
