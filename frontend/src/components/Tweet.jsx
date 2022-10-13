@@ -20,7 +20,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
   const popupRef = useRef();
 
   useClickOutside(popupRef, () => {
-    if (popup) setPopup(false);
+    setPopup(false);
   });
 
   const dispatch = useDispatch();

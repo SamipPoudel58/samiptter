@@ -15,7 +15,7 @@ import {
 import TopBar from '../components/TopBar';
 import { getUsername } from '../utils/getUsername';
 import { Link } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import {
   FOLLOW_RESET,
   EDIT_PROFILE_RESET,
@@ -79,24 +79,6 @@ const ProfileScreen = ({ match }) => {
     <div className="profileScreen">
       <Head title={`${user && user.name ? user.name : 'Profile'}`} />
       <Layout>
-        <Toaster
-          toastOptions={
-            darkMode
-              ? {
-                  style: {
-                    fontSize: '1.6rem',
-                    background: '#333',
-                    color: '#fff',
-                  },
-                }
-              : {
-                  style: {
-                    fontSize: '1.6rem',
-                  },
-                }
-          }
-        />
-
         <section className="newsFeed">
           {loading ? (
             <Loader />
