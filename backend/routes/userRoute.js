@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
   loginUser,
@@ -11,21 +11,25 @@ const {
   getNotifications,
   getUnreadNotifications,
   followUser,
-} = require("../controllers/userController");
-const { protect } = require("../middleware/authMiddleware");
+  refreshToken,
+  logOutUser,
+} = require('../controllers/userController');
+const { protect } = require('../middleware/authMiddleware');
 
 router
-  .route("/")
+  .route('/')
   .get(protect, getUsersList)
   .post(registerUser)
   .put(protect, editUser);
-router.post("/login", loginUser);
-router.route("/notifications").get(protect, getNotifications);
-router.route("/unreadnotifications").get(protect, getUnreadNotifications);
-router.route("/follow/:id").get(protect, followUser);
+router.post('/login', loginUser);
+router.post('/logout', protect, logOutUser);
+router.route('/notifications').get(protect, getNotifications);
+router.route('/unreadnotifications').get(protect, getUnreadNotifications);
+router.route('/follow/:id').get(protect, followUser);
 // router.route("/follow/:id").get(protect, followUser);
-router.route("/recommended").get(protect, getRecommendedUser);
-router.route("/:id").get(protect, getUserProfile);
-router.route("/verify/:id").get(protect, verifyUser);
+router.route('/recommended').get(protect, getRecommendedUser);
+router.route('/:id').get(protect, getUserProfile);
+router.route('/verify/:id').get(protect, verifyUser);
+router.route('/refresh_token').post(refreshToken);
 
 module.exports = router;

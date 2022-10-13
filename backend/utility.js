@@ -1,9 +1,9 @@
-const User = require("./models/userModel");
-const Notification = require("./models/notificationModel");
+const User = require('./models/userModel');
+const Notification = require('./models/notificationModel');
 // const Tweet = require("./models/tweetModel");
-const connectDB = require("./config/db");
-const Following = require("./models/followingModel");
-const Follower = require("./models/followerModel");
+const connectDB = require('./config/db');
+const Following = require('./models/followingModel');
+const Follower = require('./models/followerModel');
 
 const purgeReadNotifications = async () => {
   try {
@@ -11,7 +11,7 @@ const purgeReadNotifications = async () => {
 
     await Notification.deleteMany({ read: true });
 
-    console.log("Notifications purged");
+    console.log('Notifications purged');
     process.exit();
   } catch (error) {
     console.error(error);
@@ -26,14 +26,14 @@ const changePassword = async (email, password) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      console.log("User not found");
+      console.log('User not found');
       process.exit(1);
     }
 
     user.password = password;
 
     await user.save();
-    console.log("Password changed");
+    console.log('Password changed');
     process.exit();
   } catch (error) {
     console.error(error);
@@ -59,16 +59,10 @@ const addFollowerData = async () => {
       });
     }
 
-    console.log("Followers added");
+    console.log('Followers added');
     process.exit();
   } catch (error) {
     console.error(error);
     process.exit(1);
   }
 };
-
-// addFollowerData();
-
-// purgeReadNotifications();
-
-changePassword("sumansapkota777@gmail.com", "sumanhancy69");

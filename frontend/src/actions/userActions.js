@@ -1,5 +1,7 @@
-import axios from "axios";
-import { TWEET_LIST_RESET } from "../constants/tweetConstants";
+import axios from 'axios';
+import axiosPrivate from '../api/axiosPrivate';
+import getRefreshToken from '../api/getRefreshToken';
+import { TWEET_LIST_RESET } from '../constants/tweetConstants';
 import {
   FOLLOW_FAIL,
   FOLLOW_SUCCESS,
@@ -34,7 +36,26 @@ import {
   GET_NOTIFICATIONS_RESET,
   GET_UNREAD_NOTIF_RESET,
   GET_RECOMMENDED_USERS_RESET,
-} from "../constants/userConstants";
+  TOKEN_REFRESH_REQUEST,
+  TOKEN_REFRESH_FAIL,
+  TOKEN_REFRESH_SUCCESS,
+} from '../constants/userConstants';
+
+export const refreshToken = () => async (dispatch) => {
+  try {
+    dispatch({ type: TOKEN_REFRESH_REQUEST });
+    const data = await getRefreshToken();
+    dispatch({ type: TOKEN_REFRESH_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: TOKEN_REFRESH_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const login =
   (email, password, guest = false) =>
@@ -46,12 +67,12 @@ export const login =
 
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       };
 
       const { data } = await axios.post(
-        "/api/users/login",
+        '/api/users/login',
         { email, password, guest },
         config
       );
@@ -60,8 +81,6 @@ export const login =
         type: USER_LOGIN_SUCCESS,
         payload: data,
       });
-
-      localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: USER_LOGIN_FAIL,
@@ -73,13 +92,29 @@ export const login =
     }
   };
 
-export const logout = () => (dispatch) => {
-  localStorage.removeItem("userInfo");
-  dispatch({ type: USER_LOGOUT });
-  dispatch({ type: TWEET_LIST_RESET });
-  dispatch({ type: GET_NOTIFICATIONS_RESET });
-  dispatch({ type: GET_UNREAD_NOTIF_RESET });
-  dispatch({ type: GET_RECOMMENDED_USERS_RESET });
+export const logout = () => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    };
+
+    await axiosPrivate.post('/api/users/logout', {}, config);
+
+    dispatch({ type: USER_LOGOUT });
+    dispatch({ type: TWEET_LIST_RESET });
+    dispatch({ type: GET_NOTIFICATIONS_RESET });
+    dispatch({ type: GET_UNREAD_NOTIF_RESET });
+    dispatch({ type: GET_RECOMMENDED_USERS_RESET });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -90,12 +125,12 @@ export const register = (name, email, password) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
     const { data } = await axios.post(
-      "/api/users",
+      '/api/users',
       { name, email, password },
       config
     );
@@ -108,8 +143,6 @@ export const register = (name, email, password) => async (dispatch) => {
       type: USER_LOGIN_SUCCESS,
       payload: data,
     });
-
-    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
@@ -122,7 +155,7 @@ export const register = (name, email, password) => async (dispatch) => {
 };
 
 export const listUsers =
-  (keyword = "") =>
+  (keyword = '') =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: LIST_USERS_REQUEST });
@@ -133,11 +166,14 @@ export const listUsers =
 
       const config = {
         headers: {
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
       };
 
-      const { data } = await axios.get(`/api/users?keyword=${keyword}`, config);
+      const { data } = await axiosPrivate.get(
+        `/api/users?keyword=${keyword}`,
+        config
+      );
       dispatch({
         type: LIST_USERS_SUCCESS,
         payload: data,
@@ -165,11 +201,11 @@ export const getProfile = (username) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.get("/api/users/" + username, config);
+    const { data } = await axiosPrivate.get('/api/users/' + username, config);
 
     dispatch({
       type: GET_PROFILE_SUCCESS,
@@ -198,11 +234,11 @@ export const getNotifications = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.get("/api/users/notifications", config);
+    const { data } = await axiosPrivate.get('/api/users/notifications', config);
 
     dispatch({
       type: GET_NOTIFICATIONS_SUCCESS,
@@ -231,11 +267,14 @@ export const getUnreadNotifications = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.get("/api/users/unreadnotifications", config);
+    const { data } = await axiosPrivate.get(
+      '/api/users/unreadnotifications',
+      config
+    );
 
     dispatch({
       type: GET_UNREAD_NOTIF_SUCCESS,
@@ -266,13 +305,13 @@ export const editProfile =
 
       const config = {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
       };
 
-      const { data } = await axios.put(
-        "/api/users",
+      const { data } = await axiosPrivate.put(
+        '/api/users',
         { id, name, username, bio, image, cover, password },
         config
       );
@@ -282,7 +321,7 @@ export const editProfile =
         payload: data,
       });
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: EDIT_PROFILE_FAIL,
@@ -302,11 +341,11 @@ export const followAction = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    await axios.get(`/api/users/follow/${id}`, config);
+    await axiosPrivate.get(`/api/users/follow/${id}`, config);
     dispatch({
       type: FOLLOW_SUCCESS,
     });
@@ -333,11 +372,11 @@ export const recommendUsers = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.get(`/api/users/recommended`, config);
+    const { data } = await axiosPrivate.get(`/api/users/recommended`, config);
 
     dispatch({
       type: GET_RECOMMENDED_USERS_SUCCESS,
@@ -365,11 +404,11 @@ export const toggleVerify = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    await axios.get(`/api/users/verify/${id}`, config);
+    await axiosPrivate.get(`/api/users/verify/${id}`, config);
     dispatch({
       type: TOGGLE_VERIFY_SUCCESS,
     });

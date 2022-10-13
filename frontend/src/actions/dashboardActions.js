@@ -1,9 +1,9 @@
-import axios from "axios";
+import axiosPrivate from '../api/axiosPrivate';
 import {
   GET_DASHBOARD_FAIL,
   GET_DASHBOARD_REQUEST,
   GET_DASHBOARD_SUCCESS,
-} from "../constants/dashboardConstants";
+} from '../constants/dashboardConstants';
 
 export const getDashboard = (id) => async (dispatch, getState) => {
   try {
@@ -17,11 +17,11 @@ export const getDashboard = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.get("/api/dashboard", config);
+    const { data } = await axiosPrivate.get('/api/dashboard', config);
 
     dispatch({
       type: GET_DASHBOARD_SUCCESS,

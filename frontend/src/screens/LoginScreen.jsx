@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { login } from "../actions/userActions";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import FullLogo from "../components/FullLogo";
-import Head from "../components/Head";
-import { ReactComponent as Rocket } from "../assets/rocket.svg";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { login } from '../actions/userActions';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import FullLogo from '../components/FullLogo';
+import Head from '../components/Head';
+import { ReactComponent as Rocket } from '../assets/rocket.svg';
 
 const LoginScreen = ({ location, history }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo?.accessToken) {
       history.push(redirect);
     }
   }, [history, userInfo, redirect]);
@@ -56,6 +56,7 @@ const LoginScreen = ({ location, history }) => {
             <div className="form__group mt-3">
               <label className="form__label mb-1">Password</label>
               <input
+                autoComplete="on"
                 className="form__input"
                 type="password"
                 value={password}
@@ -68,7 +69,7 @@ const LoginScreen = ({ location, history }) => {
             </button>
 
             <p className="mt-2 form__question">
-              Don't have an account ?{" "}
+              Don't have an account ?{' '}
               <Link className="minor-link" to="/register">
                 Sign Up
               </Link>

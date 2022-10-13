@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { listTweets } from "../actions/tweetActions";
-import { ReactComponent as SearchIcon } from "../assets/search.svg";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Tweet from "../components/Tweet";
-import ProfileInfo from "../components/ProfileInfo";
-import Head from "../components/Head";
-import Layout from "../components/Layout";
-import { TWEET_LIST_RESET } from "../constants/tweetConstants";
-import { listUsers } from "../actions/userActions";
-import { LIST_USERS_RESET } from "../constants/userConstants";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { listTweets } from '../actions/tweetActions';
+import { ReactComponent as SearchIcon } from '../assets/search.svg';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import Tweet from '../components/Tweet';
+import ProfileInfo from '../components/ProfileInfo';
+import Head from '../components/Head';
+import Layout from '../components/Layout';
+import { TWEET_LIST_RESET } from '../constants/tweetConstants';
+import { listUsers } from '../actions/userActions';
+import { LIST_USERS_RESET } from '../constants/userConstants';
 
 const SearchScreen = ({ history }) => {
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [finalKeyword, setFinalKeyword] = useState("");
-  const [activeTab, setActiveTab] = useState("Posts");
+  const [finalKeyword, setFinalKeyword] = useState('');
+  const [activeTab, setActiveTab] = useState('Posts');
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -33,15 +33,15 @@ const SearchScreen = ({ history }) => {
     return () => {
       dispatch(listTweets());
       dispatch({ type: LIST_USERS_RESET });
-      setKeyword("");
+      setKeyword('');
       setSubmitted(false);
-      setFinalKeyword("");
+      setFinalKeyword('');
     };
-  }, [userInfo, dispatch]);
+  }, [dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (keyword !== "") {
+    if (keyword !== '') {
       setFinalKeyword(keyword);
       setSubmitted(true);
 
@@ -80,39 +80,39 @@ const SearchScreen = ({ history }) => {
             <>
               <div className="searchScreen__type border-b">
                 <div
-                  onClick={() => setActiveTab("Posts")}
+                  onClick={() => setActiveTab('Posts')}
                   className={`searchScreen__option ${
-                    activeTab === "Posts" && "searchScreen__option-active"
+                    activeTab === 'Posts' && 'searchScreen__option-active'
                   }`}
                 >
                   Posts
                 </div>
                 <div
-                  onClick={() => setActiveTab("Users")}
+                  onClick={() => setActiveTab('Users')}
                   className={`searchScreen__option ${
-                    activeTab === "Users" && "searchScreen__option-active"
+                    activeTab === 'Users' && 'searchScreen__option-active'
                   }`}
                 >
                   Users
                 </div>
               </div>
 
-              {((tweets.length > 0 && activeTab === "Posts") ||
-                (users.length > 0 && activeTab === "Users")) && (
+              {((tweets.length > 0 && activeTab === 'Posts') ||
+                (users.length > 0 && activeTab === 'Users')) && (
                 <p className="searchScreen__info">
                   Search Results for <span>{`" ${finalKeyword} "`}</span>
                 </p>
               )}
 
-              {((tweets.length === 0 && activeTab === "Posts") ||
-                (users.length === 0 && activeTab === "Users")) &&
+              {((tweets.length === 0 && activeTab === 'Posts') ||
+                (users.length === 0 && activeTab === 'Users')) &&
                 submitted && (
                   <p className="searchScreen__info">
                     No Results for <span>{`" ${finalKeyword} "`}</span>
                   </p>
                 )}
 
-              {activeTab === "Users" && users && users.length > 0 && (
+              {activeTab === 'Users' && users && users.length > 0 && (
                 <div className="searchScreen__userList shadow">
                   {users.map((user) => (
                     <div key={user._id}>
@@ -129,7 +129,7 @@ const SearchScreen = ({ history }) => {
                 </div>
               )}
 
-              {activeTab === "Posts" &&
+              {activeTab === 'Posts' &&
                 tweets.map((tweet) => (
                   <div key={tweet._id} className="mb-2">
                     <Tweet userInfo={userInfo} tweet={tweet} />

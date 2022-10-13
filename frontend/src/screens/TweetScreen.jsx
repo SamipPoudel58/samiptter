@@ -50,7 +50,6 @@ const TweetScreen = ({ match, history }) => {
   }, [
     dispatch,
     match.params.id,
-    userInfo,
     successTweetEdit,
     successComment,
     successDelete,

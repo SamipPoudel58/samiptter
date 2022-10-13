@@ -16,12 +16,8 @@ const DashboardScreen = ({ history }) => {
   let { userCount, tweetCount, latestUsers } = getDashboardData;
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push('/');
-    } else {
-      dispatch(getDashboard());
-    }
-  }, [dispatch, history, userInfo]);
+    dispatch(getDashboard());
+  }, [dispatch, history]);
 
   return (
     <div className="dashboardScreen">
