@@ -1,4 +1,4 @@
-<a href="https://samiptter.herokuapp.com/">
+<a href="https://samiptter.com/">
     <img src="./frontend/public/images/open_graph.png" alt="samiptter preview">
   </a>
 
@@ -11,7 +11,7 @@
   </p>
 
   <p align="center">
-    <a href="https://samiptter.herokuapp.com/">View Demo</a>
+    <a href="https://samiptter.com/">View Demo</a>
     ·
     <a href="https://github.com/SamipPoudel58/samiptter/issues">Report Bug</a>
     ·
