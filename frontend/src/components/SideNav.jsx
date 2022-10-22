@@ -32,8 +32,7 @@ const SideNav = () => {
 
   const logOutHandler = useCallback(() => {
     dispatch(logout());
-    history.push('/login');
-  }, [dispatch, history]);
+  }, [dispatch]);
 
   const toggleHandler = () => {
     dispatch(changeTheme(!darkMode));

@@ -59,7 +59,9 @@ function App() {
               <Route path="*" component={PageNotFound} />
             </Switch>
           ) : (
-            <Loader />
+            <div className="token-loading">
+              <Loader />
+            </div>
           )}
         </div>
       </main>

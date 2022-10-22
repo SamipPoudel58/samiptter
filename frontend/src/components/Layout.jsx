@@ -12,6 +12,7 @@ import { EDIT_TWEET_SETUP } from '../constants/tweetConstants';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import Loader from './Loader';
 
 const Layout = ({ children }) => {
   const preview = useSelector((state) => state.preview);
@@ -19,6 +20,9 @@ const Layout = ({ children }) => {
 
   const uiTheme = useSelector((state) => state.uiTheme);
   const { darkMode } = uiTheme;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { tokenLoading } = userLogin;
 
   const tweetEdit = useSelector((state) => state.tweetEdit);
   const {
@@ -77,7 +81,7 @@ const Layout = ({ children }) => {
       />
       <SideNav />
       <MobileNav />
-      {children}
+      {tokenLoading ? <Loader /> : children}
       <section className="rightNav__wrapper">
         <div className="rightNav">
           <FollowRecommendation />
