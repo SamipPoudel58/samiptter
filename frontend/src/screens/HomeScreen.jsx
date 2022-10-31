@@ -14,7 +14,7 @@ import Tweet from '../components/Tweet';
 import Head from '../components/Head';
 import toast from 'react-hot-toast';
 
-const HomeScreen = ({ history }) => {
+const HomeScreen = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -48,7 +48,6 @@ const HomeScreen = ({ history }) => {
     });
 
     return () => {
-      // dispatch({ type: TWEET_LIST_RESET });
       dispatch({ type: DELETE_TWEET_RESET });
       dispatch({ type: CREATE_TWEET_RESET });
     };
@@ -60,7 +59,7 @@ const HomeScreen = ({ history }) => {
       <Layout>
         <section className="newsFeed">
           <TweetComposer buttonText="Post" />
-          {tweets?.length === 0 && <Loader />}
+          {tweets?.length === 0 && <p>No Tweets Found</p>}
           {loading ? (
             <Loader />
           ) : error ? (

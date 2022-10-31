@@ -11,6 +11,7 @@ import Layout from '../components/Layout';
 import { TWEET_LIST_RESET } from '../constants/tweetConstants';
 import { listUsers } from '../actions/userActions';
 import { LIST_USERS_RESET } from '../constants/userConstants';
+import SearchBar from '../components/SearchBar';
 
 const SearchScreen = ({ history }) => {
   const [keyword, setKeyword] = useState('');
@@ -55,23 +56,7 @@ const SearchScreen = ({ history }) => {
       <Head title="Search" />
       <Layout>
         <section className="newsFeed">
-          <div className="searchScreen__searchbar">
-            <form
-              onSubmit={submitHandler}
-              className="searchScreen__form shadow"
-            >
-              <input
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-                placeholder="Search here..."
-                type="text"
-                className="searchScreen__input"
-              />
-              <button className="searchScreen__button shadow" type="submit">
-                <SearchIcon className="searchScreen__icon" />
-              </button>
-            </form>
-          </div>
+          <SearchBar submitHandler={submitHandler} />
           {loading ? (
             <Loader />
           ) : error ? (

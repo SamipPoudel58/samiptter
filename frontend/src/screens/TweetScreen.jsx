@@ -9,13 +9,13 @@ import {
   EDIT_TWEET_RESET,
   TWEET_DETAILS_RESET,
 } from '../constants/tweetConstants';
-import Comment from '../components/Comment';
+import CommentSection from '../components/CommentSection';
 import Layout from '../components/Layout';
 import TopBar from '../components/TopBar';
 import Head from '../components/Head';
 import toast from 'react-hot-toast';
 
-const TweetScreen = ({ match, history }) => {
+const TweetScreen = ({ match }) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -83,26 +83,11 @@ const TweetScreen = ({ match, history }) => {
                 <TweetComposer tweet={tweet} buttonText="Comment" />
               </div>
 
-              <div className="commentSection shadow tweetsMargin">
-                <div className="commentSection__header">
-                  <div className="commentSection__icon">
-                    <i className="far fa-comment-alt"></i>
-                  </div>
-                  <h3 className="heading-sm">
-                    {tweet.comments.length === 0 ? 'No Comments' : 'Comments'}
-                  </h3>
-                </div>
-                <div className="commentSection__comments">
-                  {tweet.comments.map((comment) => (
-                    <Comment
-                      mainTweetId={tweet._id}
-                      tweet={comment}
-                      userInfo={userInfo}
-                      key={comment._id}
-                    />
-                  ))}
-                </div>
-              </div>
+              <CommentSection
+                comments={tweet.comments}
+                mainTweetId={tweet._id}
+                userInfo={userInfo}
+              />
             </>
           )}
         </section>
