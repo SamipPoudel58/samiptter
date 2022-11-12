@@ -40,7 +40,7 @@ const HomeScreen = () => {
       toast.success('Post Created Successfully.');
     }
 
-    const socket = openSocket('/');
+    const socket = openSocket('http://localhost:4000');
     socket.on('tweets', (data) => {
       if (data.action === 'create') {
         dispatch(listTweets());
