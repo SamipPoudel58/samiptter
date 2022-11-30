@@ -20,7 +20,7 @@ const HomeScreen = () => {
   const { userInfo } = userLogin;
 
   const tweetList = useSelector((state) => state.tweetList);
-  let { loading, error, tweets } = tweetList;
+  let { loading, error, success, tweets } = tweetList;
 
   const tweetCreate = useSelector((state) => state.tweetCreate);
   let { success: successTweetCreate } = tweetCreate;
@@ -59,7 +59,9 @@ const HomeScreen = () => {
       <Layout>
         <section className="newsFeed">
           <TweetComposer buttonText="Post" />
-          {tweets?.length === 0 && <p>No Tweets Found</p>}
+          {tweets?.length === 0 && success && (
+            <p className="tweets-empty">No Tweets Found</p>
+          )}
           {loading ? (
             <Loader />
           ) : error ? (

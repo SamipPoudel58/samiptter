@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import ProfileInfo from "./ProfileInfo";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useHistory } from "react-router-dom";
-import { logout } from "../actions/userActions";
-import { changeTheme } from "../actions/uiActions";
+import React, { useState } from 'react';
+import ProfileInfo from './ProfileInfo';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, NavLink, useHistory } from 'react-router-dom';
+import { logout } from '../actions/userActions';
+import { changeTheme } from '../actions/uiActions';
 
 const MobileNav = () => {
   const [navVisible, setNavVisible] = useState(false);
@@ -21,7 +21,7 @@ const MobileNav = () => {
 
   const logOutHandler = () => {
     dispatch(logout());
-    history.push("/login");
+    history.push('/login');
   };
 
   const toggleHandler = () => {
@@ -38,7 +38,7 @@ const MobileNav = () => {
             alt="logo"
           />
           <Link to="/" className="logo-text">
-            Samiptter
+            Samiptter™
           </Link>
         </div>
       </section>
@@ -50,7 +50,7 @@ const MobileNav = () => {
             className="mobileNav__backdrop"
           ></div>
         )}
-        <nav className={`mobileNav__nav ${navVisible && "visible"}`}>
+        <nav className={`mobileNav__nav ${navVisible && 'visible'}`}>
           <div className="homeScreen__logoHolder homeScreen__logoHolder-left">
             <img
               className="homeScreen__samiptterLogo"
@@ -58,7 +58,7 @@ const MobileNav = () => {
               alt="logo"
             />
             <Link to="/" className="logo-text">
-              Samiptter
+              Samiptter™
             </Link>
           </div>
           <ul className="mobileNav__links mt-2">
@@ -114,9 +114,9 @@ const MobileNav = () => {
               Theme
               <i
                 className={`fas ${
-                  !darkMode ? "fa-moon" : "fa-sun"
+                  !darkMode ? 'fa-moon' : 'fa-sun'
                 } ml-1 mobileNav__themeIcon`}
-              ></i>{" "}
+              ></i>{' '}
             </div>
 
             <li onClick={logOutHandler} className="sideNav__navlink">
@@ -125,7 +125,7 @@ const MobileNav = () => {
           </ul>
           <div className="p-2">
             {userInfo && (
-              <Link to="/profile">
+              <Link to={`/profile/${userInfo.username}`}>
                 <ProfileInfo
                   name={userInfo.name}
                   image={userInfo.image}

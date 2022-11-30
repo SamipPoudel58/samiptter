@@ -10,7 +10,6 @@
   }
 
   &__input {
-    outline: none; // TODO:change this later
     padding: 1.5rem;
     font-size: 1.6rem;
     border: none;
@@ -18,6 +17,17 @@
     background-color: var(--c-formInput);
     border-radius: 5px;
     font-family: inherit;
+
+    &:focus {
+      outline: 2px solid var(--c-primary);
+    }
+
+    &:autofill {
+      box-shadow: 0 0 0 1000px var(--c-formInput) inset;
+    }
+    &:-webkit-autofill {
+      box-shadow: 0 0 0 1000px var(--c-formInput) inset;
+    }
 
     &-alt {
       background-color: var(--c-formInput-alt);

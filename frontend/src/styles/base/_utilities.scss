@@ -43,11 +43,22 @@
   padding-top: 2rem;
 }
 
+.block {
+  display: block;
+}
+
 .token-loading {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.tweets-empty {
+  text-align: center;
+  padding: 2rem 0;
+  color: var(--c-primary);
+  font-size: 1.6rem;
 }
 
 // centers the middle section between the two navbars
