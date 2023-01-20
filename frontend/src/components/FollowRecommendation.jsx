@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
-import { recommendUsers } from "../actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { Link } from "react-router-dom";
-import ProfileInfo from "./ProfileInfo";
+import React, { useEffect } from 'react';
+import { recommendUsers } from '../actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { Link } from 'react-router-dom';
+import ProfileInfo from './ProfileInfo';
+import UserSkeleton from './skeletons/UserSkeleton';
 
 const FollowRecommendation = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const FollowRecommendation = () => {
       </div>
       <div className="followRecommendation__userList">
         {loadingRecommended ? (
-          <Loader />
+          [...Array(3).keys()].map((num) => <UserSkeleton key={num} />)
         ) : errorRecommended ? (
           <Message variant="danger">{errorRecommended}</Message>
         ) : (

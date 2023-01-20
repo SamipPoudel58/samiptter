@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Layout from '../components/Layout';
 import { getTimeFromNow } from '../utils/getTimeFromNow';
+import NotificationSkeleton from '../components/skeletons/NotificationSkeleton';
 
 const NotificationScreen = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,9 @@ const NotificationScreen = () => {
 
           <div className="notificationScreen__notifications">
             {loading ? (
-              <Loader />
+              [...Array(5).keys()].map((num) => (
+                <NotificationSkeleton key={num} />
+              ))
             ) : error ? (
               <Message variant="danger">{error}</Message>
             ) : (

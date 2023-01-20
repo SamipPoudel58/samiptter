@@ -25,7 +25,7 @@ import {
 import axiosPrivate from '../api/axiosPrivate';
 
 export const listTweets =
-  (keyword = '') =>
+  (keyword = '', pageNumber = '') =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: TWEET_LIST_REQUEST });
@@ -41,7 +41,7 @@ export const listTweets =
       };
 
       const { data } = await axiosPrivate.get(
-        `/api/tweets?keyword=${keyword}`,
+        `/api/tweets?keyword=${keyword}&pageNumber=${pageNumber}`,
         config
       );
       dispatch({

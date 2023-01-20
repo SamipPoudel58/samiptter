@@ -1,0 +1,139 @@
+.skeleton {
+  background: var(--c-skeleton);
+  overflow: hidden;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+.skeleton.text {
+  width: 100%;
+  max-width: 500px;
+  height: 12px;
+}
+.skeleton.title {
+  width: 50%;
+  height: 20px;
+  margin-bottom: 15px;
+}
+.skeleton.subtext {
+  width: 30%;
+  height: 12px;
+}
+.skeleton.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.skeleton.coverImg {
+  width: 100%;
+  height: 200px;
+  border-radius: 0;
+  margin: 0;
+}
+
+.skeleton-profileDetails {
+  width: 100%;
+  // height: 180px;
+  padding: 2rem;
+  background-color: var(--c-tile);
+  border-radius: 2rem;
+  margin-top: -3rem;
+}
+
+.skeleton-profilePic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.skeleton-profileImg {
+  height: 13rem;
+  width: 13rem;
+  border-radius: 50%;
+  border: 5px solid var(--c-tile);
+  margin-top: -7rem;
+  background-color: var(--c-skeleton);
+}
+
+.skeleton-profileInfo {
+  max-width: 200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skeleton-profileTweets {
+  padding: 2rem;
+  border-radius: 2rem;
+  background-color: var(--c-tile);
+}
+
+.skeleton-wrapper {
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.notification-skeleton,
+.user-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 0 1.5rem;
+  padding: 1rem;
+
+  &__content {
+    flex: 1;
+  }
+}
+
+.user-skeleton {
+  padding: 0;
+
+  .skeleton.avatar {
+    margin: 0;
+  }
+}
+
+.tweet-skeleton {
+  display: flex;
+  gap: 0 1.5rem;
+  padding: 2rem;
+  background-color: var(--c-tile);
+  margin-top: 2rem;
+  border-radius: 2rem;
+  box-shadow: var(--shadow);
+
+  &__content {
+    flex: 1;
+  }
+}
+
+.shimmer-wrapper {
+  position: absolute;
+  /* parent must be relative position & overflow hidden */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: loading 1.5s infinite ease;
+}
+.shimmer {
+  width: 50%;
+  height: 100%;
+  background: var(--c-shimmer);
+  transform: skewX(-20deg);
+  box-shadow: 0 0 30px 30px var(--c-shimmer);
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(-60%);
+  }
+  100% {
+    transform: translateX(150%);
+  }
+}

@@ -24,6 +24,16 @@
     }
   }
 
+  &__tweetsEnd {
+    padding: 3rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.6rem;
+    color: var(--c-black);
+  }
+
   &__topNav {
     display: none;
     padding: 2rem;
@@ -131,7 +141,7 @@
 .newsFeed {
   margin: 0 38rem 0 25rem;
   background-color: var(--c-background);
-  padding: 3rem 2rem;
+  padding: 3rem 2rem 5rem;
   min-height: 100vh;
   // overflow: scroll;
 

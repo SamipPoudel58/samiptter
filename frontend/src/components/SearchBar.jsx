@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { ReactComponent as SearchIcon } from '../assets/search.svg';
 
-const SearchBar = ({ submitHandler }) => {
-  const [keyword, setKeyword] = useState('');
+const SearchBar = ({ submitHandler, keyword, setKeyword }) => {
   return (
     <div className="searchScreen__searchbar">
       <form onSubmit={submitHandler} className="searchScreen__form shadow">

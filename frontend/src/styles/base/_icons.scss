@@ -1,0 +1,16 @@
+.verified-badge {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: var(--c-verified);
+
+  &-lg {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}
+
+.circle-tick-icon {
+  width: 4rem;
+  height: 4rem;
+  stroke: var(--c-primary);
+}

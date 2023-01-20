@@ -13,11 +13,12 @@ import { listUsers } from '../actions/userActions';
 import { LIST_USERS_RESET } from '../constants/userConstants';
 import SearchBar from '../components/SearchBar';
 
-const SearchScreen = ({ history }) => {
+const SearchScreen = () => {
   const [keyword, setKeyword] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [finalKeyword, setFinalKeyword] = useState('');
   const [activeTab, setActiveTab] = useState('Posts');
+
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -30,25 +31,21 @@ const SearchScreen = ({ history }) => {
   let { users } = userList;
 
   useEffect(() => {
-    dispatch({ type: TWEET_LIST_RESET });
     return () => {
+      dispatch({ type: TWEET_LIST_RESET });
       dispatch(listTweets());
       dispatch({ type: LIST_USERS_RESET });
-      setKeyword('');
-      setSubmitted(false);
-      setFinalKeyword('');
     };
   }, [dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword !== '') {
+      dispatch({ type: TWEET_LIST_RESET });
+      dispatch(listTweets(keyword));
+      dispatch(listUsers(keyword));
       setFinalKeyword(keyword);
       setSubmitted(true);
-
-      dispatch(listTweets(keyword));
-
-      dispatch(listUsers(keyword));
     }
   };
   return (
@@ -56,7 +53,11 @@ const SearchScreen = ({ history }) => {
       <Head title="Search" />
       <Layout>
         <section className="newsFeed">
-          <SearchBar submitHandler={submitHandler} />
+          <SearchBar
+            keyword={keyword}
+            setKeyword={setKeyword}
+            submitHandler={submitHandler}
+          />
           {loading ? (
             <Loader />
           ) : error ? (
@@ -83,38 +84,47 @@ const SearchScreen = ({ history }) => {
               </div>
 
               {((tweets.length > 0 && activeTab === 'Posts') ||
-                (users.length > 0 && activeTab === 'Users')) && (
-                <p className="searchScreen__info">
-                  Search Results for <span>{`" ${finalKeyword} "`}</span>
-                </p>
-              )}
+                (users.length > 0 && activeTab === 'Users')) &&
+                keyword &&
+                submitted && (
+                  <p className="searchScreen__info">
+                    Search Results for <span>{`" ${finalKeyword} "`}</span>
+                  </p>
+                )}
 
               {((tweets.length === 0 && activeTab === 'Posts') ||
                 (users.length === 0 && activeTab === 'Users')) &&
-                submitted && (
+                submitted &&
+                keyword && (
                   <p className="searchScreen__info">
                     No Results for <span>{`" ${finalKeyword} "`}</span>
                   </p>
                 )}
 
-              {activeTab === 'Users' && users && users.length > 0 && (
-                <div className="searchScreen__userList shadow">
-                  {users.map((user) => (
-                    <div key={user._id}>
-                      <ProfileInfo
-                        image={user.image}
-                        id={user._id}
-                        name={user.name}
-                        username={user.username}
-                        isVerified={user.isVerified}
-                        bio={user.bio}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
+              {activeTab === 'Users' &&
+                keyword &&
+                submitted &&
+                users &&
+                users.length > 0 && (
+                  <div className="searchScreen__userList shadow">
+                    {users.map((user) => (
+                      <div key={user._id}>
+                        <ProfileInfo
+                          image={user.image}
+                          id={user._id}
+                          name={user.name}
+                          username={user.username}
+                          isVerified={user.isVerified}
+                          bio={user.bio}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
 
               {activeTab === 'Posts' &&
+                keyword &&
+                submitted &&
                 tweets.map((tweet) => (
                   <div key={tweet._id} className="mb-2">
                     <Tweet userInfo={userInfo} tweet={tweet} />

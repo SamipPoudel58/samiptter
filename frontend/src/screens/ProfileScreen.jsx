@@ -25,6 +25,7 @@ import { ReactComponent as Verified } from '../assets/verified.svg';
 import ProfilePicHolder from '../components/ProfilePicHolder';
 import { previewImage } from '../actions/uiActions';
 import Indicator from '../components/Indicator';
+import ProfileSkeleton from '../components/skeletons/ProfileSkeleton';
 
 const ProfileScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -81,12 +82,13 @@ const ProfileScreen = ({ match }) => {
       <Layout>
         <section className="newsFeed">
           {loading ? (
-            <Loader />
+            <ProfileSkeleton />
           ) : error ? (
             <Message variant="danger">{'Profile Not Found :('}</Message>
           ) : (
             <>
               <TopBar title={user.name} />
+
               {/* {userInfo.isGuest && <Notice />} */}
               <div className="profileMain mt-2">
                 <div className="profileMain__cover">
@@ -120,14 +122,15 @@ const ProfileScreen = ({ match }) => {
                     </button>
                   )}
 
-                  {match.params.id === userInfo.username && !userInfo.isGuest && (
-                    <Link
-                      to="/profile-edit"
-                      className="profileMain__followBtn primary-btn-alt"
-                    >
-                      Edit
-                    </Link>
-                  )}
+                  {match.params.id === userInfo.username &&
+                    !userInfo.isGuest && (
+                      <Link
+                        to="/profile-edit"
+                        className="profileMain__followBtn primary-btn-alt"
+                      >
+                        Edit
+                      </Link>
+                    )}
                   <h3 className="profileMain__name heading-md text-centered mt-1">
                     {user.name}{' '}
                     {user.isVerified && (
@@ -176,7 +179,7 @@ const ProfileScreen = ({ match }) => {
                 </div>
               )}
 
-              <div className="profileTweets mt-2 shadow ">
+              <div className="profileTweets mt-2 shadow">
                 <div className="profileTweets__header">
                   <div className="profileTweets__icon">
                     <i className="fas fa-newspaper"></i>

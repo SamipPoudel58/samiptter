@@ -31,11 +31,12 @@ import {
 export const tweetListReducer = (state = { tweets: [] }, action) => {
   switch (action.type) {
     case TWEET_LIST_REQUEST:
-      return { ...state, loading: false };
+      return { ...state, loading: true };
     case TWEET_LIST_SUCCESS:
       return {
         loading: false,
-        tweets: action.payload,
+        tweets: [...new Set([...state.tweets, ...action.payload.tweets])],
+        pages: action.payload.pages,
       };
     case TWEET_LIST_FAIL:
       return { loading: false, error: action.payload };

@@ -9,6 +9,8 @@ const User = require('../models/userModel');
 // @route GET /api/tweets
 // @access Private
 const getAllTweets = asyncHandler(async (req, res) => {
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
         tweetContent: {
@@ -17,7 +19,11 @@ const getAllTweets = asyncHandler(async (req, res) => {
         },
       }
     : {};
+
+  const count = await Tweet.countDocuments({ ...keyword });
   let tweets = await Tweet.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
     .populate('user', 'id name username image isAdmin isVerified')
     .sort({ createdAt: -1 });
 
@@ -35,7 +41,8 @@ const getAllTweets = asyncHandler(async (req, res) => {
       }
     });
   });
-  res.json(tweets);
+
+  res.json({ tweets, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc Fetch single tweet

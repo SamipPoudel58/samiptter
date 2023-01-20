@@ -358,8 +358,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
       }
     });
   });
-
-  res.json({ user: userData, tweets });
+  setTimeout(() => {
+    res.json({ user: userData, tweets });
+  }, 10000);
 });
 
 // @desc Follow a user
@@ -450,7 +451,6 @@ const getRecommendedUser = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('No recommended users found');
   }
-
   res.json(users);
 });
 
