@@ -9,7 +9,6 @@ import {
 } from '../constants/tweetConstants';
 import Layout from '../components/Layout';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
 import TweetComposer from '../components/TweetComposer';
 import Tweet from '../components/Tweet';
 import Head from '../components/Head';
@@ -67,8 +66,8 @@ const HomeScreen = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && pageNumber < pages) {
+          dispatch(listTweets('', pageNumber + 1));
           setPageNumber((prev) => prev + 1);
-          dispatch(listTweets('', pageNumber));
         }
       });
       if (node) observer.current.observe(node);
