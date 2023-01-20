@@ -358,9 +358,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       }
     });
   });
-  setTimeout(() => {
-    res.json({ user: userData, tweets });
-  }, 10000);
+  res.json({ user: userData, tweets });
 });
 
 // @desc Follow a user
