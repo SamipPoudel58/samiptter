@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend:/app
+
+  api:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    ports:
+      - 3001:3001
+    volumes:
+      - ./backend:/app/backend
+    command: ./docker-entrypoint.sh
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - samiptter:/data/db
+volumes:
+  samiptter:
