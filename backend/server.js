@@ -45,11 +45,11 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFound);
 app.use(errorHandler);
 
-const server = app.listen(process.env.PORT, async () => {
+const PORT = process.env.PORT || 3001;
+
+const server = app.listen(PORT, async () => {
   await connectDB();
-  console.log(
-    `Server running in ${process.env.NODE_ENV} on port ${process.env.PORT}`
-  );
+  console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`);
 });
 
 const io = require('./socket').init(server);

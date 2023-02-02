@@ -7,10 +7,7 @@ USER newusr
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY backend ./backend 
-COPY .env .
-COPY docker-entrypoint.sh .
-COPY wait-for .
+COPY . .
 
 EXPOSE 3001 
 
