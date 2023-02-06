@@ -6,7 +6,6 @@ const commentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-
     likes: [],
     numLikes: {
       type: Number,
