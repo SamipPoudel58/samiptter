@@ -14,7 +14,7 @@ import AdminRoute from './components/AdminRoute';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotificationScreen from './screens/NotificationScreen';
 import { getUnreadNotifications, refreshToken } from './actions/userActions';
-import Loader from './components/Loader';
+import { ReactComponent as Logo } from './assets/logo.svg';
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -60,7 +60,7 @@ function App() {
             </Switch>
           ) : (
             <div className="token-loading">
-              <Loader />
+              <Logo className="token-loading-logo" />
             </div>
           )}
         </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import Shimmer from './Shimmer';
 import Skeleton from './Skeleton';
 
 const UserSkeleton = () => {
@@ -10,7 +9,6 @@ const UserSkeleton = () => {
         <Skeleton type="title" />
         <Skeleton type="subtext" />
       </div>
-      <Shimmer />
     </div>
   );
 };

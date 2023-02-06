@@ -28,8 +28,8 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: email });
 
   if (user && (await user.matchPassword(password))) {
-    const { followers } = await Follower.findOne({ user: user._id });
-    const { following } = await Following.findOne({ user: user._id });
+    const followersData = await Follower.findOne({ user: user._id });
+    const followingData = await Following.findOne({ user: user._id });
 
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
@@ -46,8 +46,8 @@ const loginUser = asyncHandler(async (req, res) => {
       username: user.username,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
-      followers: followers,
-      following: following,
+      followers: followersData?.followers || [],
+      following: followingData?.following || [],
       bio: user.bio,
       image: user.image,
       cover: user.cover,
@@ -145,6 +145,7 @@ const logOutUser = asyncHandler(async (req, res) => {
 // @route POST /api/users/refresh_token
 // @access Public
 const refreshToken = asyncHandler(async (req, res) => {
+  setTimeout(() => {}, 5000);
   const token = req.cookies.refreshToken;
   if (!token) return res.status(404).send({ accessToken: '' });
   let decoded;
@@ -164,8 +165,8 @@ const refreshToken = asyncHandler(async (req, res) => {
   user.refreshToken = refreshToken;
   await user.save();
 
-  const { followers } = await Follower.findOne({ user: user._id });
-  const { following } = await Following.findOne({ user: user._id });
+  const followersData = await Follower.findOne({ user: user._id });
+  const followingData = await Following.findOne({ user: user._id });
 
   sendRefreshToken(res, refreshToken);
   return res.json({
@@ -175,8 +176,8 @@ const refreshToken = asyncHandler(async (req, res) => {
     username: user.username,
     isAdmin: user.isAdmin,
     isVerified: user.isVerified,
-    followers: followers,
-    following: following,
+    followers: followersData?.followers || [],
+    following: followingData?.following || [],
     bio: user.bio,
     image: user.image,
     cover: user.cover,
@@ -321,16 +322,16 @@ const getUserProfile = asyncHandler(async (req, res) => {
     isFollowed = true;
   }
 
-  const { followers } = await Follower.findOne({ user: user._id });
-  const { following } = await Following.findOne({ user: user._id });
+  const followersData = await Follower.findOne({ user: user._id });
+  const followingData = await Following.findOne({ user: user._id });
 
   const userData = {
     _id: user._id,
     name: user.name,
     email: user.email,
     username: user.username,
-    followers: followers,
-    following: following,
+    followers: followersData?.followers || [],
+    following: followingData?.following || [],
     isAdmin: user.isAdmin,
     isVerified: user.isVerified,
     image: user.image,
@@ -358,6 +359,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       }
     });
   });
+
   res.json({ user: userData, tweets });
 });
 
@@ -435,9 +437,11 @@ const followUser = asyncHandler(async (req, res) => {
 const getRecommendedUser = asyncHandler(async (req, res) => {
   const userSize = 3;
   let currentUser = await User.findById(req.user._id);
-  let { following: followedUsers } = await Following.findOne({
+  let followingData = await Following.findOne({
     user: currentUser._id,
   });
+
+  let followedUsers = followingData?.following || [];
   let friendArray = followedUsers.map((f) => f.user);
   // TODO: Limit unnecessary data sent
   let users = await User.find({

@@ -1,5 +1,4 @@
 import React from 'react';
-import Shimmer from './Shimmer';
 import Skeleton from './Skeleton';
 
 const TweetSkeleton = () => {
@@ -10,7 +9,6 @@ const TweetSkeleton = () => {
         <Skeleton type="title" />
         <Skeleton type="text" />
       </div>
-      <Shimmer />
     </div>
   );
 };

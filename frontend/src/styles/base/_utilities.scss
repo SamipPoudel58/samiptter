@@ -52,6 +52,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &-logo {
+    height: 9rem;
+    width: 9rem;
+  }
 }
 
 .tweets-empty {

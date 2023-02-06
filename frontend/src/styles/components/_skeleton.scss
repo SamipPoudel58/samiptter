@@ -3,6 +3,7 @@
   overflow: hidden;
   margin: 10px 0;
   border-radius: 4px;
+  animation: blink 1.5s infinite cubic-bezier(0.44, 0.21, 0, 1);
 }
 .skeleton.text {
   width: 100%;
@@ -29,6 +30,7 @@
   height: 200px;
   border-radius: 0;
   margin: 0;
+  animation: none;
 }
 
 .skeleton-profileDetails {
@@ -70,8 +72,6 @@
 }
 
 .skeleton-wrapper {
-  position: relative;
-  overflow: hidden;
   box-shadow: var(--shadow);
 }
 

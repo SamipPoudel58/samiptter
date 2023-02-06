@@ -7,6 +7,8 @@ services:
       dockerfile: frontend.Dockerfile
     ports:
       - 3000:3000
+    depends_on:
+      - api
     volumes:
       - ./frontend:/app
 
@@ -18,6 +20,8 @@ services:
       - 3001:3001
     volumes:
       - ./backend:/app/backend
+    depends_on:
+      - db
     command: ./docker-entrypoint.sh
 
   # the database url should have this name

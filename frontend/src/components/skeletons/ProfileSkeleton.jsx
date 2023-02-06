@@ -1,5 +1,4 @@
 import React from 'react';
-import Shimmer from './Shimmer';
 import Skeleton from './Skeleton';
 import TweetSkeleton from './TweetSkeleton';
 
@@ -24,7 +23,6 @@ const ProfileSkeleton = () => {
           <TweetSkeleton key={num} />
         ))}
       </div>
-      <Shimmer />
     </div>
   );
 };
