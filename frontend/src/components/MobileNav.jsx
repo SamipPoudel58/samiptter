@@ -35,7 +35,7 @@ const MobileNav = () => {
           <img
             className="homeScreen__samiptterLogo"
             src="/images/logo.png"
-            alt="logo"
+            alt="Samiptter"
           />
           <Link to="/" className="logo-text">
             Samiptter™
@@ -55,7 +55,7 @@ const MobileNav = () => {
             <img
               className="homeScreen__samiptterLogo"
               src="/images/logo.png"
-              alt="logo"
+              alt="Samiptter"
             />
             <Link to="/" className="logo-text">
               Samiptter™

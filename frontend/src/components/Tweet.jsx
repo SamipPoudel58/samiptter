@@ -143,6 +143,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
                     key={image.public_id}
                     src={image.secure_url}
                     alt="user upload"
+                    loading="lazy"
                   />
                 ))}
               </div>
@@ -179,6 +180,7 @@ const Tweet = ({ tweet, userInfo, major, rounded = true, shadow = true }) => {
                     }
                     src={image.secure_url}
                     alt="user-upload"
+                    loading="lazy"
                   />
                 ))}
               </div>
