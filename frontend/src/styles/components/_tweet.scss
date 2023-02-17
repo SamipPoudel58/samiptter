@@ -68,6 +68,7 @@
       color: var(--c-primary);
       text-decoration: none;
       font-weight: 500;
+      word-break: break-all;
       &:hover {
         text-decoration: underline;
       }
