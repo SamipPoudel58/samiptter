@@ -35,7 +35,7 @@ const ProfileEditScreen = ({ history }) => {
   const { loading, userInfo: newUserInfo, success, error } = editProfileData;
 
   useEffect(() => {
-    if (userInfo.isGuest) {
+    if (userInfo.email === 'jane@example.com') {
       history.push('/');
     }
     setName(user.name || userInfo.name);
