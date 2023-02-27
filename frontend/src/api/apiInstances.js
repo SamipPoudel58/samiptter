@@ -3,8 +3,14 @@ import getRefreshToken from './getRefreshToken';
 import store from '../store';
 import { TOKEN_REFRESH_SUCCESS } from '../constants/userConstants';
 
-const axiosPrivate = axios.create();
+const devInstance = axios.create({
+  baseURL: 'http://localhost:3001',
+});
 
+export const apiInstance =
+  process.env.NODE_ENV === 'development' ? devInstance : axios.create();
+
+const axiosPrivate = apiInstance;
 axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -20,4 +26,4 @@ axiosPrivate.interceptors.response.use(
   }
 );
 
-export default axiosPrivate;
+export { axiosPrivate };

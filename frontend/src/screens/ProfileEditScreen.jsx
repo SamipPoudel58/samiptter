@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -12,6 +11,7 @@ import {
   USER_LOGIN_SUCCESS,
 } from '../constants/userConstants';
 import toast from 'react-hot-toast';
+import { apiInstance } from '../api/apiInstances';
 
 const ProfileEditScreen = ({ history }) => {
   const [name, setName] = useState('');
@@ -63,7 +63,11 @@ const ProfileEditScreen = ({ history }) => {
         },
       };
 
-      const { data } = await axios.post(`/api/upload`, { data: [img] }, config);
+      const { data } = await apiInstance.post(
+        `/api/upload`,
+        { data: [img] },
+        config
+      );
       if (imageType === 'profile') {
         setImage(data[0].secure_url);
       } else {

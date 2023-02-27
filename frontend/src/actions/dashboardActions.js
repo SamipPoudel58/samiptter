@@ -1,4 +1,4 @@
-import axiosPrivate from '../api/axiosPrivate';
+import { axiosPrivate } from '../api/apiInstances';
 import {
   GET_DASHBOARD_FAIL,
   GET_DASHBOARD_REQUEST,

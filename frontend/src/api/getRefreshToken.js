@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { TOKEN_REFRESH_FAIL } from '../constants/userConstants';
 import store from '../store';
+import { apiInstance } from './apiInstances';
 
 const getRefreshToken = async () => {
   try {
@@ -11,7 +11,7 @@ const getRefreshToken = async () => {
       },
     };
 
-    const { data } = await axios.post(
+    const { data } = await apiInstance.post(
       '/api/users/refresh_token',
       { refreshToken: true },
       config

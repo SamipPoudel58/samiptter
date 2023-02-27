@@ -1,5 +1,4 @@
-import axios from 'axios';
-import axiosPrivate from '../api/axiosPrivate';
+import { apiInstance, axiosPrivate } from '../api/apiInstances';
 import getRefreshToken from '../api/getRefreshToken';
 import { TWEET_LIST_RESET } from '../constants/tweetConstants';
 import {
@@ -71,7 +70,7 @@ export const login =
         },
       };
 
-      const { data } = await axios.post(
+      const { data } = await apiInstance.post(
         '/api/users/login',
         { email, password, guest },
         config
@@ -129,7 +128,7 @@ export const register = (name, email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
+    const { data } = await apiInstance.post(
       '/api/users',
       { name, email, password },
       config

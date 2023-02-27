@@ -1,3 +1,4 @@
+import { axiosPrivate } from '../api/apiInstances';
 import {
   CREATE_COMMENT_FAIL,
   CREATE_COMMENT_REQUEST,
@@ -22,7 +23,6 @@ import {
   TWEET_LIST_REQUEST,
   TWEET_LIST_SUCCESS,
 } from '../constants/tweetConstants';
-import axiosPrivate from '../api/axiosPrivate';
 
 export const listTweets =
   (keyword = '', pageNumber = '') =>

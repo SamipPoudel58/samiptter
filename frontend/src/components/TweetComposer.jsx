@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createComment, createTweet, editTweet } from '../actions/tweetActions';
+import { apiInstance } from '../api/apiInstances';
 import Loader from './Loader';
 import Message from './Message';
 import ProfilePicHolder from './ProfilePicHolder';
@@ -39,7 +39,7 @@ const TweetComposer = ({ buttonText, tweet }) => {
       const cloudinaryImages = imgs.filter((img) => img.secure_url);
       const imagesToUpload = imgs.filter((img) => !img.secure_url);
 
-      const { data } = await axios.post(
+      const { data } = await apiInstance.post(
         `/api/upload`,
         { data: imagesToUpload },
         config
