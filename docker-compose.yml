@@ -11,6 +11,7 @@ services:
       - api
     volumes:
       - ./frontend:/app
+      - /app/node_modules
 
   api:
     build:
@@ -19,7 +20,8 @@ services:
     ports:
       - 3001:3001
     volumes:
-      - ./backend:/app/backend
+      - .:/app
+      - /app/node_modules
     depends_on:
       - db
     command: ./docker-entrypoint.sh
@@ -30,6 +32,6 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - samiptter:/data/db
+      - ./samiptterdb:/data/db
 volumes:
   samiptter:
