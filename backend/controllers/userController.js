@@ -21,6 +21,10 @@ require('dotenv').config();
 const loginUser = asyncHandler(async (req, res) => {
   let { email, password, guest } = req.body;
 
+  if (email === process.env.GUEST_EMAIL) {
+    guest = true;
+  }
+
   if (guest) {
     email = process.env.GUEST_EMAIL;
     password = process.env.GUEST_PASSWORD;
