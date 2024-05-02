@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import Tweet from '../components/Tweet';
+import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { listTweetDetails } from '../actions/tweetActions';
+import CommentSection from '../components/CommentSection';
+import GuestNotice from '../components/GuestNotice';
+import Head from '../components/Head';
+import Layout from '../components/Layout';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import TopBar from '../components/TopBar';
+import Tweet from '../components/Tweet';
 import TweetComposer from '../components/TweetComposer';
 import {
   EDIT_TWEET_RESET,
   TWEET_DETAILS_RESET,
 } from '../constants/tweetConstants';
-import CommentSection from '../components/CommentSection';
-import Layout from '../components/Layout';
-import TopBar from '../components/TopBar';
-import Head from '../components/Head';
-import toast from 'react-hot-toast';
 
 const TweetScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const TweetScreen = ({ match }) => {
   let { loading, error, tweet } = tweetDetails;
 
   const commentCreate = useSelector((state) => state.commentCreate);
-  const { success: successComment } = commentCreate;
+  const { success: successComment, error: errorComment } = commentCreate;
 
   const commentDelete = useSelector((state) => state.commentDelete);
   const { success: successDelete } = commentDelete;
@@ -37,6 +38,10 @@ const TweetScreen = ({ match }) => {
 
     if (successComment || successDelete) {
       dispatch(listTweetDetails(match.params.id));
+    }
+
+    if (errorComment) {
+      toast.error('Failed to comment on the post. ' + errorComment);
     }
 
     if (successTweetEdit) {
@@ -53,6 +58,7 @@ const TweetScreen = ({ match }) => {
     successTweetEdit,
     successComment,
     successDelete,
+    errorComment,
   ]);
 
   return (
@@ -79,9 +85,13 @@ const TweetScreen = ({ match }) => {
                   major={true}
                 />
               </div>
-              <div className="tweetsMargin">
-                <TweetComposer tweet={tweet} buttonText="Comment" />
-              </div>
+              {userInfo.isGuest ? (
+                <GuestNotice />
+              ) : (
+                <div className="tweetsMargin">
+                  <TweetComposer tweet={tweet} buttonText="Comment" />
+                </div>
+              )}
 
               <CommentSection
                 comments={tweet.comments}

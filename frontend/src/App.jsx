@@ -15,6 +15,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import NotificationScreen from './screens/NotificationScreen';
 import { getUnreadNotifications, refreshToken } from './actions/userActions';
 import { ReactComponent as Logo } from './assets/logo.svg';
+import EmailConfrimationScreen from './screens/EmailConfirmationScreen';
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -41,6 +42,11 @@ function App() {
             <Switch>
               <Route exact path="/login" component={LoginScreen} />
               <Route exact path="/register" component={RegisterScreen} />
+              <Route
+                exact
+                path="/confirmation/:token"
+                component={EmailConfrimationScreen}
+              />
               <AdminRoute exact path="/dashboard" component={DashboardScreen} />
               <ProtectedRoute
                 exact

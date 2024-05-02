@@ -1,6 +1,6 @@
 const User = require('./models/userModel');
 const Notification = require('./models/notificationModel');
-// const Tweet = require("./models/tweetModel");
+const Tweet = require('./models/tweetModel');
 const connectDB = require('./config/db');
 const Following = require('./models/followingModel');
 const Follower = require('./models/followerModel');
@@ -66,3 +66,54 @@ const addFollowerData = async () => {
     process.exit(1);
   }
 };
+
+const purgeOneDaySpam = async () => {
+  try {
+    await connectDB();
+
+    const startOfDay = new Date('2023-06-13T00:00:00.000Z');
+    const endOfDay = new Date('2023-06-14T00:00:00.000Z');
+
+    const spamTweets = await Tweet.deleteMany({
+      updatedAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    });
+    const spamUsers = await User.deleteMany({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    });
+
+    console.log('spams deleted');
+    process.exit();
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+const getImageLinks = async () => {
+  try {
+    await connectDB();
+
+    const tweets = await Tweet.find({});
+
+    const TweetImgs = [];
+    tweets.forEach((tweet) => {
+      if (tweet.images) {
+        tweet.images.forEach((image) => TweetImg.push(image.secure_url));
+      } else return;
+    });
+
+    console.log('tweets found', TweetImgs.length);
+    process.exit();
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+getImageLinks();

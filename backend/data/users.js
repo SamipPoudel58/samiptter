@@ -10,6 +10,7 @@ const users = [
     image: '/images/1.jpg',
     isAdmin: true,
     isVerified: true,
+    isConfirmed: true,
   },
   {
     name: 'John Doe',
@@ -18,6 +19,7 @@ const users = [
     email: 'john@example.com',
     password: bcrypt.hashSync('123456', 10),
     image: '/images/2.jpg',
+    isConfirmed: true,
   },
   {
     name: 'Jane Doe',
@@ -26,6 +28,7 @@ const users = [
     email: 'jane@example.com',
     password: bcrypt.hashSync('123456', 10),
     image: '/images/3.jpg',
+    isConfirmed: true,
   },
   {
     name: 'Michael Scott',
@@ -34,6 +37,7 @@ const users = [
     email: 'mike@example.com',
     password: bcrypt.hashSync('123456', 10),
     image: '/images/4.jpg',
+    isConfirmed: true,
   },
   {
     name: 'Dwight Schrute',
@@ -42,6 +46,7 @@ const users = [
     email: 'dwight@example.com',
     password: bcrypt.hashSync('123456', 10),
     image: '/images/5.jpg',
+    isConfirmed: true,
   },
 ];
 

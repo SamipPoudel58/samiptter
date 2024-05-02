@@ -30,6 +30,7 @@
     "mongoose": "^5.12.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
+    "nodemailer": "^6.9.13",
     "socket.io": "^4.0.0"
   },
   "devDependencies": {

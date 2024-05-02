@@ -34,4 +34,13 @@ const admin = (req, res, next) => {
   }
 };
 
-module.exports = { protect, admin };
+const notGuest = (req, res, next) => {
+  if (req.user && req.user.email !== process.env.GUEST_EMAIL) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error('Not Authorized for guest accounts.');
+  }
+};
+
+module.exports = { protect, admin, notGuest };

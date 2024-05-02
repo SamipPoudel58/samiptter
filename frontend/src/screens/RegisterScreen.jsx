@@ -7,6 +7,8 @@ import Head from '../components/Head';
 import { ReactComponent as Rocket } from '../assets/rocket.svg';
 import { register } from '../actions/userActions';
 import FullLogo from '../components/FullLogo';
+import toast from 'react-hot-toast';
+import CustomToaster from '../components/CustomToaster';
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState('');
@@ -20,7 +22,7 @@ const RegisterScreen = ({ location, history }) => {
   const { loading, userInfo } = userLogin;
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { error: registerError } = userRegister;
+  const { success: registerSuccess, error: registerError } = userRegister;
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
@@ -29,6 +31,12 @@ const RegisterScreen = ({ location, history }) => {
       history.push(redirect);
     }
   }, [history, userInfo, redirect]);
+
+  useEffect(() => {
+    if (registerSuccess) {
+      toast.success('User Created Successfully.');
+    }
+  }, [registerSuccess]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -44,10 +52,17 @@ const RegisterScreen = ({ location, history }) => {
   return (
     <section className="authScreen">
       <Head title="Register" />
+      <CustomToaster />
       <div className="authScreen__content">
         <FullLogo />
         <div className="authScreen__formContainer">
           <h2 className="heading-md">Create an account</h2>
+          {registerSuccess && (
+            <Message>
+              Hooray! 🎉 You're registered. Keep an eye on your inbox for a
+              confirmation email!
+            </Message>
+          )}
           {registerError && <Message variant="danger">{registerError}</Message>}
           {message && <Message variant="danger">{message}</Message>}
           {loading && <Loader />}

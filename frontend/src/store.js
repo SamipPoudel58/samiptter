@@ -21,6 +21,7 @@ import {
   userListReducer,
   userLoginReducer,
   userRegisterReducer,
+  confirmEmailReducer,
 } from './reducers/userReducers';
 import { previewReducer, uiThemeReducer } from './reducers/uiReducer';
 import { getDashboardReducer } from './reducers/dashboardReducers';
@@ -28,6 +29,7 @@ import { getDashboardReducer } from './reducers/dashboardReducers';
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  confirmEmail: confirmEmailReducer,
   followUser: followReducer,
   getRecommendedUsers: getRecommendedUsersReducer,
   tweetList: tweetListReducer,
