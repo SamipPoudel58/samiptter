@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import FullLogo from '../components/FullLogo';
 import Head from '../components/Head';
 import { ReactComponent as Rocket } from '../assets/rocket.svg';
+import CustomToaster from '../components/CustomToaster';
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ const LoginScreen = ({ location, history }) => {
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
-    if (userInfo?.accessToken) {
+    if (userInfo && userInfo?.accessToken) {
       history.push(redirect);
     }
   }, [history, userInfo, redirect]);
@@ -33,13 +34,16 @@ const LoginScreen = ({ location, history }) => {
     e.preventDefault();
     dispatch(login(email, password, true));
   };
+
   return (
     <section className="authScreen">
       <Head title="Sign In" />
+      <CustomToaster />
       <div className="authScreen__content">
         <FullLogo />
         <div className="authScreen__formContainer">
           <h2 className="heading-md">Sign In</h2>
+
           {error && <Message variant="danger">{error}</Message>}
           {loading && <Loader />}
           <form onSubmit={submitHandler}>

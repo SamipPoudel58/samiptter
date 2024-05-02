@@ -15,6 +15,7 @@ import Head from '../components/Head';
 import toast from 'react-hot-toast';
 import { ReactComponent as CircleTick } from '../assets/circle-tick.svg';
 import TweetSkeleton from '../components/skeletons/TweetSkeleton';
+import Notice from '../components/GuestNotice';
 
 const HomeScreen = () => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -27,7 +28,7 @@ const HomeScreen = () => {
   let { loading, error, success, tweets, pages } = tweetList;
 
   const tweetCreate = useSelector((state) => state.tweetCreate);
-  let { success: successTweetCreate } = tweetCreate;
+  let { success: successTweetCreate, error: errorTweetCreate } = tweetCreate;
 
   const tweetDelete = useSelector((state) => state.tweetDelete);
   let { success: successDelete } = tweetDelete;
@@ -46,6 +47,10 @@ const HomeScreen = () => {
       toast.success('Post Created Successfully.');
     }
 
+    if (errorTweetCreate) {
+      toast.error('Failed to create post. ' + errorTweetCreate);
+    }
+
     // const socket = openSocket('/');
     // socket.on('tweets', (data) => {
     //   if (data.action === 'create') {
@@ -57,7 +62,7 @@ const HomeScreen = () => {
       dispatch({ type: DELETE_TWEET_RESET });
       dispatch({ type: CREATE_TWEET_RESET });
     };
-  }, [dispatch, successDelete, successTweetCreate]);
+  }, [dispatch, successDelete, successTweetCreate, errorTweetCreate]);
 
   const observer = useRef();
   const lastTweetRef = useCallback(
@@ -80,7 +85,7 @@ const HomeScreen = () => {
       <Head title="Home" />
       <Layout>
         <section className="newsFeed">
-          <TweetComposer buttonText="Post" />
+          {userInfo.isGuest ? <Notice /> : <TweetComposer buttonText="Post" />}
           {tweets?.length === 0 && success && (
             <p className="tweets-empty">No Tweets Found</p>
           )}
