@@ -1,0 +1,36 @@
+.emailConfirmation {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 3rem;
+    margin-bottom: 8rem;
+  }
+
+  &__icon {
+    font-size: 10rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  &__heading {
+    font-size: 3.5rem;
+    color: var(--c-secondary);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__redirectLink {
+    color: var(--c-primary);
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin: 0 auto;
+  }
+}

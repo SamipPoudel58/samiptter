@@ -8,26 +8,27 @@
   //     var(--c-primary)
   //   );
 
-  background-color: rgba(129, 140, 248, 0.5);
+  background-color: #e0e7ff;
   display: flex;
   gap: 1rem;
 
   &__icon {
     & > svg {
-      height: 2rem;
-      fill: white;
-      color: white;
+      height: 3.5rem;
+      stroke: var(--c-primary);
+      stroke-width: 2px;
     }
   }
 
   &__description {
     color: var(--c-secondary);
     font-size: 1.4rem;
+  }
 
-    & > a {
-      color: inherit;
-      font-weight: 600;
-      text-decoration: underline;
-    }
+  &__links {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }

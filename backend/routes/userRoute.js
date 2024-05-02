@@ -13,20 +13,21 @@ const {
   followUser,
   refreshToken,
   logOutUser,
+  verifyUserEmail,
 } = require('../controllers/userController');
-const { protect } = require('../middleware/authMiddleware');
+const { protect, notGuest } = require('../middleware/authMiddleware');
 
 router
   .route('/')
   .get(protect, getUsersList)
   .post(registerUser)
-  .put(protect, editUser);
+  .put(protect, notGuest, editUser);
 router.post('/login', loginUser);
+router.route('/confirmation/:token').get(verifyUserEmail);
 router.post('/logout', protect, logOutUser);
 router.route('/notifications').get(protect, getNotifications);
 router.route('/unreadnotifications').get(protect, getUnreadNotifications);
 router.route('/follow/:id').get(protect, followUser);
-// router.route("/follow/:id").get(protect, followUser);
 router.route('/recommended').get(protect, getRecommendedUser);
 router.route('/:id').get(protect, getUserProfile);
 router.route('/verify/:id').get(protect, verifyUser);

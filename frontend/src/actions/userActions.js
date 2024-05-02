@@ -38,6 +38,9 @@ import {
   TOKEN_REFRESH_REQUEST,
   TOKEN_REFRESH_FAIL,
   TOKEN_REFRESH_SUCCESS,
+  CONFIRM_EMAIL_REQUEST,
+  CONFIRM_EMAIL_SUCCESS,
+  CONFIRM_EMAIL_FAIL,
 } from '../constants/userConstants';
 
 export const refreshToken = () => async (dispatch) => {
@@ -48,6 +51,22 @@ export const refreshToken = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TOKEN_REFRESH_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const confirmEmail = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: CONFIRM_EMAIL_REQUEST });
+    const { data } = await apiInstance.get(`/api/users/confirmation/${token}`);
+    dispatch({ type: CONFIRM_EMAIL_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: CONFIRM_EMAIL_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -70,7 +89,7 @@ export const login =
         },
       };
 
-      const { data } = await apiInstance.post(
+      const res = await apiInstance.post(
         '/api/users/login',
         { email, password, guest },
         config
@@ -78,7 +97,7 @@ export const login =
 
       dispatch({
         type: USER_LOGIN_SUCCESS,
-        payload: data,
+        payload: res.data,
       });
     } catch (error) {
       dispatch({
@@ -136,10 +155,6 @@ export const register = (name, email, password) => async (dispatch) => {
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
-      payload: data,
-    });
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
       payload: data,
     });
   } catch (error) {

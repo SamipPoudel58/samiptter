@@ -1,5 +1,11 @@
 const jwt = require('jsonwebtoken');
 
+const generateEmailToken = (id) => {
+  return jwt.sign({ id }, process.env.EMAIL_TOKEN_SECRET, {
+    expiresIn: '1d',
+  });
+};
+
 const generateAccessToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: '30m',
@@ -23,4 +29,5 @@ module.exports = {
   generateAccessToken,
   generateRefreshToken,
   sendRefreshToken,
+  generateEmailToken,
 };

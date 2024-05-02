@@ -41,6 +41,10 @@ import {
   TOKEN_REFRESH_REQUEST,
   TOKEN_REFRESH_SUCCESS,
   TOKEN_REFRESH_FAIL,
+  USER_REGISTER_RESET,
+  CONFIRM_EMAIL_REQUEST,
+  CONFIRM_EMAIL_SUCCESS,
+  CONFIRM_EMAIL_FAIL,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = { tokenLoading: true }, action) => {
@@ -64,14 +68,32 @@ export const userLoginReducer = (state = { tokenLoading: true }, action) => {
   }
 };
 
+export const confirmEmailReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CONFIRM_EMAIL_REQUEST:
+      return { loading: true };
+    case CONFIRM_EMAIL_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case CONFIRM_EMAIL_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return { loading: true };
     case USER_REGISTER_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, success: true };
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload };
+    case USER_REGISTER_RESET:
+      return {};
     default:
       return state;
   }

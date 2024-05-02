@@ -10,6 +10,7 @@ const Notification = require('../models/notificationModel');
 const Following = require('../models/followingModel');
 const Follower = require('../models/followerModel');
 const jwt = require('jsonwebtoken');
+const { sendConfirmationEmail, isValidEmail } = require('../utils/email');
 
 const ObjectId = require('mongoose').Types.ObjectId;
 require('dotenv').config();
@@ -27,7 +28,18 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email: email });
 
-  if (user && (await user.matchPassword(password))) {
+  if (!user) {
+    res.status(401);
+    throw new Error('Invalid email or password.');
+  }
+
+  if (!user.isConfirmed) {
+    sendConfirmationEmail(user.email, user._id);
+    res.status(401);
+    throw new Error('Please confirm your email to login.');
+  }
+
+  if (await user.matchPassword(password)) {
     const followersData = await Follower.findOne({ user: user._id });
     const followingData = await Following.findOne({ user: user._id });
 
@@ -71,6 +83,11 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Name should be 20 characters maximum.');
   }
 
+  if (!isValidEmail(email) && process.env.NODE_ENV !== 'development') {
+    res.status(401);
+    throw new Error('Invalid Email!');
+  }
+
   const userExists = await User.findOne({ email: email });
 
   if (userExists) {
@@ -91,41 +108,34 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const user = await createdUser.save();
 
+  sendConfirmationEmail(user.email, user._id);
+
   if (user) {
-    const { following } = await Following.create({
-      user: user._id,
-      following: [],
-    });
-
-    const { followers } = await Follower.create({
-      user: user._id,
-      followers: [],
-    });
-
-    const accessToken = generateAccessToken(user._id);
-    const refreshToken = generateRefreshToken(user._id);
-    user.refreshToken = refreshToken;
-    await user.save();
-    sendRefreshToken(res, refreshToken);
-
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      username: user.username,
-      followers: followers,
-      following: following,
-      isAdmin: user.isAdmin,
-      isVerified: user.isVerified,
-      bio: user.bio,
-      image: user.image,
-      cover: user.cover,
-      accessToken: accessToken,
+      message: 'User Created successfully',
     });
   } else {
     res.status(400);
     throw new Error('Invalid User Data');
   }
+});
+
+// @desc Verify user's email
+// @route GET /api/users/confirmation/:token
+// @access Public
+const verifyUserEmail = asyncHandler(async (req, res) => {
+  const token = req.params.token;
+  const { id } = jwt.verify(token, process.env.EMAIL_TOKEN_SECRET);
+  const user = await User.findById(id);
+  console.log('id yeta yeata y🎉', id);
+  if (!user) {
+    res.status(400);
+    throw new Error('Invalid user ID.');
+  }
+
+  user.isConfirmed = true;
+  await user.save();
+  res.json({ message: `User's email is confirmed successfully.` });
 });
 
 const logOutUser = asyncHandler(async (req, res) => {
@@ -145,19 +155,26 @@ const logOutUser = asyncHandler(async (req, res) => {
 // @route POST /api/users/refresh_token
 // @access Public
 const refreshToken = asyncHandler(async (req, res) => {
-  setTimeout(() => {}, 5000);
   const token = req.cookies.refreshToken;
-  if (!token) return res.status(404).send({ accessToken: '' });
+  if (!token)
+    return res
+      .status(404)
+      .send({ accessToken: '', message: 'No token found!' });
   let decoded;
   try {
     decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
   } catch (err) {
-    return res.status(401).send({ accessToken: '' });
+    return res.status(401).send({ accessToken: '', message: 'Invalid token!' });
   }
   const user = await User.findById(decoded.id);
-  if (!user) return res.status(404).send({ accessToken: '' });
+  if (!user)
+    return res
+      .status(404)
+      .send({ accessToken: '', message: 'User not found!' });
   if (user.refreshToken !== token) {
-    return res.send({ accessToken: '' });
+    return res
+      .status(401)
+      .send({ accessToken: '', message: "Tokens don't match!" });
   }
 
   const accessToken = generateAccessToken(user._id);
@@ -547,4 +564,5 @@ module.exports = {
   getUsersList,
   getNotifications,
   getUnreadNotifications,
+  verifyUserEmail,
 };
