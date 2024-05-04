@@ -16,11 +16,14 @@ const {
   verifyUserEmail,
 } = require('../controllers/userController');
 const { protect, notGuest } = require('../middleware/authMiddleware');
+const {
+  validateUserRegisterData,
+} = require('../middleware/validationMiddleware');
 
 router
   .route('/')
   .get(protect, getUsersList)
-  .post(registerUser)
+  .post(validateUserRegisterData, registerUser)
   .put(protect, notGuest, editUser);
 router.post('/login', loginUser);
 router.route('/confirmation/:token').get(verifyUserEmail);

@@ -11,6 +11,7 @@ const Following = require('../models/followingModel');
 const Follower = require('../models/followerModel');
 const jwt = require('jsonwebtoken');
 const { sendConfirmationEmail, isValidEmail } = require('../utils/email');
+const { generateAvatars } = require('../utils/generators.js');
 
 const ObjectId = require('mongoose').Types.ObjectId;
 require('dotenv').config();
@@ -19,61 +20,60 @@ require('dotenv').config();
 // @route POST /api/users/login
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
-  let { email, password, guest } = req.body;
+  const { email, password, guest } = req.body;
 
-  if (email === process.env.GUEST_EMAIL) {
-    guest = true;
-  }
+  let userEmail = email;
+  let userPassword = password;
 
   if (guest) {
-    email = process.env.GUEST_EMAIL;
-    password = process.env.GUEST_PASSWORD;
+    userEmail = process.env.GUEST_EMAIL;
+    userPassword = process.env.GUEST_PASSWORD;
   }
 
-  const user = await User.findOne({ email: email });
+  let user = await User.findOne({ email: userEmail });
 
   if (!user) {
     res.status(401);
     throw new Error('Invalid email or password.');
   }
 
-  if (!user.isConfirmed) {
-    sendConfirmationEmail(user.email, user._id);
+  if (!user.isConfirmed && !guest) {
+    sendConfirmationEmail(userEmail, user._id);
     res.status(401);
     throw new Error('Please confirm your email to login.');
   }
 
-  if (await user.matchPassword(password)) {
-    const followersData = await Follower.findOne({ user: user._id });
-    const followingData = await Following.findOne({ user: user._id });
-
-    const accessToken = generateAccessToken(user._id);
-    const refreshToken = generateRefreshToken(user._id);
-
-    user.refreshToken = refreshToken;
-    await user.save();
-
-    sendRefreshToken(res, refreshToken);
-
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      username: user.username,
-      isAdmin: user.isAdmin,
-      isVerified: user.isVerified,
-      followers: followersData?.followers || [],
-      following: followingData?.following || [],
-      bio: user.bio,
-      image: user.image,
-      cover: user.cover,
-      accessToken: accessToken,
-      isGuest: !!guest,
-    });
-  } else {
+  if (!(await user.matchPassword(userPassword))) {
     res.status(401);
     throw new Error('Invalid email or password');
   }
+
+  const followersData = await Follower.findOne({ user: user._id });
+  const followingData = await Following.findOne({ user: user._id });
+
+  const accessToken = generateAccessToken(user._id);
+  const refreshToken = generateRefreshToken(user._id);
+
+  user.refreshToken = refreshToken;
+  await user.save();
+
+  sendRefreshToken(res, refreshToken);
+
+  res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    username: user.username,
+    isAdmin: user.isAdmin,
+    isVerified: user.isVerified,
+    followers: followersData?.followers || [],
+    following: followingData?.following || [],
+    bio: user.bio,
+    image: user.image,
+    cover: user.cover,
+    accessToken: accessToken,
+    isGuest: !!guest,
+  });
 });
 
 // @desc Register a new user
@@ -82,46 +82,26 @@ const loginUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  if (name.length > 20) {
-    res.status(400);
-    throw new Error('Name should be 20 characters maximum.');
-  }
-
-  if (!isValidEmail(email) && process.env.NODE_ENV !== 'development') {
-    res.status(401);
-    throw new Error('Invalid Email!');
-  }
-
-  const userExists = await User.findOne({ email: email });
-
+  // Check if user already exists
+  const userExists = await User.findOne({ email });
   if (userExists) {
-    res.status(400);
-    throw new Error('User already exists');
+    return res.status(400).json({ error: 'User already exists' });
   }
 
   const createdUser = await User.create({
     name,
     email,
     password,
-    image: `https://robohash.org/${name}/set_set${Math.floor(
-      Math.random() * 2 + 1
-    )}?size=400x400`,
+    image: generateAvatars(name),
   });
 
+  // Generate a username from ID
   createdUser.username = createdUser._id.toString();
+  await createdUser.save();
 
-  const user = await createdUser.save();
+  sendConfirmationEmail(createdUser.email, createdUser._id);
 
-  sendConfirmationEmail(user.email, user._id);
-
-  if (user) {
-    res.status(201).json({
-      message: 'User Created successfully',
-    });
-  } else {
-    res.status(400);
-    throw new Error('Invalid User Data');
-  }
+  return res.status(201).json({ message: 'User Created successfully' });
 });
 
 // @desc Verify user's email
@@ -384,72 +364,87 @@ const getUserProfile = asyncHandler(async (req, res) => {
   res.json({ user: userData, tweets });
 });
 
-// @desc Follow a user
+// @desc Toogle follow and unfollow a user
 // @route GET /api/users/follow/:id
 // @access Private
 const followUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  let user = await User.findById(req.user._id);
-  if (!user) {
-    res.status(404);
-    throw new Error('User not found');
-  }
-  if (id.toString() === req.user._id.toString()) {
-    throw new Error('Cannot follow yourself');
-  }
 
-  const followingData = await Following.findOne({ user: user._id });
-
-  let action = '';
-
-  if (!followingData) {
-    res.status(404);
-    throw new Error("User's followingData not found");
-  } else {
-    const userExist = await Following.findOne({
-      user: user._id,
+  try {
+    // Retrieve the logged-in user
+    const userPromise = User.findById(req.user._id);
+    // Check if the user is already followed
+    const followingPromise = Following.exists({
+      user: req.user._id,
       'following.user': id,
     });
 
-    if (userExist) {
-      action = 'unfollow';
-      //unfollow user
-      // * use $pullAll to check for multiple values
-      await Following.updateOne(
-        { user: user._id },
-        { $pull: { following: { user: ObjectId(id) } } }
-      );
-      await Follower.updateOne(
-        { user: id },
-        { $pull: { followers: { user: ObjectId(user._id) } } }
-      );
-    } else {
-      // follow user
-      action = 'follow';
-      await Following.updateOne(
-        { user: user._id },
-        { $push: { following: { user: ObjectId(id) } } }
-      );
+    const [user, isFollowing] = await Promise.all([
+      userPromise,
+      followingPromise,
+    ]);
 
-      await Follower.updateOne(
-        { user: id },
-        { $push: { followers: { user: ObjectId(user._id) } } }
-      );
+    if (!user) {
+      res.status(404).json({ error: 'User not found' });
+      return;
     }
+
+    // Prevent following self
+    if (id.toString() === req.user._id.toString()) {
+      res.status(400).json({ error: 'Cannot follow yourself' });
+      return;
+    }
+
+    let action;
+
+    if (isFollowing) {
+      action = 'unfollow';
+      // Unfollow user
+      const unfollowPromise = Following.updateOne(
+        { user: req.user._id },
+        { $pull: { following: { user: mongoose.Types.ObjectId(id) } } }
+      );
+      const removeFollowerPromise = Follower.updateOne(
+        { user: id },
+        { $pull: { followers: { user: req.user._id } } }
+      );
+      await Promise.all([unfollowPromise, removeFollowerPromise]);
+    } else {
+      action = 'follow';
+      // Follow user
+      const followPromise = Following.updateOne(
+        { user: req.user._id },
+        { $push: { following: { user: ObjectId(id) } } },
+        { upsert: true }
+      );
+      const addFollowerPromise = Follower.updateOne(
+        { user: id },
+        { $push: { followers: { user: req.user._id } } },
+        { upsert: true }
+      );
+      // Create a notification for the followed user
+      const notification = new Notification({
+        receiver: id,
+        sender: req.user._id,
+        read: false,
+        action: 'follow',
+        message: 'followed you.',
+        link: `/profile/${req.user.username}`,
+      });
+      const notificationPromise = notification.save();
+
+      await Promise.all([
+        followPromise,
+        addFollowerPromise,
+        notificationPromise,
+      ]);
+    }
+
+    res.json({ message: `User ${action}` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-
-  const notification = new Notification({
-    receiver: id,
-    sender: req.user._id,
-    read: false,
-    action: 'follow',
-    message: 'followed you.',
-    link: `/profile/${req.user.username}`,
-  });
-
-  await notification.save();
-
-  res.json('User ' + action);
 });
 
 // @desc Get recommended user
