@@ -27,12 +27,25 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(refreshToken());
-    if (userInfo && userInfo.accessToken) {
+    let intervalId;
+
+    const fetchNotifications = () => {
       dispatch(getUnreadNotifications());
+    };
+
+    if (userInfo && userInfo.accessToken) {
+      fetchNotifications();
+      // fetch notifications every 3 minutes
+      intervalId = setInterval(fetchNotifications, 300000);
+    } else {
+      dispatch(refreshToken());
     }
+
+    return () => {
+      clearInterval(intervalId);
+    };
     // eslint-disable-next-line
-  }, [dispatch]);
+  }, [dispatch, userInfo]);
 
   return (
     <Router>

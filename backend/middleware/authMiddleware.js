@@ -35,7 +35,7 @@ const admin = (req, res, next) => {
 };
 
 const notGuest = (req, res, next) => {
-  if (req.user && req.user.email !== process.env.GUEST_EMAIL) {
+  if (req.user && !req.user.isGuest) {
     next();
   } else {
     res.status(401);

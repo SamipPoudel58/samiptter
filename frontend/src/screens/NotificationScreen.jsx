@@ -8,6 +8,7 @@ import Message from '../components/Message';
 import Layout from '../components/Layout';
 import { getTimeFromNow } from '../utils/getTimeFromNow';
 import NotificationSkeleton from '../components/skeletons/NotificationSkeleton';
+import { GET_UNREAD_NOTIF_RESET } from '../constants/userConstants';
 
 const NotificationScreen = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const NotificationScreen = () => {
 
   useEffect(() => {
     dispatch(getNotifications());
+    dispatch({ type: GET_UNREAD_NOTIF_RESET });
   }, [dispatch]);
   return (
     <div className="notificationScreen">

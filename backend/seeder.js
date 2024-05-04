@@ -1,9 +1,12 @@
-const dotenv = require("dotenv");
-const users = require("./data/users");
-const tweets = require("./data/tweets");
-const User = require("./models/userModel");
-const Tweet = require("./models/tweetModel");
-const connectDB = require("./config/db");
+const dotenv = require('dotenv');
+const users = require('./data/users');
+const tweets = require('./data/tweets');
+const connectDB = require('./config/db');
+const User = require('./models/userModel');
+const Tweet = require('./models/tweetModel');
+const Notification = require('./models/notificationModel');
+const Following = require('./models/followingModel');
+const Follower = require('./models/followerModel');
 
 dotenv.config();
 
@@ -13,6 +16,9 @@ const importData = async () => {
 
     await User.deleteMany();
     await Tweet.deleteMany();
+    await Follower.deleteMany();
+    await Following.deleteMany();
+    await Notification.deleteMany();
 
     const createdUser = await User.insertMany(users);
     // const adminUser = createdUser[0]._id;
@@ -26,7 +32,7 @@ const importData = async () => {
 
     await Tweet.insertMany(sampleTweets);
 
-    console.log("Data Imported");
+    console.log('Data Imported');
     process.exit();
   } catch (error) {
     console.error(error);
@@ -37,10 +43,14 @@ const importData = async () => {
 const destroyData = async () => {
   try {
     await connectDB();
+
     await User.deleteMany();
     await Tweet.deleteMany();
+    await Follower.deleteMany();
+    await Following.deleteMany();
+    await Notification.deleteMany();
 
-    console.log("Data Destroyed");
+    console.log('Data Destroyed');
     process.exit();
   } catch (error) {
     console.error(error);
@@ -48,7 +58,7 @@ const destroyData = async () => {
   }
 };
 
-if (process.argv[2] === "-d") {
+if (process.argv[2] === '-d') {
   destroyData();
 } else {
   importData();

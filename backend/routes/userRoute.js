@@ -13,7 +13,7 @@ const {
   followUser,
   refreshToken,
   logOutUser,
-  verifyUserEmail,
+  confirmUserEmail,
 } = require('../controllers/userController');
 const { protect, notGuest } = require('../middleware/authMiddleware');
 const {
@@ -26,7 +26,7 @@ router
   .post(validateUserRegisterData, registerUser)
   .put(protect, notGuest, editUser);
 router.post('/login', loginUser);
-router.route('/confirmation/:token').get(verifyUserEmail);
+router.route('/confirmation/:token').get(confirmUserEmail);
 router.post('/logout', protect, logOutUser);
 router.route('/notifications').get(protect, getNotifications);
 router.route('/unreadnotifications').get(protect, getUnreadNotifications);

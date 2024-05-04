@@ -1,20 +1,21 @@
-const User = require('../models/userModel');
-const Tweet = require('../models/tweetModel');
+const jwt = require('jsonwebtoken');
+const ObjectId = require('mongoose').Types.ObjectId;
+require('dotenv').config();
+
 const asyncHandler = require('../utils/asyncHandler');
 const {
   generateAccessToken,
   generateRefreshToken,
   sendRefreshToken,
 } = require('../utils/tokens.js');
+const { sendConfirmationEmail } = require('../utils/email');
+const { generateAvatars } = require('../utils/generators.js');
+
 const Notification = require('../models/notificationModel');
 const Following = require('../models/followingModel');
 const Follower = require('../models/followerModel');
-const jwt = require('jsonwebtoken');
-const { sendConfirmationEmail, isValidEmail } = require('../utils/email');
-const { generateAvatars } = require('../utils/generators.js');
-
-const ObjectId = require('mongoose').Types.ObjectId;
-require('dotenv').config();
+const User = require('../models/userModel');
+const Tweet = require('../models/tweetModel');
 
 // @desc Auth user and get token
 // @route POST /api/users/login
@@ -37,7 +38,7 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid email or password.');
   }
 
-  if (!user.isConfirmed && !guest) {
+  if (!user.isConfirmed && !guest && !user.isGuest) {
     sendConfirmationEmail(userEmail, user._id);
     res.status(401);
     throw new Error('Please confirm your email to login.');
@@ -72,7 +73,7 @@ const loginUser = asyncHandler(async (req, res) => {
     image: user.image,
     cover: user.cover,
     accessToken: accessToken,
-    isGuest: !!guest,
+    isGuest: user.isGuest,
   });
 });
 
@@ -85,7 +86,8 @@ const registerUser = asyncHandler(async (req, res) => {
   // Check if user already exists
   const userExists = await User.findOne({ email });
   if (userExists) {
-    return res.status(400).json({ error: 'User already exists' });
+    res.status(400);
+    throw new Error('User already exists');
   }
 
   const createdUser = await User.create({
@@ -104,35 +106,42 @@ const registerUser = asyncHandler(async (req, res) => {
   return res.status(201).json({ message: 'User Created successfully' });
 });
 
-// @desc Verify user's email
+// @desc Confirm user's email
 // @route GET /api/users/confirmation/:token
 // @access Public
-const verifyUserEmail = asyncHandler(async (req, res) => {
+const confirmUserEmail = asyncHandler(async (req, res) => {
   const token = req.params.token;
   const { id } = jwt.verify(token, process.env.EMAIL_TOKEN_SECRET);
   const user = await User.findById(id);
-  console.log('id yeta yeata y🎉', id);
+
   if (!user) {
-    res.status(400);
+    res.status(404);
     throw new Error('Invalid user ID.');
   }
 
   user.isConfirmed = true;
   await user.save();
+
   res.json({ message: `User's email is confirmed successfully.` });
 });
 
+// @desc Log out user
+// @route POST /api/users/logout
+// @access Public
 const logOutUser = asyncHandler(async (req, res) => {
   res.clearCookie('refreshToken', { path: '/refresh_token' });
+
   const user = await User.findById(req.user._id);
-  if (user) {
-    user.refreshToken = '';
-    await user.save();
-    res.status(200).json({ message: 'Logged out' });
-  } else {
+
+  if (!user) {
     res.status(404);
     throw new Error('User not found');
   }
+
+  user.refreshToken = '';
+  await user.save();
+
+  res.status(200).json({ message: 'Logged out successfully' });
 });
 
 // @desc Refresh tokens
@@ -176,6 +185,7 @@ const refreshToken = asyncHandler(async (req, res) => {
     email: user.email,
     username: user.username,
     isAdmin: user.isAdmin,
+    isGuest: user.isGuest,
     isVerified: user.isVerified,
     followers: followersData?.followers || [],
     following: followingData?.following || [],
@@ -268,6 +278,7 @@ const editUser = asyncHandler(async (req, res) => {
       email: adminUser.email,
       username: adminUser.username,
       isAdmin: adminUser.isAdmin,
+      isGuest: adminUser.isGuest,
       isVerified: adminUser.isVerified,
       bio: adminUser.bio,
       image: adminUser.image,
@@ -281,6 +292,7 @@ const editUser = asyncHandler(async (req, res) => {
       username: updatedUser.username,
       name: updatedUser.name,
       isAdmin: updatedUser.isAdmin,
+      isGuest: updatedUser.isGuest,
       isVerified: updatedUser.isVerified,
       image: updatedUser.image,
       cover: updatedUser.cover,
@@ -372,17 +384,12 @@ const followUser = asyncHandler(async (req, res) => {
 
   try {
     // Retrieve the logged-in user
-    const userPromise = User.findById(req.user._id);
+    const user = await User.findById(req.user._id);
     // Check if the user is already followed
-    const followingPromise = Following.exists({
+    const isFollowing = await Following.exists({
       user: req.user._id,
       'following.user': id,
     });
-
-    const [user, isFollowing] = await Promise.all([
-      userPromise,
-      followingPromise,
-    ]);
 
     if (!user) {
       res.status(404).json({ error: 'User not found' });
@@ -400,24 +407,23 @@ const followUser = asyncHandler(async (req, res) => {
     if (isFollowing) {
       action = 'unfollow';
       // Unfollow user
-      const unfollowPromise = Following.updateOne(
+      await Following.updateOne(
         { user: req.user._id },
-        { $pull: { following: { user: mongoose.Types.ObjectId(id) } } }
+        { $pull: { following: { user: ObjectId(id) } } }
       );
-      const removeFollowerPromise = Follower.updateOne(
+      await Follower.updateOne(
         { user: id },
         { $pull: { followers: { user: req.user._id } } }
       );
-      await Promise.all([unfollowPromise, removeFollowerPromise]);
     } else {
       action = 'follow';
       // Follow user
-      const followPromise = Following.updateOne(
+      await Following.updateOne(
         { user: req.user._id },
         { $push: { following: { user: ObjectId(id) } } },
         { upsert: true }
       );
-      const addFollowerPromise = Follower.updateOne(
+      await Follower.updateOne(
         { user: id },
         { $push: { followers: { user: req.user._id } } },
         { upsert: true }
@@ -431,13 +437,7 @@ const followUser = asyncHandler(async (req, res) => {
         message: 'followed you.',
         link: `/profile/${req.user.username}`,
       });
-      const notificationPromise = notification.save();
-
-      await Promise.all([
-        followPromise,
-        addFollowerPromise,
-        notificationPromise,
-      ]);
+      await notification.save();
     }
 
     res.json({ message: `User ${action}` });
@@ -451,7 +451,8 @@ const followUser = asyncHandler(async (req, res) => {
 // @route GET /api/users/recommended
 // @access Private
 const getRecommendedUser = asyncHandler(async (req, res) => {
-  const userSize = 3;
+  const userSize = parseInt(process.env.RECOMMENDED_USERS_SIZE) || 3;
+
   let currentUser = await User.findById(req.user._id);
   let followingData = await Following.findOne({
     user: currentUser._id,
@@ -459,16 +460,20 @@ const getRecommendedUser = asyncHandler(async (req, res) => {
 
   let followedUsers = followingData?.following || [];
   let friendArray = followedUsers.map((f) => f.user);
-  // TODO: Limit unnecessary data sent
+
   let users = await User.find({
     _id: { $nin: [...friendArray, req.user._id] },
+    isAdmin: false,
+    isGuest: false,
   })
     .select('_id name username isVerified image')
     .limit(userSize);
-  if (!users) {
-    res.status(404);
-    throw new Error('No recommended users found');
+
+  if (!users || users.length === 0) {
+    res.status(404).json({ error: 'No recommended users found' });
+    return;
   }
+
   res.json(users);
 });
 
@@ -563,5 +568,5 @@ module.exports = {
   getUsersList,
   getNotifications,
   getUnreadNotifications,
-  verifyUserEmail,
+  confirmUserEmail,
 };

@@ -24,7 +24,7 @@ router
   .post(protect, notGuest, createComment)
   .put(protect, notGuest, editTweet)
   .delete(protect, notGuest, deleteTweet);
-router.route('/:id/like,').get(protect, likeTweet);
+router.route('/:id/like').get(protect, likeTweet);
 
 router
   .route('/:id/:comId')

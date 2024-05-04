@@ -26,6 +26,7 @@ import {
   EDIT_TWEET_SUCCESS,
   EDIT_TWEET_FAIL,
   EDIT_TWEET_RESET,
+  TWEET_LIST_SYNC,
 } from '../constants/tweetConstants';
 
 export const tweetListReducer = (state = { tweets: [] }, action) => {
@@ -38,8 +39,11 @@ export const tweetListReducer = (state = { tweets: [] }, action) => {
         tweets: [...new Set([...state.tweets, ...action.payload.tweets])],
         pages: action.payload.pages,
       };
+    case TWEET_LIST_SYNC:
+      return { ...state, loading: false, tweets: action.payload.tweets };
     case TWEET_LIST_FAIL:
       return { loading: false, error: action.payload };
+
     case TWEET_LIST_RESET:
       return {
         tweets: [],

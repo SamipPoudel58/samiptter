@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listTweets } from '../actions/tweetActions';
-import { ReactComponent as SearchIcon } from '../assets/search.svg';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import Tweet from '../components/Tweet';
-import ProfileInfo from '../components/ProfileInfo';
+import { listUsers } from '../actions/userActions';
 import Head from '../components/Head';
 import Layout from '../components/Layout';
-import { TWEET_LIST_RESET } from '../constants/tweetConstants';
-import { listUsers } from '../actions/userActions';
-import { LIST_USERS_RESET } from '../constants/userConstants';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import ProfileInfo from '../components/ProfileInfo';
 import SearchBar from '../components/SearchBar';
+import Tweet from '../components/Tweet';
+import { TWEET_LIST_RESET } from '../constants/tweetConstants';
+import { LIST_USERS_RESET } from '../constants/userConstants';
 
 const SearchScreen = () => {
   const [keyword, setKeyword] = useState('');
@@ -32,8 +31,6 @@ const SearchScreen = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: TWEET_LIST_RESET });
-      dispatch(listTweets());
       dispatch({ type: LIST_USERS_RESET });
     };
   }, [dispatch]);

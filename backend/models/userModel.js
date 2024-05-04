@@ -41,6 +41,10 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    isGuest: {
+      type: Boolean,
+      default: false,
+    },
     isVerified: {
       type: Boolean,
       required: true,

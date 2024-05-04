@@ -1,16 +1,18 @@
-const express = require('express');
 const path = require('path');
+const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const connectDB = require('./config/db');
+const { errorHandler, notFound } = require('./middleware/errorMiddleware');
+
 const userRoute = require('./routes/userRoute');
 const tweetRoute = require('./routes/tweetRoute');
 const dashboardRoute = require('./routes/dashboardRoute');
 const uploadRoute = require('./routes/uploadRoute');
-const cookieParser = require('cookie-parser');
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const { errorHandler, notFound } = require('./middleware/errorMiddleware');
-const connectDB = require('./config/db');
-dotenv.config();
 
 const app = express();
 

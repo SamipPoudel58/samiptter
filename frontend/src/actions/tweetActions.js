@@ -22,10 +22,11 @@ import {
   TWEET_LIST_FAIL,
   TWEET_LIST_REQUEST,
   TWEET_LIST_SUCCESS,
+  TWEET_LIST_SYNC,
 } from '../constants/tweetConstants';
 
 export const listTweets =
-  (keyword = '', pageNumber = '') =>
+  (keyword = '', pageNumber) =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: TWEET_LIST_REQUEST });
@@ -41,11 +42,11 @@ export const listTweets =
       };
 
       const { data } = await axiosPrivate.get(
-        `/api/tweets?keyword=${keyword}&pageNumber=${pageNumber}`,
+        `/api/tweets?keyword=${keyword}&pageNumber=${pageNumber || ''}`,
         config
       );
       dispatch({
-        type: TWEET_LIST_SUCCESS,
+        type: pageNumber ? TWEET_LIST_SUCCESS : TWEET_LIST_SYNC,
         payload: data,
       });
     } catch (error) {

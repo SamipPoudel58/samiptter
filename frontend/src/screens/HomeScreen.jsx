@@ -34,12 +34,12 @@ const HomeScreen = () => {
   let { success: successDelete } = tweetDelete;
 
   useEffect(() => {
-    if (tweets.length === 0) {
-      dispatch(listTweets('', pageNumber));
-    }
+    dispatch(listTweets());
+    console.log(successTweetCreate);
+  }, [successTweetCreate, successDelete]);
 
+  useEffect(() => {
     if (successDelete) {
-      dispatch({ type: TWEET_LIST_RESET });
       toast.success('Post Deleted Successfully.');
     }
 
