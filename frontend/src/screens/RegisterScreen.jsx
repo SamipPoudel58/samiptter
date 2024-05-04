@@ -35,6 +35,9 @@ const RegisterScreen = ({ location, history }) => {
   useEffect(() => {
     if (registerSuccess) {
       toast.success('User Created Successfully.');
+      setName('');
+      setEmail('');
+      setPassword('');
     }
   }, [registerSuccess]);
 
