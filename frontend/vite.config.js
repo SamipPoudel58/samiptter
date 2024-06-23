@@ -20,6 +20,9 @@ export default defineConfig({
         background_color: '#f9f9f9',
         theme_color: '#818cf8',
         description: 'The ultimate social media site of your dreams.',
+        splash_screen: {
+          full: '/images/splash-screen.png',
+        },
         icons: [
           {
             src: 'icons/icon-48.png',
@@ -64,6 +67,11 @@ export default defineConfig({
           {
             src: 'icons/icon-512.png',
             sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: 'icons/icon-1024.png',
+            sizes: '1024x1024',
             type: 'image/png',
           },
           {
