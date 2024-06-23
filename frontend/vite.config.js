@@ -18,7 +18,7 @@ export default defineConfig({
         start_url: '/',
         display: 'standalone',
         background_color: '#f9f9f9',
-        theme_color: '#818cf8',
+        theme_color: '#5b67ee',
         description: 'The ultimate social media site of your dreams.',
         splash_screen: {
           full: '/images/splash-screen.png',
