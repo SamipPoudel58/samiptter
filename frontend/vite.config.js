@@ -18,70 +18,53 @@ export default defineConfig({
         start_url: '/',
         display: 'standalone',
         background_color: '#f9f9f9',
-        theme_color: '#5b67ee',
+        theme_color: '#f7faff',
         description: 'The ultimate social media site of your dreams.',
-        splash_screen: {
-          full: '/images/splash-screen.png',
-        },
         icons: [
           {
-            src: 'icons/icon-48.png',
+            src: '/icons/icon-48.png',
             sizes: '48x48',
             type: 'image/png',
           },
           {
-            src: 'icons/icon-72.png',
-            sizes: '72x72',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-96.png',
+            src: '/icons/icon-96.png',
             sizes: '96x96',
             type: 'image/png',
           },
           {
-            src: 'icons/icon-128.png',
+            src: '/icons/icon-128.png',
             sizes: '128x128',
             type: 'image/png',
           },
           {
-            src: 'icons/icon-144.png',
-            sizes: '144x144',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-192.png',
+            src: '/icons/icon-192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'icons/icon-256.png',
+            src: '/icons/icon-256.png',
             sizes: '256x256',
             type: 'image/png',
           },
+
           {
-            src: 'icons/icon-384.png',
-            sizes: '384x384',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-512.png',
+            src: '/icons/icon-512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: 'icons/icon-1024.png',
+            src: '/icons/icon-1024.png',
             sizes: '1024x1024',
             type: 'image/png',
           },
           {
-            src: 'icons/maskable-icon-192.png',
+            src: '/icons/maskable-icon-192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'maskable',
           },
           {
-            src: 'icons/maskable-icon-512x512.png',
+            src: '/icons/maskable-icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
