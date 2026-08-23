@@ -13,52 +13,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const isValidEmail = (email) => {
-  const validDomains = [
-    'gmail',
-    'yahoo',
-    'hotmail',
-    'outlook',
-    'aol',
-    'icloud',
-    'live',
-    'msn',
-    'ymail',
-    'rocketmail',
-    'att',
-    'sbcglobal',
-    'comcast',
-    'cox',
-    'verizon',
-    'bellsouth',
-    'shaw',
-    'sympatico',
-    'charter',
-    'earthlink',
-    'optonline',
-    'rogers',
-    'ntlworld',
-    'blueyonder',
-    'talktalk',
-    'tiscali',
-    'orange',
-    'btinternet',
-    'virginmedia',
-    'sfr',
-    'free',
-    'wanadoo',
-    'laposte',
-    'gmx',
-    'web',
-    'mail',
-    'yandex',
-    'rambler',
-    'protonmail',
-  ];
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const domain = email.split('@')[1].split('.')[0].toLowerCase();
-  return validDomains.includes(domain);
-};
+const isValidEmail = (email) => EMAIL_REGEX.test(email);
 
 const sendConfirmationEmail = async (email, id) => {
   try {
