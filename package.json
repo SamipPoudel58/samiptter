@@ -36,5 +36,8 @@
   "devDependencies": {
     "concurrently": "^6.0.0",
     "nodemon": "^2.0.19"
+  },
+  "overrides": {
+    "minimist": "1.2.6"
   }
 }
