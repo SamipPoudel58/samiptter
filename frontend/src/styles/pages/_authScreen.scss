@@ -1,6 +1,6 @@
 .authScreen {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--banner-h));
 
   &__content {
     width: 50%;
@@ -23,7 +23,7 @@
 
   &__decor {
     width: 50%;
-    height: 100vh;
+    height: calc(100vh - var(--banner-h));
     padding: 3rem 3rem 3rem 0;
 
     @media only screen and (max-width: 1200px) {

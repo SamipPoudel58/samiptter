@@ -16,6 +16,7 @@ import NotificationScreen from './screens/NotificationScreen';
 import { getUnreadNotifications, refreshToken } from './actions/userActions';
 import { ReactComponent as Logo } from './assets/logo.svg';
 import EmailConfrimationScreen from './screens/EmailConfirmationScreen';
+import ReliefBanner from './components/ReliefBanner';
 
 function App() {
   const uiTheme = useSelector((state) => state.uiTheme);
@@ -50,6 +51,7 @@ function App() {
   return (
     <Router>
       <main className={`${darkMode ? 'dark' : ''}`}>
+        <ReliefBanner />
         <div className="mainContainer">
           {!tokenLoading ? (
             <Switch>

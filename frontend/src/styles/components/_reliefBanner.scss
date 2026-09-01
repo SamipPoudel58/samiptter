@@ -1,0 +1,42 @@
+.reliefBanner {
+  position: sticky;
+  top: 0;
+  z-index: 13;
+  height: var(--banner-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0 1.5rem;
+  // a touch deeper than the primary indigo so white text still reads
+  background-color: #7580f5;
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+
+  &__long {
+    @media only screen and (max-width: 650px) {
+      display: none;
+    }
+  }
+
+  &__short {
+    display: none;
+    @media only screen and (max-width: 650px) {
+      display: inline;
+    }
+  }
+
+  &__arrow {
+    height: 1.4rem;
+    width: 1.4rem;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover &__arrow {
+    transform: translateX(3px);
+  }
+}
